@@ -1,0 +1,24 @@
+section {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+     ::after {
+        content: '';
+        flex-grow: 999
+    }
+    div {
+        flex-grow: 1;
+        margin: 2px;
+        background: url('/assets/svg/loading.svg') 100%;
+        height: 360px;
+        img {
+            height: 360px;
+            object-fit: cover;
+            max-width: 100%;
+            // min-width: 100%;
+            vertical-align: bottom;
+        }
+    }
+}
