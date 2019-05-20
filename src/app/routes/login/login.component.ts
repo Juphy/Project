@@ -57,8 +57,9 @@ export class LoginComponent implements OnInit {
           userinfo["name"] = user_info["name"];
           userinfo["id"] = user_info["id"];
           userinfo["roles"] = user_info["roles"];
-          userinfo["permission"] = user_info["permission"];
-          this.router.navigate(["console"]);
+          userinfo["permission"] = data["permission_list"];
+          userinfo["info"] = user_info;
+          this.router.navigate(["console/news"]);
         }
       });
   }

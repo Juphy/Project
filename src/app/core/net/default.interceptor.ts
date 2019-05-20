@@ -46,6 +46,14 @@ export class DefaultInterceptor implements HttpInterceptor {
 
   private handleData(event: HttpResponseBase): Observable<any> {
     switch (event.status) {
+      case 200:
+        let body = event["body"];
+        switch (body.status) {
+          case 400:
+            this.msg.error(body.message);
+            break;
+        }
+        break;
       case 400: // 客服端错误
         this.msg.warning(event["error"]["error"]);
         break;
@@ -72,23 +80,21 @@ export class DefaultInterceptor implements HttpInterceptor {
         url: url,
         setHeaders: { Authorization: "Bearer " + DATA["token"] }
       });
-      return next.handle(req).pipe(
-        mergeMap((event: any) => {
-          if (event instanceof HttpResponseBase && event.status === 200)
-            return this.handleData(event);
-          return of(event);
-        }),
-        catchError((err: any) => {
-          if (err instanceof HttpResponseBase) {
-            this.handleData(err);
-            return throwError(err); // 在抛出错误以便捕获
-          }
-        })
-      );
     } else {
-      let url = siteinfo.api + "/" + req.url;
       req = req.clone({ url });
-      return next.handle(req);
     }
+    return next.handle(req).pipe(
+      mergeMap((event: any) => {
+        if (event instanceof HttpResponseBase && event.status === 200)
+          return this.handleData(event);
+        return of(event);
+      }),
+      catchError((err: any) => {
+        if (err instanceof HttpResponseBase) {
+          this.handleData(err);
+          return throwError(err); // 在抛出错误以便捕获
+        }
+      })
+    );
   }
 }

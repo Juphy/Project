@@ -3,8 +3,32 @@ import {
   MailOutline,
   UserOutline,
   MenuFoldOutline,
-  MenuUnfoldOutline,
-  LockOutline
+  LockOutline,
+  HomeOutline,
+  TeamOutline,
+  QuestionCircleOutline,
+  CrownOutline,
+  PayCircleOutline,
+  EditOutline,
+  IdcardOutline,
+  TableOutline,
+  SettingOutline,
+  MenuUnfoldOutline
 } from "@ant-design/icons-angular/icons";
 
-export const ICONS = [MailOutline, UserOutline, MenuFoldOutline, LockOutline];
+export const ICONS = [
+  MailOutline,
+  UserOutline,
+  MenuFoldOutline,
+  LockOutline,
+  HomeOutline,
+  TeamOutline,
+  QuestionCircleOutline,
+  CrownOutline,
+  PayCircleOutline,
+  EditOutline,
+  IdcardOutline,
+  TableOutline,
+  SettingOutline,
+  MenuUnfoldOutline
+];

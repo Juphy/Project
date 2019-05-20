@@ -1,7 +1,71 @@
 <div class="layout">
-    <header>
-        <div class="project">{{project}}</div>
-        <div class="account">{{name}}</div>
-    </header>
-
+  <header>
+    <div class="project">
+      <a href="/"
+        ><i
+          nz-icon
+          [nzType]="'home'"
+          style="margin-right: 12px;font-size: 32px"
+        ></i
+        >{{ project }}</a
+      >
+    </div>
+    <div class="account">
+      <i nz-icon nzType="user" nzTheme="outline" style="margin-right: 6px;"></i
+      >{{ name }}
+    </div>
+  </header>
+  <nz-layout style="display: flex">
+    <nz-sider
+      [nzWidth]="230"
+      [nzCollapsedWidth]="80"
+      nzCollapsible
+      [nzTheme]="'light'"
+      [(nzCollapsed)]="isCollapsed"
+      [nzTrigger]="triggerTemplate"
+    >
+      <div class="logo">
+        <i
+          class="trigger"
+          nz-icon
+          [type]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          (click)="isCollapsed = !isCollapsed"
+        ></i>
+      </div>
+      <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
+        <ng-container *ngFor="let menu of menus">
+          <li nz-submenu *ngIf="menu.children">
+            <span title
+              ><i nz-icon [type]="menu.icon"></i
+              ><span class="nav-text">{{ menu.name }}</span></span
+            >
+            <ul>
+              <li
+                *ngFor="let m of menu.children"
+                nz-menu-item
+                [routerLink]="[menu.url]"
+                routerLinkActive="active"
+              >
+                {{ m.name }}
+              </li>
+            </ul>
+          </li>
+          <li
+            nz-menu-item
+            *ngIf="!menu.children"
+            [routerLink]="[menu.url]"
+            routerLinkActive="active"
+          >
+            <span
+              ><i nz-icon [type]="menu.icon"></i
+              ><span class="nav-text">{{ menu.name }}</span></span
+            >
+          </li>
+        </ng-container>
+      </ul>
+    </nz-sider>
+    <div style="flex:1">
+      <router-outlet></router-outlet>
+    </div>
+  </nz-layout>
 </div>

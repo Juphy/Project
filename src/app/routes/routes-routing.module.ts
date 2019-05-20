@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule, PreloadAllModules } from "@angular/router";
 import { LayoutComponent } from "@layout/layout.component";
 import { environment } from "@env/environment";
-import { MainComponent } from './main/main.component';
+import { MainComponent } from "./main/main.component";
 const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" },
   { path: "login", loadChildren: "./login/login.module#LoginModule" },
@@ -10,9 +10,9 @@ const routes: Routes = [
     path: "console",
     component: LayoutComponent,
     children: [
-      { path: "", redirectTo: "main", pathMatch: "full" },
-      { path: "main", component: MainComponent }
-      // {path: '**', component: PageNotFoundComponent}
+      { path: "main", component: MainComponent },
+      { path: "news", loadChildren: "./news/news.module#NewsModule" },
+      { path: "system", loadChildren: "./system/system.module#SystemModule" }
     ]
   }
 ];
