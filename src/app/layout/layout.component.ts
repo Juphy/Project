@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component, OnInit } from "@angular/core";
+import { Location } from "@angular/common";
+import { userinfo } from "@core/store";
 @Component({
-  selector: 'app-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss']
+  selector: "app-layout",
+  templateUrl: "./layout.component.html",
+  styleUrls: ["./layout.component.scss"]
 })
 export class LayoutComponent implements OnInit {
-  constructor(private location: Location) { }
+  name='';
+  Permission=[];
+  constructor(private location: Location) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
+
   activate(e) {
     console.log(e);
   }

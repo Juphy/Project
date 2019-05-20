@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="top">
+        <div class="title">{{title}}</div>
+        <div class="desc">{{description}}</div>
+    </div>
+    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submit_form()">
+        <nz-form-item>
+            <nz-form-control>
+                <nz-input-group nzSize="large" nzPrefixIcon="user">
+                    <input type="text" nz-input formControlName="account" placeholder="账号" />
+                </nz-input-group>
+                <nz-form-explain *ngIf="validateForm.get('account')?.dirty && validateForm.get('account')?.errors">请输入你的账号！
+                </nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control>
+                <nz-input-group nzSize="large" nzPrefixIcon="lock">
+                    <input type="password" nz-input formControlName="password" placeholder="密码" />
+                </nz-input-group>
+                <nz-form-explain *ngIf="validateForm.get('password')?.dirty && validateForm.get('password')?.errors">请输入你的密码！
+                </nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control>
+                <label nz-checkbox formControlName="remember">
+                    <span>记住我</span>
+                  </label>
+                <a class="login-form-forgot" class="login-form-forgot">Forgot password</a>
+                <button nzSize="large" nz-button class="login-form-button" [nzType]="'primary'">登 录</button>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+    <ng-template #prefixUser><i nz-icon type="user"></i></ng-template>
+    <ng-template #prefixLock><i nz-icon type="lock"></i></ng-template>
+</div>
