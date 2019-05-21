@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "allowJs": true,
     "baseUrl": "./src",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
@@ -11,41 +12,18 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2018", "dom"],
     "paths": {
-      "@shared": [
-        "app/shared"
-      ],
-      "@shared/*": [
-        "app/shared/*"
-      ],
-      "@core": [
-        "app/core"
-      ],
-      "@core/*": [
-        "app/core/*"
-      ],
-      "@routes": [
-        "app/routes"
-      ],
-      "@routes/*": [
-        "app/routes/*"
-      ],
-      "@layout": [
-        "app/layout"
-      ],
-      "@layout/*": [
-        "app/layout/*"
-      ],
-      "@env/*": [
-        "environments/*"
-      ]
+      "@shared": ["app/shared"],
+      "@shared/*": ["app/shared/*"],
+      "@core": ["app/core"],
+      "@core/*": ["app/core/*"],
+      "@routes": ["app/routes"],
+      "@routes/*": ["app/routes/*"],
+      "@layout": ["app/layout"],
+      "@layout/*": ["app/layout/*"],
+      "@env/*": ["environments/*"]
     }
   }
 }

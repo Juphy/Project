@@ -1,8 +1,7 @@
 <div class="layout">
-  <header>
-    <div class="project">
-      <a href="/"
-        ><i
+    <header>
+        <div class="project">
+            <a href="/"><i
           nz-icon
           [nzType]="'home'"
           style="margin-right: 12px;font-size: 32px"
@@ -42,30 +41,21 @@
             <ul>
               <li
                 *ngFor="let m of menu.children"
-                nz-menu-item
-                [routerLink]="[menu.url]"
-                routerLinkActive="active"
-              >
-                {{ m.name }}
-              </li>
+                nz-menu-item>
+              <a [routerLink]="[m.url]"
+                routerLinkActive="active">{{ m.name }}</a>
+            </li>
             </ul>
-          </li>
-          <li
-            nz-menu-item
-            *ngIf="!menu.children"
-            [routerLink]="[menu.url]"
-            routerLinkActive="active"
-          >
-            <span
-              ><i nz-icon [type]="menu.icon"></i
-              ><span class="nav-text">{{ menu.name }}</span></span
-            >
-          </li>
-        </ng-container>
-      </ul>
-    </nz-sider>
-    <div style="flex:1">
-      <router-outlet></router-outlet>
-    </div>
-  </nz-layout>
-</div>
+            </li>
+            <li nz-menu-item *ngIf="!menu.children">
+                <a [routerLink]="[menu.url]" routerLinkActive="active"><i nz-icon [type]="menu.icon"></i
+              ><span class="nav-text">{{ menu.name }}</span></a>
+            </li>
+            </ng-container>
+            </ul>
+            </nz-sider>
+            <div style="flex:1">
+                <router-outlet></router-outlet>
+            </div>
+            </nz-layout>
+        </div>

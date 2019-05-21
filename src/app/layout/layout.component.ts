@@ -11,7 +11,7 @@ export class LayoutComponent implements OnInit {
   project = "";
   Permission = [];
   menus = [];
-
+  path: any = "";
   isCollapsed = false;
   triggerTemplate: TemplateRef<void> | null = null;
   @ViewChild("trigger") customTrigger: TemplateRef<void>;
@@ -52,12 +52,32 @@ export class LayoutComponent implements OnInit {
       }
     });
     console.log(this.menus);
+    if (!this.menus.length) {
+      this.menus = [
+        { url: "/console/news", name: "测试1", icon: "team" },
+        { url: "/console/cash", name: "测试1", icon: "team" },
+        { url: "/console/pay", name: "测试1", icon: "team" },
+        { url: "/console/role", name: "测试1", icon: "team" },
+        {
+          url: "/console/system",
+          name: "测试1",
+          icon: "table",
+          children: [
+            { url: "/console/system/a", name: "测试1" },
+            { url: "/console/system/b", name: "测试1" },
+            { url: "/console/system/c", name: "测试1" },
+            { url: "/console/system/d", name: "测试1" }
+          ]
+        }
+      ];
+    }
   }
 
   ngOnInit() {}
 
   activate(e) {
-    console.log(e);
+    this.path = this.location.path();
+    console.log(this.path);
   }
 
   changeTrigger(): void {

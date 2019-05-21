@@ -1,0 +1,16 @@
+div[nz-row] {
+    div[nz-col] {
+        display: flex;
+        margin-bottom: 16px;
+        label {
+            font-size: 16px;
+            line-height: 32px;
+        }
+        input,
+        textarea,
+        nz-select,
+        #editorElem {
+            flex: 1;
+        }
+    }
+}

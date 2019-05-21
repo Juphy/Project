@@ -13,7 +13,9 @@ import {
   IdcardOutline,
   TableOutline,
   SettingOutline,
-  MenuUnfoldOutline
+  MenuUnfoldOutline,
+  SearchOutline,
+  ReloadOutline
 } from "@ant-design/icons-angular/icons";
 
 export const ICONS = [
@@ -30,5 +32,7 @@ export const ICONS = [
   IdcardOutline,
   TableOutline,
   SettingOutline,
-  MenuUnfoldOutline
+  MenuUnfoldOutline,
+  SearchOutline,
+  ReloadOutline
 ];

@@ -1,0 +1,24 @@
+<div nz-row>
+    <div nz-col>
+        <label>文章标题：</label>
+        <input type="text" nz-input [(ngModel)]="title">
+    </div>
+    <div nz-col>
+        <label>文章分类：</label>
+        <nz-select [(ngModel)]="option" [nzAllowClear]="true" nzPlaceHolder="选择文章分类">
+            <nz-option *ngFor="let o of options" [nzLabel]="o.c_name" [nzValue]="o.c_id"></nz-option>
+        </nz-select>
+    </div>
+    <div nz-col>
+        <label>文章描述：</label>
+        <textarea rows="4" nz-input [(ngModel)]="description"></textarea>
+    </div>
+    <div nz-col>
+        <label>文章内容：</label>
+        <div id="editorElem" style="text-align: left"></div>
+    </div>
+    <div nz-col style="padding-left: 80px">
+        <button nz-button (click)="done()" nzType="primary" [nzLoading]="loading">完成</button>
+        <button class="ant-left-large" nz-button (click)="cancel()">取消</button>
+    </div>
+</div>

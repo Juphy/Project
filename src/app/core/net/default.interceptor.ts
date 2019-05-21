@@ -55,16 +55,16 @@ export class DefaultInterceptor implements HttpInterceptor {
         }
         break;
       case 400: // 客服端错误
-        this.msg.warning(event["error"]["error"]);
+        this.msg.warning(event["error"]["message"]);
         break;
       case 401:
-        this.msg.warning(event["error"].msg);
+        this.msg.warning(event["error"]["message"]);
         break;
       case 403:
-        this.msg.error(event["error"]["error"]);
+        this.msg.error(event["error"]["message"]);
         break;
       case 500: //服务端错误
-        this.msg.error(event["error"]["error"]);
+        this.msg.error(event["error"]["message"]);
         break;
     }
     return of(event);
@@ -78,10 +78,14 @@ export class DefaultInterceptor implements HttpInterceptor {
     if (req.url !== "api/manager_login") {
       req = req.clone({
         url: url,
-        setHeaders: { Authorization: "Bearer " + DATA["token"] }
+        setHeaders: {
+          Authorization: "Bearer " + DATA["TOKEN"]
+        }
       });
     } else {
-      req = req.clone({ url });
+      req = req.clone({
+        url
+      });
     }
     return next.handle(req).pipe(
       mergeMap((event: any) => {
