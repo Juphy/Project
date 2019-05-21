@@ -51,8 +51,18 @@ export class NewsComponent implements OnInit {
   }
 
   get_data() {
+    let params = {
+      page: this.page,
+      pagesize: this.pagesize
+    };
+    if (this.c_id) {
+      params["c_id"] = this.c_id;
+    }
+    if (this.title) {
+      params["title"] = this.title;
+    }
     this.loading = true;
-    this.http.post("api/news/lists", {}).subscribe(
+    this.http.post("api/news/lists", params).subscribe(
       res => {
         this.loading = false;
         if (res["status"] === 200) {
@@ -72,6 +82,12 @@ export class NewsComponent implements OnInit {
       this.page = 1;
     }
     this.get_data();
+  }
+
+  clear_data() {
+    this.title = "";
+    this.c_id = null;
+    this.search_data(true);
   }
 
   show_modal(flag?: boolean, data?: any) {

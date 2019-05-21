@@ -23,7 +23,9 @@
       "@routes/*": ["app/routes/*"],
       "@layout": ["app/layout"],
       "@layout/*": ["app/layout/*"],
-      "@env/*": ["environments/*"]
+      "@env/*": ["environments/*"],
+      "@assets": ["assets"],
+      "@assets/*": ["assets/*"]
     }
   }
 }

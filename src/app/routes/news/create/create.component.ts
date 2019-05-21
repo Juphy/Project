@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, Input } from "@angular/core";
 import * as wangEditor from "wangeditor";
 import { HttpClient } from "@angular/common/http";
 import { NzModalRef, NzMessageService } from "ng-zorro-antd";
+import { siteinfo } from "@core/store";
 
 @Component({
   selector: "app-create",
@@ -34,16 +35,29 @@ export class CreateComponent implements OnInit {
     this.options.forEach(item => {
       this.optionObj[item.c_id] = item["c_name"];
     });
-    this.title = this.data["title"];
-    this.description = this.data["description"];
-    this.content = this.data["content"];
-    this.option = this.data["c_id"];
+    if (this.data) {
+      this.title = this.data["title"];
+      this.description = this.data["description"];
+      this.content = this.data["content"];
+      this.option = this.data["c_id"];
+    }
   }
 
   ngAfterViewInit(): void {
     let editorDom = this.el.nativeElement.querySelector("#editorElem");
     this.editor = new wangEditor(editorDom);
-    this.editor.customConfig.uploadImgServer = "/upload";
+    this.editor.customConfig.uploadImgServer = siteinfo.api+'/api/upload_file';
+    this.editor.customConfig.uploadFileName = "photo";
+    this.editor.customConfig.uploadImgHooks = {
+      success: (xhr, editor, result) => {
+        console.log(result);
+      },
+      customInsert: (insertImg, result, editor) => {
+        console.log(result);
+        let path = result["data"];
+        insertImg(siteinfo.api + "/" + path);
+      }
+    };
     this.editor.create();
     this.editor.txt.html(this.content);
   }

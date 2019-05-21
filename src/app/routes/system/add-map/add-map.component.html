@@ -1,0 +1,20 @@
+<input
+  type="file"
+  name="image"
+  accept="image/*"
+  (change)="get_change($event)"
+/>
+<!-- <nz-upload nzType="drag" [nzMultiple]="true" (nzChange)="get_change($event)">
+  <p class="ant-upload-drag-icon">
+    <i nz-icon nzType="inbox"></i>
+  </p>
+  <p class="ant-upload-text">Click or drag file to this area to upload</p>
+</nz-upload> -->
+
+
+<div nz-row *ngIf="imgSrc">
+  <div nz-col></div>
+  <div nz-col>
+    <img id="image" />
+  </div>
+</div>
