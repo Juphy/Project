@@ -59,6 +59,15 @@ export class LoginComponent implements OnInit {
           userinfo["roles"] = user_info["roles"];
           userinfo["permission"] = data["permission_list"];
           userinfo["info"] = user_info;
+          // localStorage存储信息
+          localStorage.setItem("token", data["token"]);
+          localStorage.setItem("name", user_info["name"]);
+          localStorage.setItem("id", user_info["id"]);
+          localStorage.setItem("roles", JSON.stringify(user_info["roles"]));
+          localStorage.setItem(
+            "permission",
+            JSON.stringify(data["permission_list"])
+          );
           this.router.navigate(["console/news"]);
         }
       });

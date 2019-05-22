@@ -64,6 +64,10 @@ export class DefaultInterceptor implements HttpInterceptor {
         this.msg.error(event["error"]["message"]);
         break;
       case 500: //服务端错误
+        let message = event["error"]["message"];
+        if (message.includes("Token has expired")) {
+          this.goTo(siteinfo.site + "/login");
+        }
         this.msg.error(event["error"]["message"]);
         break;
     }

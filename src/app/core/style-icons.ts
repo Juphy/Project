@@ -16,7 +16,16 @@ import {
   MenuUnfoldOutline,
   SearchOutline,
   ReloadOutline,
-  InboxOutline
+  InboxOutline,
+  FolderOpenOutline,
+  RedoOutline,
+  UndoOutline,
+  SyncOutline,
+  ArrowDownOutline,
+  ArrowLeftOutline,
+  ArrowRightOutline,
+  ArrowUpOutline,
+  CloudUploadOutline
 } from "@ant-design/icons-angular/icons";
 
 export const ICONS = [
@@ -36,5 +45,14 @@ export const ICONS = [
   MenuUnfoldOutline,
   SearchOutline,
   ReloadOutline,
-  InboxOutline
+  InboxOutline,
+  FolderOpenOutline,
+  RedoOutline,
+  UndoOutline,
+  SyncOutline,
+  ArrowDownOutline,
+  ArrowLeftOutline,
+  ArrowRightOutline,
+  ArrowUpOutline,
+  CloudUploadOutline
 ];

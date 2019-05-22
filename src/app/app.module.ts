@@ -69,8 +69,8 @@ const INTERCEPTOR_PROVIDES = [
     })
   ],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
-    // { provide: LocationStrategy, useClass: PathLocationStrategy },  // 使用Html5路由
+    // { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: LocationStrategy, useClass: PathLocationStrategy }, // 使用Html5路由
     { provide: RouteReuseStrategy, useClass: AppRoutingCache }, // 实现路由缓存
     ...LANG_PROVIDES,
     ...INTERCEPTOR_PROVIDES,

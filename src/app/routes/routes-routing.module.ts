@@ -12,7 +12,8 @@ const routes: Routes = [
     children: [
       { path: "main", component: MainComponent },
       { path: "news", loadChildren: "./news/news.module#NewsModule" },
-      { path: "system", loadChildren: "./system/system.module#SystemModule" }
+      { path: "system", loadChildren: "./system/system.module#SystemModule" },
+      { path: "user", loadChildren: "./user/user.module#UserModule" }
     ]
   }
 ];

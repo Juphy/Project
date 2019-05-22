@@ -30,13 +30,13 @@ export class MapComponent implements OnInit {
       pagesize: this.pagesize
     };
     this.loading = true;
-    this.http.post("api/news/lists", params).subscribe(
+    this.http.post("api/manager/carousel_map_list", params).subscribe(
       res => {
         this.loading = false;
         if (res["status"] === 200) {
           let data = res["data"];
-          this.data = data["data"];
-          this.total = data["total"];
+          this.data = data["data"] || [];
+          this.total = data["total"] || 0;
         }
       },
       error => {
@@ -56,16 +56,33 @@ export class MapComponent implements OnInit {
     this.search_data(true);
   }
 
-  show_modal() {
-    let modal = this.modalService.create({
-      nzTitle: "添加图片",
-      nzContent: AddMapComponent,
-      nzFooter: null,
-      nzMaskClosable: false,
-      nzClosable: true,
-      nzWidth: 1000
-    });
-
+  show_modal(flag?: boolean, data?: any) {
+    let modal;
+    if (flag) {
+      modal = this.modalService.create({
+        nzTitle: "编辑图片",
+        nzContent: AddMapComponent,
+        nzComponentParams: {
+          title: data.title,
+          image_name: data.image_name,
+          link: data.link,
+          id: data.id
+        },
+        nzFooter: null,
+        nzMaskClosable: false,
+        nzClosable: true,
+        nzWidth: 1000
+      });
+    } else {
+      modal = this.modalService.create({
+        nzTitle: "添加图片",
+        nzContent: AddMapComponent,
+        nzFooter: null,
+        nzMaskClosable: false,
+        nzClosable: true,
+        nzWidth: 1000
+      });
+    }
     modal.afterClose.subscribe(res => {
       if (res) {
         this.search_data();

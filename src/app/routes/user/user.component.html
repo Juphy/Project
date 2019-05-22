@@ -1,0 +1,75 @@
+<nz-card nzTitle="用户列表" [nzExtra]="extraTemplate">
+    <div class="search">
+        <div class="query">
+            <b>查询条件</b>
+        </div>
+        <div nz-row>
+            <div nz-col [nzSpan]="6">
+                <label style="width: 64px">标题：</label>
+                <input type="text" nz-input [(ngModel)]="title" />
+            </div>
+            <div nz-col [nzSpan]="6">
+                <label style="width: 64px">分类：</label>
+                <nz-select [(ngModel)]="c_id" nzAllowClear="true">
+                    <nz-option *ngFor="let o of options" [nzLabel]="o.c_name" [nzValue]="o.c_id"></nz-option>
+                </nz-select>
+            </div>
+            <button nz-button nzType="primary" class="ant-left-xxl" (click)="search_data(true)">
+        <i nz-icon nzType="search" nzTheme="outline"></i>搜索
+      </button>
+            <button nz-button class="ant-left-large" (click)="clear_data()">
+        <i nz-icon nzType="reload" nzTheme="outline"></i>清空
+      </button>
+        </div>
+    </div>
+    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="false" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" [nzPageSizeOptions]="pagesizeAry" (nzPageIndexChange)="search_data()"
+        (nzPageSizeChange)="search_data(true)">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>姓名</th>
+                <th>地址</th>
+                <th>创建时间</th>
+                <th>创建人</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of table.data">
+                <td>{{ data.id_card }}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.address }}</td>
+                <td>{{ data.created_at }}</td>
+                <td>{{ data.creator_id }}</td>
+                <td>{{ data.invalid ? "已删除" : status[data["status"]] }}</td>
+                <td>
+                    <button class="ant-right" *ngIf="fn['activate_member']" nz-button (click)="activate_member(data.id)">激活用户</button>
+                    <button class="ant-right" *ngIf="fn['delete_user']" nz-button nzType="danger" nz-popconfirm nzTitle="你确定要删除这个用户吗？" (nzOnConfirm)="delete_user(data.id)" (nzOnCancel)="cancel()" nzPlacement="top">删除</button>
+                    <button class="ant-right" *ngIf="fn['reset_password']" nz-button (click)="reset_password(data.id)">重置密码</button>
+                    <button class="ant-right" *ngIf="fn['change_user_status']&&data.status===0" nz-button (click)="change_status(data.id, 1)">恢复用户</button>
+                    <button class="ant-right" *ngIf="fn['change_user_status']&&data.status===1" nz-button (click)="change_status(data.id, 0)">禁用用户</button>
+                    <button class="ant-right" *ngIf="fn['change_balance']" nz-button (click)="show_balance_gold(data.id, 1)">修改余额</button>
+                    <button class="ant-right" *ngIf="fn['change_mutual_gold']" nz-button (click)="show_balance_gold(data.id, 2)">修改互助金</button>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</nz-card>
+<ng-template #totalTemplate> 总计 {{ total }} 条 </ng-template>
+
+<ng-template #extraTemplate>
+    <button nz-button (click)="show_modal()" nzType="primary">
+    <span>添加用户</span>
+  </button>
+</ng-template>
+<nz-modal [(nzVisible)]="visible" [nzTitle]="type===1?'修改余额': (type===2? '修改互助金':'')" (nzOnCancel)="cancel()" (nzOnOk)="make_sure()" nzOkText="确认" nzCancelText="关闭" [nzMaskClosable]="false" [nzOkLoading]="visibleLoading">
+    <div nz-row *ngIf="type===1">
+        <label>余额：</label>
+        <nz-input-number [(ngModel)]="balance" [nzMin]="0" [nzStep]="1"></nz-input-number>
+    </div>
+    <div nz-row *ngIf="type===2">
+        <label>互助金：</label>
+        <nz-input-number [(ngModel)]="gold" [nzMin]="0" [nzStep]="1"></nz-input-number>
+    </div>
+</nz-modal>
