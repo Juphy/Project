@@ -122,7 +122,7 @@ export class UserComponent implements OnInit {
     });
   }
 
-  change_balance_gold(user_id, type, num) {
+  show_balance_gold(user_id, type, num) {
     this.user_id = user_id;
     this.type = type;
     switch (this.type) {

@@ -19,10 +19,9 @@ export class AddUserComponent implements OnInit {
     this.validateForm = this.fb.group({
       id_card: ["", [Validators.required]],
       name: ["", [Validators.required]],
-      birthday: ["", [Validators.required]],
+      birthday: [null, [Validators.required]],
       address: ["", [Validators.required]],
-      password: ["", [Validators.required]],
-      parent_snum: ["", [Validators.required]]
+      password: [123456, [Validators.required]]
     });
   }
 
@@ -46,42 +45,51 @@ export class AddUserComponent implements OnInit {
     return this.validateForm.controls.password;
   }
 
-  get parent_snum() {
-    return this.validateForm.controls.parent_snum;
-  }
-
   ngOnInit() {}
 
   handle_birth(e) {
-    console.log(e);
+    if (this.birthday.value) return;
+    if (e.length >= 18) {
+      e = e.slice(6, 14);
+      let date = e.slice(0, 4) + "-" + e.slice(4, 6) + "-" + e.slice(6, 8);
+      this.birthday.setValue(new Date(date));
+    }
   }
 
-  done() {
+  submit_form() {
     for (let i in this.validateForm.controls) {
       let control = this.validateForm.controls[i];
       control.markAsDirty();
       control.updateValueAndValidity();
     }
-    if(this.id_card.invalid || this.name.invalid || this.birthday.invalid || this.address.invalid || this.password.invalid || this.parent_snum.invalid)return;
+    if (
+      this.id_card.invalid ||
+      this.name.invalid ||
+      this.birthday.invalid ||
+      this.address.invalid ||
+      this.password.invalid
+    )
+      return;
     this.loading = true;
-    this.http.post("api/manager/add_user", {
-      id_card: this.id_card.value,
-      name: this.name.value,
-      birthday: this.birthday.value,
-      address: this.address.value,
-      password: this.password.value,
-      parent_snum: this.parent_snum.value
-    }).subscribe(res =>{
-      console.log(res);
-      this.loading = false;
-      if(res['status']===200){
-        this.nzMessageService.success('用户添加成功！');
-        this.nzModalRef.destroy(true);
-      }
-    });
+    this.http
+      .post("api/manager/add_user", {
+        id_card: this.id_card.value,
+        name: this.name.value,
+        birthday: this.birthday.value,
+        address: this.address.value,
+        password: this.password.value
+      })
+      .subscribe(res => {
+        console.log(res);
+        this.loading = false;
+        if (res["status"] === 200) {
+          this.nzMessageService.success("用户添加成功！");
+          this.nzModalRef.destroy(true);
+        }
+      });
   }
 
-  cancel(){
+  cancel() {
     this.nzModalRef.destroy(false);
   }
 }

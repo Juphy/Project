@@ -86,4 +86,6 @@ export class CashComponent implements OnInit {
         }
       });
   }
+
+  cancel() {}
 }

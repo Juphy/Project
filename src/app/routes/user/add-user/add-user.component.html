@@ -18,7 +18,7 @@
     <nz-form-item>
         <nz-form-label [nzSpan]="6" nzRequired>生日</nz-form-label>
         <nz-form-control [nzSpan]="12">
-            <nz-date-picker formControlName="birthday"></nz-date-picker>
+            <nz-date-picker formControlName="birthday" placeholder="生日"></nz-date-picker>
             <nz-form-explain *ngIf="validateForm.get('birthday')?.dirty && validateForm.get('birthday')?.errors">请输入你的生日！
             </nz-form-explain>
         </nz-form-control>
@@ -36,14 +36,6 @@
         <nz-form-control [nzSpan]="12">
             <input type="text" nz-input formControlName="password" placeholder="密码" />
             <nz-form-explain *ngIf="validateForm.get('password')?.dirty && validateForm.get('password')?.errors">请输入你的密码！
-            </nz-form-explain>
-        </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzRequired>母鸡</nz-form-label>
-        <nz-form-control [nzSpan]="12">
-            <input type="text" nz-input formControlName="parent_snum" placeholder="母鸡" />
-            <nz-form-explain *ngIf="validateForm.get('parent_snum')?.dirty && validateForm.get('parent_snum')?.errors">请输入你的母鸡！
             </nz-form-explain>
         </nz-form-control>
     </nz-form-item>

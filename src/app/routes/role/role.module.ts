@@ -6,7 +6,7 @@ import { AddRoleComponent } from "./add-role/add-role.component";
 const routes: Routes = [{ path: "", component: RoleComponent }];
 @NgModule({
   imports: [SharedModule, RouterModule.forChild(routes)],
-  declarations: [RoleComponent],
+  declarations: [RoleComponent, AddRoleComponent],
   entryComponents: [AddRoleComponent]
 })
 export class RoleModule {}

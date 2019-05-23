@@ -49,7 +49,7 @@
                 <td>{{ data.creator_id }}</td>
                 <td>{{ data.invalid ? "已删除" : status[data["status"]] }}</td>
                 <td>
-                    <button class="ant-right" *ngIf="fn['activate_member']&&data.disable===0" nz-button nz-popconfirm nzTitle="你确定要删除这个用户吗？" (nzOnConfirm)="activate_member(data.id)" (nzOnCancel)="cancel()" nzPlacement="top">激活</button>
+                    <button class="ant-right" *ngIf="fn['activate_member']&&data.disable===0" nz-button nz-popconfirm nzTitle="你确定要激活这个用户吗？" (nzOnConfirm)="activate_member(data.id)" (nzOnCancel)="cancel()" nzPlacement="top">激活</button>
                     <button class="ant-right" *ngIf="fn['delete_user']" nz-button nzType="danger" nz-popconfirm nzTitle="你确定要删除这个用户吗？" (nzOnConfirm)="delete_user(data.id)" (nzOnCancel)="cancel()" nzPlacement="top">删除</button>
                     <button class="ant-right" *ngIf="fn['reset_password']" nz-button (click)="reset_password(data.id)">重置密码</button>
                     <button class="ant-right" *ngIf="fn['change_user_status']&&data.status===0" nz-button (click)="change_status(data.id, 1)">恢复</button>

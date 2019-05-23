@@ -15,7 +15,8 @@ const routes: Routes = [
       { path: "system", loadChildren: "./system/system.module#SystemModule" },
       { path: "user", loadChildren: "./user/user.module#UserModule" },
       { path: "cash", loadChildren: "./cash/cash.module#CashModule" },
-      { path: 'role', loadChildren: './role/role.module#RoleModule' }
+      { path: 'role', loadChildren: './role/role.module#RoleModule' },
+      { path: 'manager', loadChildren: './manager/manager.module#ManagerModule' }
     ]
   }
 ];
