@@ -26,11 +26,16 @@
         (nzPageSizeChange)="search_data(true)">
         <thead>
             <tr>
-                <th>id</th>
+                <th>编号</th>
+                <th>身份证号</th>
                 <th>姓名</th>
+                <th>性别</th>
+                <th>电话</th>
                 <th>地址</th>
+                <th>等级</th>
+                <th>余额</th>
+                <th>互助金</th>
                 <th>创建时间</th>
-                <th>创建人</th>
                 <th>状态</th>
                 <th>操作</th>
             </tr>
@@ -44,13 +49,15 @@
                 <td>{{ data.creator_id }}</td>
                 <td>{{ data.invalid ? "已删除" : status[data["status"]] }}</td>
                 <td>
-                    <button class="ant-right" *ngIf="fn['activate_member']" nz-button (click)="activate_member(data.id)">激活用户</button>
+                    <button class="ant-right" *ngIf="fn['activate_member']&&data.disable===0" nz-button nz-popconfirm nzTitle="你确定要删除这个用户吗？" (nzOnConfirm)="activate_member(data.id)" (nzOnCancel)="cancel()" nzPlacement="top">激活</button>
                     <button class="ant-right" *ngIf="fn['delete_user']" nz-button nzType="danger" nz-popconfirm nzTitle="你确定要删除这个用户吗？" (nzOnConfirm)="delete_user(data.id)" (nzOnCancel)="cancel()" nzPlacement="top">删除</button>
                     <button class="ant-right" *ngIf="fn['reset_password']" nz-button (click)="reset_password(data.id)">重置密码</button>
-                    <button class="ant-right" *ngIf="fn['change_user_status']&&data.status===0" nz-button (click)="change_status(data.id, 1)">恢复用户</button>
-                    <button class="ant-right" *ngIf="fn['change_user_status']&&data.status===1" nz-button (click)="change_status(data.id, 0)">禁用用户</button>
-                    <button class="ant-right" *ngIf="fn['change_balance']" nz-button (click)="show_balance_gold(data.id, 1)">修改余额</button>
-                    <button class="ant-right" *ngIf="fn['change_mutual_gold']" nz-button (click)="show_balance_gold(data.id, 2)">修改互助金</button>
+                    <button class="ant-right" *ngIf="fn['change_user_status']&&data.status===0" nz-button (click)="change_status(data.id, 1)">恢复</button>
+                    <button class="ant-right" *ngIf="fn['change_user_status']&&data.status===1" nz-button (click)="change_status(data.id, 0)">禁用</button>
+                    <button class="ant-right" *ngIf="fn['change_balance']" nz-button (click)="show_balance_gold(data.id, 1, data.balance)">修改余额</button>
+                    <button class="ant-right" *ngIf="fn['change_mutual_gold']" nz-button (click)="show_balance_gold(data.id, 2, data.mutual_gold)">修改互助金</button>
+                    <button class="ant-right" *ngIf="fn['user_parent_list']" nz-button (click)="user_parent_list(data.id)">查看父级</button>
+                    <button *ngIf='fn["user_child_list"]' nz-button (click)="user_child_list(data.id)">查看子级</button>
                 </td>
             </tr>
         </tbody>
@@ -59,7 +66,7 @@
 <ng-template #totalTemplate> 总计 {{ total }} 条 </ng-template>
 
 <ng-template #extraTemplate>
-    <button nz-button (click)="show_modal()" nzType="primary">
+    <button *ngIf="fn['add_user']" nz-button (click)="show_modal()" nzType="primary">
     <span>添加用户</span>
   </button>
 </ng-template>

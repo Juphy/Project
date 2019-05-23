@@ -1,7 +1,7 @@
 export let siteinfo = {
   site: "",
   api: "http://chengcheng.wenquanpage.com",
-  ucs: ""
+  ucs: "http://chengcheng.wenquanpage.com/storage/"
 };
 export let userinfo = { name: "", id: "", roles: [], info: {}, permission: [] };
 export let app = "后台管理系统";

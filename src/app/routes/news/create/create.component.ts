@@ -46,7 +46,8 @@ export class CreateComponent implements OnInit {
   ngAfterViewInit(): void {
     let editorDom = this.el.nativeElement.querySelector("#editorElem");
     this.editor = new wangEditor(editorDom);
-    this.editor.customConfig.uploadImgServer = siteinfo.api+'/api/upload_file';
+    this.editor.customConfig.uploadImgServer =
+      siteinfo.api + "/api/upload_file";
     this.editor.customConfig.uploadFileName = "photo";
     this.editor.customConfig.uploadImgHooks = {
       success: (xhr, editor, result) => {
@@ -55,7 +56,7 @@ export class CreateComponent implements OnInit {
       customInsert: (insertImg, result, editor) => {
         console.log(result);
         let path = result["data"];
-        insertImg(siteinfo.api + "/" + path);
+        insertImg(siteinfo.ucs + path);
       }
     };
     this.editor.create();

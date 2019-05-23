@@ -42,11 +42,11 @@
                 <td>{{ data.description }}</td>
                 <td>{{ data.created_at }}</td>
                 <td>{{ data.creator_id }}</td>
-                <td>{{ data.invalid ? "已删除" : status[data["status"]] }}</td>
+                <td>{{ data.invalid ? "已删除" : statusObj[data["status"]] }}</td>
                 <td>
-                    <button class="ant-right" *ngIf="data.invalid === 0 && data.status === 0" nz-button (click)="show_modal(true, data)"> 编辑</button>
-                    <button class="ant-right" *ngIf="data.invalid === 0" nz-button nzType="danger" nz-popconfirm nzTitle="你确定要删除这篇文章吗？" (nzOnConfirm)="delete_news(data.id)" (nzOnCancel)="cancel()" nzPlacement="top">删除</button>
-                    <button *ngIf="data.invalid === 0 && data.status === 0" nz-button nzType="primary" nz-popconfirm nzTitle="你确定要发布这篇文章吗?" (nzOnConfirm)="release_news(data.id)" (nzOnCancel)="cancel()" nzPlacement="top">
+                    <button class="ant-right" *ngIf="data.invalid === 0&&data.status === 0" nz-button (click)="show_modal(true, data)"> 编辑</button>
+                    <button class="ant-right" *ngIf="data.invalid === 0&&data.status===0" nz-button nzType="danger" nz-popconfirm nzTitle="你确定要删除这篇文章吗？" (nzOnConfirm)="delete_news(data.id)" (nzOnCancel)="cancel()" nzPlacement="top">删除</button>
+                    <button *ngIf="data.invalid===0&&data.status === 0" nz-button nzType="primary" nz-popconfirm nzTitle="你确定要发布这篇文章吗?" (nzOnConfirm)="release_news(data.id)" (nzOnCancel)="cancel()" nzPlacement="top">
             发布
           </button>
                 </td>

@@ -14,6 +14,10 @@ export class MapComponent implements OnInit {
   pagesizeAry = [16, 32, 48];
   loading = false;
   total = 0;
+  statusObj = {
+    0: "未上架",
+    1: "已上架"
+  };
   constructor(
     private modalService: NzModalService,
     private http: HttpClient,
@@ -88,5 +92,16 @@ export class MapComponent implements OnInit {
         this.search_data();
       }
     });
+  }
+
+  change_status(id, status) {
+    this.http
+      .post("api/manager/up_carousel_map", { id, status })
+      .subscribe(res => {
+        if (res["status"] === 200) {
+          this.messageService.success("操作成功");
+          this.get_data();
+        }
+      });
   }
 }

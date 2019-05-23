@@ -17,7 +17,7 @@ export class NewsComponent implements OnInit {
   title;
   c_id;
   options = [];
-  status = {
+  statusObj = {
     0: "未发布",
     1: "已发布"
   };

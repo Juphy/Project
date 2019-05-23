@@ -106,7 +106,7 @@ export class AddMapComponent implements OnInit {
         this.loading = false;
         console.log(res);
         if (res["status"] === 200) {
-          this.link = siteinfo.api + "/" + res["data"];
+          this.link = siteinfo.ucs + res["data"];
         }
       },
       err => {

@@ -13,7 +13,9 @@ const routes: Routes = [
       { path: "main", component: MainComponent },
       { path: "news", loadChildren: "./news/news.module#NewsModule" },
       { path: "system", loadChildren: "./system/system.module#SystemModule" },
-      { path: "user", loadChildren: "./user/user.module#UserModule" }
+      { path: "user", loadChildren: "./user/user.module#UserModule" },
+      { path: "cash", loadChildren: "./cash/cash.module#CashModule" },
+      { path: 'role', loadChildren: './role/role.module#RoleModule' }
     ]
   }
 ];

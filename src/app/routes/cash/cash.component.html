@@ -1,0 +1,50 @@
+<nz-card nzTitle="审核记录列表" [nzExtra]="extraTemplate">
+    <div class="search">
+        <div class="query">
+            <b>查询条件</b>
+        </div>
+        <div nz-row>
+            <div nz-col [nzSpan]="6">
+                <label style="width: 64px">姓名：</label>
+                <input type="text" nz-input [(ngModel)]="user_name" />
+            </div>
+            <div nz-col [nzSpan]="6">
+                <label style="width: 64px">起止日期：</label>
+                <nz-range-picker [nzFormat]="date"></nz-range-picker>
+                </nz-select>
+            </div>
+            <button nz-button nzType="primary" class="ant-left-xxl" (click)="search_data(true)">
+        <i nz-icon nzType="search" nzTheme="outline"></i>搜索
+      </button>
+            <button nz-button class="ant-left-large" (click)="clear_data()">
+        <i nz-icon nzType="reload" nzTheme="outline"></i>清空
+      </button>
+        </div>
+    </div>
+    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="false" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" [nzPageSizeOptions]="pagesizeAry" (nzPageIndexChange)="search_data()"
+        (nzPageSizeChange)="search_data(true)">
+        <thead>
+            <tr>
+                <th>用户id</th>
+                <th>金额</th>
+                <th>银行卡号</th>
+                <th>申请时间</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of table.data">
+                <td>{{ data.user_id }}</td>
+                <td>{{ data.money }}</td>
+                <td>{{ data.bank_card }}</td>
+                <td>{{ data.created_at }}</td>
+                <td>{{ status[data["status"]] }}</td>
+                <td>
+                    <button nz-button *ngIf="data.status===0" nz-popconfirm nzTitle="你确定要审核通过这个申请吗？" (nzOnConfirm)="check_cash(data.id, 1)" (nzOnCancel)="cancel()" nzPlacement="top"></button>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</nz-card>
+<ng-template #totalTemplate> 总计 {{ total }} 条 </ng-template>

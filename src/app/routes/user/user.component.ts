@@ -122,9 +122,17 @@ export class UserComponent implements OnInit {
     });
   }
 
-  change_balance_gold(user_id, type) {
+  change_balance_gold(user_id, type, num) {
     this.user_id = user_id;
     this.type = type;
+    switch (this.type) {
+      case 1:
+        this.balance = num;
+        break;
+      case 2:
+        this.gold = num;
+        break;
+    }
     this.visible = true;
   }
 
@@ -132,27 +140,43 @@ export class UserComponent implements OnInit {
     this.visibleLoading = true;
     switch (this.type) {
       case 1:
-        this.http.post("api/manager/change_balance", {balance: this.balance, user_id: this.user_id}).subscribe(res =>{
-          this.visibleLoading = false;
-          if(res['status']===200){
-            this.messageService.success('修改成功！');
-            this.visible = false;
-          }
-        }, e =>{
-            this.visibleLoading = false;
-        });  
+        this.http
+          .post("api/manager/change_balance", {
+            balance: this.balance,
+            user_id: this.user_id
+          })
+          .subscribe(
+            res => {
+              this.visibleLoading = false;
+              if (res["status"] === 200) {
+                this.messageService.success("修改成功！");
+                this.visible = false;
+              }
+            },
+            e => {
+              this.visibleLoading = false;
+            }
+          );
         break;
       case 2:
       case 1:
-        this.http.post("api/manager/change_mutual_gold", { mutual_gold: this.gold, user_id: this.user_id }).subscribe(res => {
-          this.visibleLoading = false;
-          if (res['status'] === 200) {
-            this.messageService.success('修改成功！');
-            this.visible = false;
-          }
-        }, e => {
-          this.visibleLoading = false;
-        });  
+        this.http
+          .post("api/manager/change_mutual_gold", {
+            mutual_gold: this.gold,
+            user_id: this.user_id
+          })
+          .subscribe(
+            res => {
+              this.visibleLoading = false;
+              if (res["status"] === 200) {
+                this.messageService.success("修改成功！");
+                this.visible = false;
+              }
+            },
+            e => {
+              this.visibleLoading = false;
+            }
+          );
         break;
     }
   }
@@ -162,7 +186,19 @@ export class UserComponent implements OnInit {
     this.visibleLoading = false;
   }
 
-  user_child_list() {}
+  user_child_list(user_id) {
+    this.http
+      .post("api/manager/user_child_list", { user_id })
+      .subscribe(res => {
+        console.log(res);
+      });
+  }
 
-  user_parent_list() {}
+  user_parent_list(user_id) {
+    this.http
+      .post("api/manager/user_parent_list", { user_id })
+      .subscribe(res => {
+        console.log(res);
+      });
+  }
 }
