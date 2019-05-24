@@ -53,13 +53,23 @@ export class RoleComponent implements OnInit {
     this.get_data();
   }
 
-  show_modal(flag?:boolean,data?:any){
+  show_modal(flag?: boolean, data?: any) {
     let modal;
-    if(flag){
-
-    }else{
+    if (flag) {
       modal = this.modalService.create({
-        nzTitle: '添加角色',
+        nzTitle: "添加角色",
+        nzContent: AddRoleComponent,
+        nzComponentParams: {
+          id: data.id
+        },
+        nzFooter: null,
+        nzMaskClosable: false,
+        nzClosable: true,
+        nzWidth: 1000
+      });
+    } else {
+      modal = this.modalService.create({
+        nzTitle: "添加角色",
         nzContent: AddRoleComponent,
         nzFooter: null,
         nzMaskClosable: false,
@@ -67,10 +77,10 @@ export class RoleComponent implements OnInit {
         nzWidth: 1000
       });
     }
-    modal.afterClose.subscribe(res =>{
-      if(res){
+    modal.afterClose.subscribe(res => {
+      if (res) {
         this.search_data();
       }
-    })
+    });
   }
 }

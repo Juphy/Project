@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
             "permission",
             JSON.stringify(data["permission_list"])
           );
-          this.router.navigate(["console/news"]);
+          this.router.navigate(["console/user"]);
         }
       });
   }

@@ -1,6 +1,8 @@
 .file-btn {
     position: relative;
     overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .file-btn span {
@@ -15,4 +17,16 @@
     opacity: 0;
     -ms-filter: 'alpha(opacity=0)';
     cursor: pointer;
+}
+
+div[nz-row] {
+    div[nz-col] {
+        display: flex;
+        label {
+            line-height: 32px;
+        }
+        input {
+            flex: 1;
+        }
+    }
 }

@@ -1,13 +1,20 @@
+<div class="ant-bottom" nz-row>
+    <div nz-col [nzSpan]="12"><label>标题：</label><input type="text" nz-input [(ngModel)]="title"></div>
+    <div nz-col [nzSpan]="12"><label class="ant-left-xl">图片名称：</label><input type="text" nz-input [(ngModel)]="image_name"></div>
+</div>
+<div class="ant-bottom" nz-row>
+    <div nz-col [nzSpan]="24">
+        <label>图片链接：</label><input type="text" nz-input [(ngModel)]="link">
+    </div>
+</div>
 <div class="ant-bottom">
-    <label>标题：</label><input type="text" nz-input [(ngModel)]="title" style="width: 120px">
-    <label class="ant-left-xl">图片名称：</label><input type="text" nz-input [(ngModel)]="image_name" style="width: 120px">
-    <label class="ant-left-xl">图片链接：</label><input type="text" nz-input [(ngModel)]="link" style="width: 200px">
-    <button class="ant-left-xxl" nz-button nzType="primary" (click)="submit()">提交</button><button class="ant-left" nz-button (click)="cancel()">取消</button>
+    <button nz-button nzType="primary" (click)="submit()">提交</button><button class="ant-left" nz-button (click)="cancel()">取消</button>
+    <div class="file-btn ant-btn ant-btn-default ant-left">
+        <span><i class="ant-right-tiny" nz-icon nzType="folder-open" nzTheme="outline"></i>打开本地图片</span>
+        <input type="file" name="image" accept="image/*" (change)="get_change($event)" />
+    </div>
 </div>
-<div class="file-btn ant-btn ant-btn-default">
-    <span><i  class="ant-right-tiny" nz-icon nzType="folder-open" nzTheme="outline"></i>选择图片</span>
-    <input type="file" name="image" accept="image/*" (change)="get_change($event)" />
-</div>
+
 
 <div class="image-setting ant-top-large ant-bottom-large" *ngIf="imgSrc">
     <div class="ant-bottom">
@@ -41,7 +48,7 @@
         </nz-input-group>
     </div>
     <div class="ant-bottom">
-        <button class="ant-right" [nzLoading]="loading" nz-button (click)="upload_image()"><i  class="ant-right-tiny" nz-icon nzType="cloud-upload" nzTheme="outline"></i>上传所选区域图片</button>
+        <button class="ant-right" [nzLoading]="loading" nz-button (click)="upload_image()"><i  nz-icon nzType="cloud-upload" nzTheme="outline"></i>上传所选区域图片</button>
     </div>
 </div>
 

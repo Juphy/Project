@@ -1,4 +1,4 @@
-<nz-card nzTitle="文章列表" [nzExtra]="extraTemplate">
+<nz-card nzTitle="轮播图列表" [nzExtra]="extraTemplate">
     <div class="search" style="display: none">
         <div class="query">
             <b>查询条件</b>
@@ -14,13 +14,12 @@
       </button>
         </div>
     </div>
-    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="false" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" [nzPageSizeOptions]="pagesizeAry" (nzPageIndexChange)="search_data()"
-        (nzPageSizeChange)="search_data(true)">
-        <thead>
+    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="true" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading">
+    <thead>
             <tr>
                 <th>标题</th>
                 <th>名称</th>
-                <th>图片链接</th>
+                <th nzWidth="250px">图片链接</th>
                 <th>创建时间</th>
                 <th>创建人</th>
                 <th>状态</th>
@@ -37,7 +36,7 @@
                 <td>{{data.invalid?"已删除":statusObj[data.status]}}</td>
                 <td>
                     <button *ngIf="data.status === 0" nz-button (click)="show_modal(true, data)" class="ant-right">编辑</button>
-                    <button *ngIf="status===0" class="ant-right" nz-button nzType="danger" nz-popconfirm nzTitle="你确定要删除这张图片吗？" (nzOnConfirm)="delete_image(data.id)" (nzOnCancel)="cancel()" nzPlacement="top">删除</button>
+                    <button *ngIf="data.status===0" class="ant-right" nz-button nzType="danger" nz-popconfirm nzTitle="你确定要删除这张图片吗？" (nzOnConfirm)="delete_image(data.id)" (nzOnCancel)="cancel()" nzPlacement="top">删除</button>
                     <button *ngIf="data.status===0" class="ant-right" nz-button (click)="change_status(datas.id, 1)">上架</button>
                     <button *ngIf="data.status===1" class="ant-right" nz-button (click)="change_status(datas.id, 0)">下架</button>
                 </td>

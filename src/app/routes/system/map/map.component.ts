@@ -39,8 +39,8 @@ export class MapComponent implements OnInit {
         this.loading = false;
         if (res["status"] === 200) {
           let data = res["data"];
-          this.data = data["data"] || [];
-          this.total = data["total"] || 0;
+          this.data = [...data];
+          this.total = this.data.length;
         }
       },
       error => {
@@ -104,4 +104,6 @@ export class MapComponent implements OnInit {
         }
       });
   }
+
+  cancel(){}
 }

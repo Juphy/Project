@@ -16,7 +16,8 @@ const routes: Routes = [
       { path: "user", loadChildren: "./user/user.module#UserModule" },
       { path: "cash", loadChildren: "./cash/cash.module#CashModule" },
       { path: 'role', loadChildren: './role/role.module#RoleModule' },
-      { path: 'manager', loadChildren: './manager/manager.module#ManagerModule' }
+      { path: 'manager', loadChildren: './manager/manager.module#ManagerModule' },
+      { path: 'batch', loadChildren: './batch/batch.module#BatchModule' }
     ]
   }
 ];

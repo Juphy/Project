@@ -1,3 +1,17 @@
-<p>
-  add-role works!
-</p>
+<div nz-row>
+    <div nz-col class="ant-bottom" [nzSpan]="16" [nzOffset]="4">
+        <label>角色名称：</label>
+        <input type="text" nz-input [(ngModel)]="name">
+    </div>
+    <div nz-col class="ant-bottom" [nzSpan]="16" [nzOffset]="4">
+        <label>角色权限：</label>
+        <ul class="roles">
+            <li class="role" *ngFor="let option of permissionOptions">
+                <label nz-checkbox [(ngModel)]="option.checked">{{option.name}}</label>
+                <div *ngIf="option.checked">
+                    <label *ngFor="let a of " nz-checkbox [(ngModel)]=""></label>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
