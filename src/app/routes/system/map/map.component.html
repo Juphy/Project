@@ -7,38 +7,42 @@
             <div nz-col [nzSpan]="6"></div>
             <div nz-col [nzSpan]="8"></div>
             <button nz-button nzType="primary" class="ant-left-xxl" (click)="search_data(true)">
-        <i nz-icon nzType="search" nzTheme="outline"></i>搜索
-      </button>
+                <i nz-icon nzType="search" nzTheme="outline"></i>搜索
+            </button>
             <button nz-button class="ant-left-large" (click)="clear_data()">
-        <i nz-icon nzType="reload" nzTheme="outline"></i>清空
-      </button>
+                <i nz-icon nzType="reload" nzTheme="outline"></i>清空
+            </button>
         </div>
     </div>
-    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="true" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading">
-    <thead>
+    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page"
+        [nzFrontPagination]="true" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading">
+        <thead>
             <tr>
                 <th>标题</th>
                 <th>名称</th>
-                <th nzWidth="250px">图片链接</th>
-                <th>创建时间</th>
-                <th>创建人</th>
-                <th>状态</th>
-                <th>操作</th>
+                <th nzWidth="300px">图片外链</th>
+                <th nzWidth="200px">创建时间</th>
+                <th nzWidth="96px">状态</th>
+                <th nzWidth="260px">操作</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let data of table.data">
                 <td>{{ data.title }}</td>
                 <td>{{ data.image_name }}</td>
-                <td>{{ data.link }}</td>
+                <td style="word-break: break-all">{{ data.link }}</td>
                 <td>{{ data.created_at }}</td>
-                <td>{{ data.creator_id }}</td>
                 <td>{{data.invalid?"已删除":statusObj[data.status]}}</td>
                 <td>
-                    <button *ngIf="data.status === 0" nz-button (click)="show_modal(true, data)" class="ant-right">编辑</button>
-                    <button *ngIf="data.status===0" class="ant-right" nz-button nzType="danger" nz-popconfirm nzTitle="你确定要删除这张图片吗？" (nzOnConfirm)="delete_image(data.id)" (nzOnCancel)="cancel()" nzPlacement="top">删除</button>
-                    <button *ngIf="data.status===0" class="ant-right" nz-button (click)="change_status(datas.id, 1)">上架</button>
-                    <button *ngIf="data.status===1" class="ant-right" nz-button (click)="change_status(datas.id, 0)">下架</button>
+                    <button *ngIf="data.status === 0" nz-button (click)="show_modal(true, data)"
+                        class="ant-right">编辑</button>
+                    <button *ngIf="data.status===0" class="ant-right" nz-button nzType="danger" nz-popconfirm
+                        nzTitle="你确定要删除这张图片吗？" (nzOnConfirm)="delete_image(data.id)" (nzOnCancel)="cancel()"
+                        nzPlacement="top">删除</button>
+                    <button *ngIf="data.status===0" class="ant-right" nz-button
+                        (click)="change_status(data.id, 1)">上架</button>
+                    <button *ngIf="data.status===1" class="ant-right" nz-button
+                        (click)="change_status(data.id, 0)">下架</button>
                 </td>
             </tr>
         </tbody>
@@ -48,6 +52,6 @@
 
 <ng-template #extraTemplate>
     <button nz-button (click)="show_modal()" nzType="primary">
-    <span>添加轮播图</span>
-  </button>
+        <span>添加轮播图</span>
+    </button>
 </ng-template>

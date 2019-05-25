@@ -5,20 +5,20 @@
         </div>
         <div nz-row>
             <button nz-button nzType="primary" class="ant-left-xxl" (click)="search_data(true)">
-        <i nz-icon nzType="search" nzTheme="outline"></i>搜索
-      </button>
+                <i nz-icon nzType="search" nzTheme="outline"></i>搜索
+            </button>
             <button nz-button class="ant-left-large" (click)="clear_data()">
-        <i nz-icon nzType="reload" nzTheme="outline"></i>清空
-      </button>
+                <i nz-icon nzType="reload" nzTheme="outline"></i>清空
+            </button>
         </div>
     </div>
-    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="false" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" [nzPageSizeOptions]="pagesizeAry" (nzPageIndexChange)="search_data()"
-        (nzPageSizeChange)="search_data(true)">
+    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page"
+        [nzFrontPagination]="true" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading"
+        [nzPageSizeOptions]="pagesizeAry">
         <thead>
             <tr>
                 <th>名称</th>
-                <th>type</th>
-                <th>描述</th>
+                <th nzWidth="360px">权限详情</th>
                 <th>状态</th>
                 <th>创建时间</th>
                 <th>操作</th>
@@ -27,15 +27,17 @@
         <tbody>
             <tr *ngFor="let data of table.data">
                 <td>{{ data.name }}</td>
-                <td>{{ data.type }}</td>
-                <td>{{ data.description }}</td>
-                <td>{{ data.status }}</td>
-                <td>{{ data.created_at }}</td>
+                <td><span *ngFor="let a of data.permissions_name">{{a}}、</span></td>
                 <td>{{ status[data["status"]] }}</td>
+                <td>{{ data.created_at }}</td>
                 <td>
-                    <button nz-button class="ant-right">编辑</button>
-                    <button class="ant-right" *ngIf="data.status===0" nz-button nzType="danger" nz-popconfirm nzTitle="你确定要删除这个角色吗？" (nzOnConfirm)="delete_role(data.id)" (nzOnCancel)="cancel()" nzPlacement="top">删除</button>
-                    <button class="ant-right" *ngIf="data.status===1" nz-button nzType="danger" nz-popconfirm nzTitle="你确定要恢复这个角色吗？" (nzOnConfirm)="restore_role(data.id)" (nzOnCancel)="cancel()" nzPlacement="top">恢复</button>
+                    <button nz-button class="ant-right" (click)="show_modal(data.id)">编辑</button>
+                    <button class="ant-right" *ngIf="data.status===1" nz-button nzType="danger" nz-popconfirm
+                        nzTitle="你确定要删除这个角色吗？" (nzOnConfirm)="delete_role(data.id)" (nzOnCancel)="cancel()"
+                        nzPlacement="top">删除</button>
+                    <button class="ant-right" *ngIf="data.status===0" nz-button nzType="danger" nz-popconfirm
+                        nzTitle="你确定要恢复这个角色吗？" (nzOnConfirm)="restore_role(data.id)" (nzOnCancel)="cancel()"
+                        nzPlacement="top">恢复</button>
                 </td>
             </tr>
         </tbody>
@@ -44,6 +46,6 @@
 <ng-template #totalTemplate> 总计 {{ total }} 条 </ng-template>
 <ng-template #extraTemplate>
     <button nz-button (click)="show_modal()" nzType="primary">
-    <span>添加角色</span>
-  </button>
+        <span>添加角色</span>
+    </button>
 </ng-template>

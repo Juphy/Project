@@ -8,10 +8,16 @@
         <ul class="roles">
             <li class="role" *ngFor="let option of permissionOptions">
                 <label nz-checkbox [(ngModel)]="option.checked">{{option.name}}</label>
-                <div *ngIf="option.checked">
-                    <label *ngFor="let a of " nz-checkbox [(ngModel)]=""></label>
+                <div style="padding-left: 24px;">
+                    <label *ngFor="let a of option.children" nz-checkbox [(ngModel)]="a.checked" (click)="change_checked(a.id)"
+                        style="margin-left: 0">{{a.name}}</label>
                 </div>
             </li>
         </ul>
+    </div>
+    <div nz-col class="ant-bottom" [nzSpan]="16" [nzOffset]="4">
+        <label style="visibility: hidden">空白占领：</label>
+        <button nz-button nzType="primary" (click)="add_edit_role()">完成</button>
+        <button nz-button (click)="cancel()" class="ant-left">取消</button>
     </div>
 </div>

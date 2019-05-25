@@ -1,4 +1,4 @@
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submit_form()">
+﻿<form nz-form [formGroup]="validateForm" (ngSubmit)="submit_form()">
     <nz-form-item>
         <nz-form-label [nzSpan]="6" nzRequired>身份证号码</nz-form-label>
         <nz-form-control [nzSpan]="12">
@@ -42,7 +42,7 @@
 </form>
 <div nz-row>
     <div nz-col nzSpan="12" nzOffset="6">
-        <button nz-button class="ant-right" nzType="primary" [nzLoading]="loading" (click)="done()">完成</button>
+        <button nz-button class="ant-right" nzType="primary" [nzLoading]="loading" (click)="submit_form()">完成</button>
         <button nz-button class="ant-right" (click)="cancel()">取消</button>
     </div>
 </div>

@@ -8,25 +8,30 @@ import { NzModalRef, NzMessageService } from "ng-zorro-antd";
 })
 export class AddRoleComponent implements OnInit {
   permissionOptions = [];
-
+  name = '';
   @Input() id: any;
   constructor(
     private http: HttpClient,
     private nzModalRef: NzModalRef,
     private nzMessageService: NzMessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (this.id) {
-      this.http.post("api/role/info", { id: this.id }).subscribe(res => {
-        console.log(res);
+      this.http.post("api/roles/info", { id: this.id }).subscribe(res => {
+        if (res['status'] === 200) {
+          let data = res['data'];
+          this.name = data.name;
+          let permission = data['permission'];
+          this.get_all_permission(permission);
+        }
       });
     } else {
       this.get_all_permission();
     }
   }
 
-  get_all_permission() {
+  get_all_permission(permission?: Array<any>) {
     this.http.post("api/roles/permission", {}).subscribe(res => {
       console.log(res);
       if (res["status"] === 200) {
@@ -37,7 +42,7 @@ export class AddRoleComponent implements OnInit {
             roles.push({
               id: item.id,
               name: item.display_name,
-              checked: false
+              checked: (permission && permission.includes(Number(item.id))) || false
             });
           }
         });
@@ -47,7 +52,8 @@ export class AddRoleComponent implements OnInit {
             if (_item.pid === item.id) {
               children.push({
                 id: _item.id,
-                name: _item.display_name
+                name: _item.display_name,
+                checked: (permission && permission.includes(Number(_item.id))) || false
               });
             }
           });
@@ -61,6 +67,39 @@ export class AddRoleComponent implements OnInit {
   add_edit_role() {
     if (this.id) {
     } else {
+      let permission_ids = [];
+      this.permissionOptions.forEach(item => {
+        if (item.checked) {
+          permission_ids.push(item.id);
+        }
+        item.children.forEach(_item => {
+          if (_item.checked) {
+            permission_ids.push(_item.id);
+          }
+        })
+      })
+      console.log(permission_ids);
+      this.http.post('api/roles/add', {
+        name: this.name,
+        permission_ids: permission_ids.join(',')
+      }).subscribe(res => {
+        console.log(res);
+        if (res['status'] === 200) {
+          this.nzMessageService.success('添加成功！');
+          this.nzModalRef.destroy(true);
+        }
+      })
     }
+  }
+
+  cancel() {
+    this.nzModalRef.destroy(false);
+  }
+
+  change_checked(id) {
+    console.log(id);
+    this.permissionOptions.forEach(item => {
+      if (item.children.some(_item => _item.id == id)) item.checked = true;
+    })
   }
 }

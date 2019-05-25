@@ -24,6 +24,7 @@ div[nz-row] {
         display: flex;
         label {
             line-height: 32px;
+            white-space: nowrap;
         }
         input {
             flex: 1;

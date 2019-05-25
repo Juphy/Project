@@ -17,13 +17,19 @@ export class RoleComponent implements OnInit {
   total = 0;
 
   fn = {};
+  status = {
+    '0': '禁用',
+    '1': '正常'
+  };
   constructor(
     private modalService: NzModalService,
     private http: HttpClient,
     private messageService: NzMessageService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.get_data();
+  }
 
   get_data() {
     let params = {
@@ -31,13 +37,13 @@ export class RoleComponent implements OnInit {
       pagesize: this.pagesize
     };
     this.loading = true;
-    this.http.get("api/roles/index").subscribe(
+    this.http.post("api/roles/index", {}).subscribe(
       res => {
         this.loading = false;
         if (res["status"] === 200) {
           let data = res["data"];
-          this.data = data["data"] || [];
-          this.total = data["total"] || 0;
+          this.data = [...data];
+          this.total = this.data.length;
         }
       },
       err => {
@@ -53,14 +59,14 @@ export class RoleComponent implements OnInit {
     this.get_data();
   }
 
-  show_modal(flag?: boolean, data?: any) {
+  show_modal(id?: any) {
     let modal;
-    if (flag) {
+    if (id) {
       modal = this.modalService.create({
-        nzTitle: "添加角色",
+        nzTitle: "编辑角色",
         nzContent: AddRoleComponent,
         nzComponentParams: {
-          id: data.id
+          id
         },
         nzFooter: null,
         nzMaskClosable: false,
@@ -83,4 +89,23 @@ export class RoleComponent implements OnInit {
       }
     });
   }
+
+  delete_role(id) {
+    this.http.post('api/role/delete', { id }).subscribe(res => {
+      if (res['status'] === 200) {
+        this.messageService.success('删除成功！');
+        this.get_data();
+      }
+    })
+  }
+
+  restore_role(id) {
+    this.http.post('role/restore_roles', { id }).subscribe(res => {
+      if (res['status'] === 200) {
+        this.messageService.success('恢复成功！');
+        this.get_data();
+      }
+    })
+  }
+
 }

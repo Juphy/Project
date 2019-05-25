@@ -1,0 +1,11 @@
+<div nz-row>
+  <div nz-col class="ant-bottom-xxl" nzSpan="12" nzOffset="6">
+    <label>名称：</label>
+    <input type="text" nz-input [(ngModel)]="name">
+  </div>
+  <div nz-col nzSpan="12" nzOffset="6">
+    <label style="visibility: hidden">占位：</label>
+    <button nz-button class="ant-right" nzType="primary" (click)="edit_range()">完成</button>
+    <button nz-button (click)="cancel()">取消</button>
+  </div>
+</div>

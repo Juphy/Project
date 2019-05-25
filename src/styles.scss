@@ -84,3 +84,7 @@ $xxl: 24px;
 .cdk-global-scrollblock {
     overflow: hidden;
 }
+
+tbody tr td{
+    word-break: break-all!important;
+}

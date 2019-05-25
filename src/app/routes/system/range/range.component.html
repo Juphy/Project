@@ -1,0 +1,42 @@
+<nz-card nzTitle="互助范围列表" [nzExtra]="extraTemplate">
+  <div class="search" style="display: none">
+    <div class="query">
+      <b>查询条件</b>
+    </div>
+    <div nz-row>
+      <div nz-col [nzSpan]="6"></div>
+      <div nz-col [nzSpan]="8"></div>
+    </div>
+  </div>
+  <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page"
+    [nzFrontPagination]="true" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>名称</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of table.data">
+        <td>{{ data.id }}</td>
+        <td>{{ data.name }}</td>
+        <td>{{ data.invalid?'已删除':'正常' }}</td>
+        <td>
+          <button *ngIf="data.status === 0" nz-button (click)="show_modal(data)" class="ant-right">编辑</button>
+          <button *ngIf="data.status===0" class="ant-right" nz-button nzType="danger" nz-popconfirm
+            nzTitle="你确定要删除这个互助范围吗？" (nzOnConfirm)="delete_range(data.id)" (nzOnCancel)="cancel()"
+            nzPlacement="top">删除</button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+<ng-template #totalTemplate> 总计 {{ total }} 条 </ng-template>
+
+<ng-template #extraTemplate>
+  <button nz-button (click)="show_modal()" nzType="primary">
+    <span>添加互助范围</span>
+  </button>
+</ng-template>

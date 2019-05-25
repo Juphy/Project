@@ -22,7 +22,7 @@ export class MapComponent implements OnInit {
     private modalService: NzModalService,
     private http: HttpClient,
     private messageService: NzMessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.get_data();
@@ -34,7 +34,7 @@ export class MapComponent implements OnInit {
       pagesize: this.pagesize
     };
     this.loading = true;
-    this.http.post("api/manager/carousel_map_list", params).subscribe(
+    this.http.post("api/manager/carousel_map_list", {}).subscribe(
       res => {
         this.loading = false;
         if (res["status"] === 200) {
@@ -105,5 +105,14 @@ export class MapComponent implements OnInit {
       });
   }
 
-  cancel(){}
+  cancel() { }
+
+  delete_image(id) {
+    this.http.post('api/manager/delete_carousel_map', { id }).subscribe(res => {
+      if(res['status']===200){
+        this.messageService.success('删除成功！');
+        this.get_data();
+      }      
+    })
+  }
 }

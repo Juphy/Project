@@ -1,0 +1,11 @@
+div[nz-row] {
+    div[nz-col] {
+        display: flex;
+        label {
+            line-height: 32px;
+        }
+        input {
+            flex: 1;
+        }
+    }
+}

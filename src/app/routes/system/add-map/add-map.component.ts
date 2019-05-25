@@ -18,17 +18,21 @@ export class AddMapComponent implements OnInit {
   degree = 0;
 
   loading = false;
-  @Input() title: any = "";
-  @Input() image_name: any = "";
-  @Input() link: any = "";
-  @Input() id: any = "";
+  @Input() title: any;
+  @Input() image_name: any;
+  @Input() link: any;
+  @Input() id: any;
   constructor(
     private nzModalRef: NzModalRef,
     private http: HttpClient,
     private messageService: NzMessageService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.id) {
+
+    }
+  }
 
   get_change(e) {
     var files = e.target.files;
@@ -106,7 +110,7 @@ export class AddMapComponent implements OnInit {
         this.loading = false;
         console.log(res);
         if (res["status"] === 200) {
-          this.link = siteinfo.ucs + res["data"];
+          this.image_name = res["data"];
         }
       },
       err => {
@@ -120,6 +124,18 @@ export class AddMapComponent implements OnInit {
   }
 
   submit() {
+    if (!this.title) {
+      this.messageService.warning('图片标题不能为空！');
+      return;
+    }
+    if (!this.image_name) {
+      this.messageService.warning('尚未上传图片！');
+      return;
+    }
+    if (!this.link) {
+      this.messageService.warning('图片外链不能为空！');
+      return;
+    }
     let params = {
       title: this.title,
       image_name: this.image_name,
@@ -129,8 +145,8 @@ export class AddMapComponent implements OnInit {
       params["id"] = this.id;
     }
     this.http.post("api/manager/edit_carousel_map", params).subscribe(res => {
-      console.log(res);
       if (res["status"] === 200) {
+        this.messageService.success('添加成功！');
         this.nzModalRef.destroy(true);
       }
     });

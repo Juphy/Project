@@ -23,6 +23,13 @@ export class UserComponent implements OnInit {
   balance;
   gold;
   type; // 1 balance  2 gold
+
+  status={
+    '0': '未激活',
+    '1': '已激活',
+    '2': '已禁用'
+  }
+
   constructor(
     private modalService: NzModalService,
     private http: HttpClient,
