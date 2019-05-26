@@ -2,6 +2,7 @@ import { AddMapComponent } from "./../add-map/add-map.component";
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { NzModalService, NzMessageService } from "ng-zorro-antd";
+import { siteinfo } from "@core/store";
 @Component({
   selector: "app-map",
   templateUrl: "./map.component.html",
@@ -18,11 +19,12 @@ export class MapComponent implements OnInit {
     0: "未上架",
     1: "已上架"
   };
+  UCS = siteinfo.ucs;
   constructor(
     private modalService: NzModalService,
     private http: HttpClient,
     private messageService: NzMessageService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.get_data();
@@ -69,7 +71,7 @@ export class MapComponent implements OnInit {
         nzComponentParams: {
           title: data.title,
           image_name: data.image_name,
-          link: data.link,
+          link: data.link.split("://").pop(),
           id: data.id
         },
         nzFooter: null,
@@ -105,14 +107,14 @@ export class MapComponent implements OnInit {
       });
   }
 
-  cancel() { }
+  cancel() {}
 
   delete_image(id) {
-    this.http.post('api/manager/delete_carousel_map', { id }).subscribe(res => {
-      if(res['status']===200){
-        this.messageService.success('删除成功！');
+    this.http.post("api/manager/delete_carousel_map", { id }).subscribe(res => {
+      if (res["status"] === 200) {
+        this.messageService.success("删除成功！");
         this.get_data();
-      }      
-    })
+      }
+    });
   }
 }

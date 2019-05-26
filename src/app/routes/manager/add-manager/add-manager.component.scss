@@ -1,0 +1,21 @@
+div[nz-row] {
+    div[nz-col] {
+        display: flex;
+        >label {
+            width: 120px;
+            text-align: right;
+            line-height: 32px;
+        }
+        input,
+        .roles {
+            flex: 1
+        }
+    }
+}
+
+ul,
+ul li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}

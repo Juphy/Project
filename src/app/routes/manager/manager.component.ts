@@ -17,16 +17,21 @@ export class ManagerComponent implements OnInit {
   total = 0;
 
   fn = {};
+
+  status = {
+    "1": "正常"
+  };
   constructor(
     private modalService: NzModalService,
     private http: HttpClient,
     private messageService: NzMessageService
   ) {
-    console.log(FN["manager_list"]);
     this.fn = FN["manager_list"];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.get_data();
+  }
 
   get_data() {
     let params = {
@@ -60,16 +65,30 @@ export class ManagerComponent implements OnInit {
     this.search_data(true);
   }
 
-  show_modal() {
+  show_modal(data) {
     let modal;
-    modal = this.modalService.create({
-      nzTitle: "添加管理员",
-      nzContent: AddManagerComponent,
-      nzFooter: null,
-      nzMaskClosable: false,
-      nzClosable: true,
-      nzWidth: 1000
-    });
+    if (data) {
+      modal = this.modalService.create({
+        nzTitle: "编辑管理员",
+        nzContent: AddManagerComponent,
+        nzComponentParams: {
+          id: data.id
+        },
+        nzFooter: null,
+        nzMaskClosable: false,
+        nzClosable: true,
+        nzWidth: 1000
+      });
+    } else {
+      modal = this.modalService.create({
+        nzTitle: "添加管理员",
+        nzContent: AddManagerComponent,
+        nzFooter: null,
+        nzMaskClosable: false,
+        nzClosable: true,
+        nzWidth: 1000
+      });
+    }
     modal.afterClose.subscribe(res => {
       if (res) {
         this.search_data();
@@ -77,10 +96,10 @@ export class ManagerComponent implements OnInit {
     });
   }
 
-  delete_manager(user_id) {
-    this.http.post("api/manager/delete_manager", { user_id }).subscribe(res => {
+  delete_manager(id) {
+    this.http.post("api/manager/delete_manager", { id }).subscribe(res => {
       if (res["status"] === 200) {
-        this.messageService.success('删除成功！');
+        this.messageService.success("删除成功！");
         this.get_data();
       }
     });

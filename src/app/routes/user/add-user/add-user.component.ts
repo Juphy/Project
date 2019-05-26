@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NzModalRef, NzMessageService } from "ng-zorro-antd";
 import { HttpClient } from "@angular/common/http";
+import { DatePipe } from "@angular/common";
 @Component({
   selector: "app-add-user",
   templateUrl: "./add-user.component.html",
@@ -14,7 +15,8 @@ export class AddUserComponent implements OnInit {
     private nzModalRef: NzModalRef,
     private fb: FormBuilder,
     private nzMessageService: NzMessageService,
-    private http: HttpClient
+    private http: HttpClient,
+    private datePipe: DatePipe
   ) {
     this.validateForm = this.fb.group({
       id_card: ["", [Validators.required]],
@@ -75,7 +77,7 @@ export class AddUserComponent implements OnInit {
       .post("api/manager/add_user", {
         id_card: this.id_card.value,
         name: this.name.value,
-        birthday: this.birthday.value,
+        birthday: this.datePipe.transform(this.birthday.value, "yyyy-MM-dd"),
         address: this.address.value,
         password: this.password.value
       })
@@ -86,6 +88,8 @@ export class AddUserComponent implements OnInit {
           this.nzMessageService.success("用户添加成功！");
           this.nzModalRef.destroy(true);
         }
+      }, err =>{
+        this.loading = false;
       });
   }
 

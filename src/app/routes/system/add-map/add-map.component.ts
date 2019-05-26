@@ -18,6 +18,7 @@ export class AddMapComponent implements OnInit {
   degree = 0;
 
   loading = false;
+  linkHeader = "http://";
   @Input() title: any;
   @Input() image_name: any;
   @Input() link: any;
@@ -26,13 +27,9 @@ export class AddMapComponent implements OnInit {
     private nzModalRef: NzModalRef,
     private http: HttpClient,
     private messageService: NzMessageService
-  ) { }
+  ) {}
 
-  ngOnInit() {
-    if (this.id) {
-
-    }
-  }
+  ngOnInit() {}
 
   get_change(e) {
     var files = e.target.files;
@@ -125,28 +122,28 @@ export class AddMapComponent implements OnInit {
 
   submit() {
     if (!this.title) {
-      this.messageService.warning('图片标题不能为空！');
+      this.messageService.warning("图片标题不能为空！");
       return;
     }
     if (!this.image_name) {
-      this.messageService.warning('尚未上传图片！');
+      this.messageService.warning("尚未上传图片！");
       return;
     }
     if (!this.link) {
-      this.messageService.warning('图片外链不能为空！');
+      this.messageService.warning("图片外链不能为空！");
       return;
     }
     let params = {
       title: this.title,
       image_name: this.image_name,
-      link: this.link
+      link: this.linkHeader + this.link
     };
     if (this.id) {
       params["id"] = this.id;
     }
     this.http.post("api/manager/edit_carousel_map", params).subscribe(res => {
       if (res["status"] === 200) {
-        this.messageService.success('添加成功！');
+        this.messageService.success("添加成功！");
         this.nzModalRef.destroy(true);
       }
     });

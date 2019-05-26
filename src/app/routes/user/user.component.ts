@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { NzModalService, NzMessageService } from "ng-zorro-antd";
 import { FN } from "@core/store";
 import { AddUserComponent } from "./add-user/add-user.component";
+import { DatePipe } from "@angular/common";
 @Component({
   selector: "app-user",
   templateUrl: "./user.component.html",
@@ -24,37 +25,65 @@ export class UserComponent implements OnInit {
   gold;
   type; // 1 balance  2 gold
 
-  status={
-    '0': '未激活',
-    '1': '已激活',
-    '2': '已禁用'
-  }
+  status = {
+    "0": "未激活",
+    "1": "已激活",
+    "2": "已禁用"
+  };
 
+  name = "";
+  snum;
+  address = "";
+  sex;
+  datetime;
   constructor(
     private modalService: NzModalService,
     private http: HttpClient,
-    private messageService: NzMessageService
+    private messageService: NzMessageService,
+    private datePipe: DatePipe
   ) {
-    console.log(FN["user_list"]);
     this.fn = FN["user_list"];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.get_data();
+  }
 
   get_data() {
     let params = {
       page: this.page,
       pagesize: this.pagesize
     };
+    if (this.name) {
+      params["name"] = this.name;
+    }
+    if (this.snum) {
+      params["snum"] = this.snum;
+    }
+    if (this.address) {
+      params["address"] = this.address;
+    }
+    if (this.sex) {
+      params["sex"] = this.sex;
+    }
+    if (this.datetime) {
+      this.datetime[0] &&
+        (params["regist_begin_time"] = this.datePipe.transform(
+          this.datetime[0],
+          "yyyy-MM-dd"
+        ));
+      this.datetime[1] &&
+        (params["regist_end_time"] = this.datePipe.transform(
+          this.datetime[1],
+          "yyyy-MM-dd"
+        ));
+    }
     this.loading = true;
     this.http.post("api/manager/user_list", params).subscribe(
       res => {
         this.loading = false;
-        if (res["status"] === 200) {
-          let data = res["data"];
-          this.data = data["data"] || [];
-          this.total = data["total"] || 0;
-        }
+        this.data = res["data"] || [];
+        this.total = res["total"] || 0;
       },
       err => {
         this.loading = false;
@@ -70,6 +99,11 @@ export class UserComponent implements OnInit {
   }
 
   clear_data() {
+    this.name = "";
+    this.snum = "";
+    this.address = "";
+    this.sex = 0;
+    this.datetime = null;
     this.search_data(true);
   }
 
@@ -101,7 +135,7 @@ export class UserComponent implements OnInit {
 
   change_status(user_id, status) {
     this.http
-      .post("api/user/change_user_status", { user_id, status })
+      .post("api/manager/change_user_status", { user_id, status })
       .subscribe(res => {
         if (res["status"] === 200) {
           this.messageService.success("操作成功！");
@@ -134,10 +168,10 @@ export class UserComponent implements OnInit {
     this.type = type;
     switch (this.type) {
       case 1:
-        this.balance = num;
+        this.balance = (num / 100).toFixed(2);
         break;
       case 2:
-        this.gold = num;
+        this.gold = (num / 100).toFixed(2);
         break;
     }
     this.visible = true;
@@ -149,7 +183,7 @@ export class UserComponent implements OnInit {
       case 1:
         this.http
           .post("api/manager/change_balance", {
-            balance: this.balance,
+            balance: Number(this.balance) * 100,
             user_id: this.user_id
           })
           .subscribe(
@@ -158,6 +192,7 @@ export class UserComponent implements OnInit {
               if (res["status"] === 200) {
                 this.messageService.success("修改成功！");
                 this.visible = false;
+                this.get_data();
               }
             },
             e => {
@@ -169,7 +204,7 @@ export class UserComponent implements OnInit {
       case 1:
         this.http
           .post("api/manager/change_mutual_gold", {
-            mutual_gold: this.gold,
+            mutual_gold: Number(this.gold) * 100,
             user_id: this.user_id
           })
           .subscribe(

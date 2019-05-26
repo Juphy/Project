@@ -78,12 +78,10 @@ export class AddRoleComponent implements OnInit {
           }
         })
       })
-      console.log(permission_ids);
       this.http.post('api/roles/add', {
         name: this.name,
         permission_ids: permission_ids.join(',')
       }).subscribe(res => {
-        console.log(res);
         if (res['status'] === 200) {
           this.nzMessageService.success('添加成功！');
           this.nzModalRef.destroy(true);

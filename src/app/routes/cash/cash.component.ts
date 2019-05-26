@@ -18,9 +18,9 @@ export class CashComponent implements OnInit {
   user_name;
   date;
   status = {
-    "-1": "失败",
+    "-1": "未通过",
     "0": "申请中",
-    "1": "成功"
+    "1": "已通过"
   };
   constructor(
     private datePipe: DatePipe,
@@ -28,7 +28,9 @@ export class CashComponent implements OnInit {
     private messageService: NzMessageService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.get_data();
+  }
 
   get_data() {
     let params = {
@@ -48,13 +50,9 @@ export class CashComponent implements OnInit {
     this.loading = true;
     this.http.post("api/manager/cash_list", params).subscribe(
       res => {
-        console.log(res);
         this.loading = false;
-        if (res["status"] === 200) {
-          let data = res["data"];
-          this.data = data["data"] || [];
-          this.total = data["total"] || 0;
-        }
+        this.data = res["data"] || [];
+        this.total = res["total"] || 0;
       },
       err => {
         this.loading = false;

@@ -1,4 +1,4 @@
-<nz-card nzTitle="用户列表" [nzExtra]="extraTemplate">
+<nz-card nzTitle="会员列表" [nzExtra]="extraTemplate">
     <div class="search" style="display: none">
         <div class="query">
             <b>查询条件</b>
@@ -12,12 +12,12 @@
             </button>
         </div>
     </div>
-    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page"
-        [nzFrontPagination]="false" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading"
-        [nzPageSizeOptions]="pagesizeAry" (nzPageIndexChange)="search_data()" (nzPageSizeChange)="search_data(true)">
+    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="false" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" [nzPageSizeOptions]="pagesizeAry" (nzPageIndexChange)="search_data()"
+        (nzPageSizeChange)="search_data(true)">
         <thead>
             <tr>
-                <th>编号</th>
+                <th>账号</th>
+                <th>姓名</th>
                 <th>创建时间</th>
                 <th>状态</th>
                 <th>操作</th>
@@ -26,15 +26,14 @@
         <tbody>
             <tr *ngFor="let data of table.data">
                 <td>{{ data.snum }}</td>
+                <td>{{ data.name }}</td>
                 <td>{{ data.created_at }}</td>
                 <td>{{ data.invalid ? "已删除" : status[data["status"]] }}</td>
                 <td>
-                    <button class="ant-right" *ngIf="fn['delete_manager'] && data.disable === 0" nz-button nz-popconfirm
-                        nzTitle="你确定要删除这个用户吗？" (nzOnConfirm)="delete_manager(data.id)" (nzOnCancel)="cancel()"
-                        nzPlacement="top">
-                        激活
+                    <button class="ant-right" *ngIf="fn['delete_manager']" nz-button nz-popconfirm nzTitle="你确定要删除这个用户吗？" (nzOnConfirm)="delete_manager(data.id)" (nzOnCancel)="cancel()" nzPlacement="top" nzType="danger">
+                        删除
                     </button>
-                    <button nz-button *ngIf="fn['add_manager']" class="ant-right" (click)="show_modal(data.id)">编辑</button>
+                    <button nz-button *ngIf="fn['add_manager']" class="ant-right" (click)="show_modal(data)">编辑</button>
                 </td>
             </tr>
         </tbody>
@@ -44,6 +43,6 @@
 
 <ng-template #extraTemplate>
     <button *ngIf="fn['add_manager']" nz-button (click)="show_modal()" nzType="primary">
-        <span>添加用户</span>
+        <span>添加会员</span>
     </button>
 </ng-template>

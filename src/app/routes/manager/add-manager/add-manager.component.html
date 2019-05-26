@@ -1,3 +1,32 @@
-<p>
-  add-manager works!
-</p>
+<div nz-row>
+    <div class="ant-bottom" nz-col [nzSpan]="16" [nzOffset]="4">
+        <label>账号：</label>
+        <input type="text" [(ngModel)]="snum" nz-input>
+    </div>
+    <div class="ant-bottom" nz-col [nzSpan]="16" [nzOffset]="4">
+        <label>姓名：</label>
+        <input type="text" [(ngModel)]="name" nz-input>
+    </div>
+    <div *ngIf="!id" class="ant-bottom" nz-col [nzSpan]="16" [nzOffset]="4">
+        <label>密码：</label>
+        <input type="password" [(ngModel)]="password" (ngModelChange)="check_password(0)" nz-input>
+    </div>
+    <div *ngIf="!id" class="ant-bottom" nz-col [nzSpan]="16" [nzOffset]="4">
+        <label>确认密码：</label>
+        <input type="password" [(ngModel)]="_password" nz-input (ngModelChange)="check_password(1)">
+        <span *ngIf="flag" style="color:tomato">（密码不一致）</span>
+    </div>
+    <div class="ant-bottom" nz-col [nzSpan]="16" [nzOffset]="4">
+        <label>角色：</label>
+        <ul style="padding-top: 6px">
+            <li *ngFor="let option of rolesOption">
+                <label nz-checkbox [(ngModel)]="option.checked">{{option.name}}</label>
+            </li>
+        </ul>
+    </div>
+    <div nz-col class="ant-bottom" [nzSpan]="16" [nzOffset]="4">
+        <label style="visibility: hidden">空白占领：</label>
+        <button nz-button nzType="primary" (click)="add_edit_manager()">完成</button>
+        <button nz-button (click)="cancel()" class="ant-left">取消</button>
+    </div>
+</div>

@@ -1,4 +1,10 @@
-import { Component, OnInit, ElementRef, Input } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  Input,
+  AfterViewInit
+} from "@angular/core";
 import * as wangEditor from "wangeditor";
 import { HttpClient } from "@angular/common/http";
 import { NzModalRef, NzMessageService } from "ng-zorro-antd";
@@ -9,7 +15,7 @@ import { siteinfo } from "@core/store";
   templateUrl: "./create.component.html",
   styleUrls: ["./create.component.scss"]
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent implements OnInit, AfterViewInit {
   private editor: any;
   title: any;
   description: any;
