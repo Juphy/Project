@@ -1,0 +1,35 @@
+<nz-steps [nzCurrent]="current">
+  <nz-step nzTitle="圈定范围"></nz-step>
+  <nz-step nzTitle="编辑批量操作互助金"></nz-step>
+</nz-steps>
+<div *ngIf="current===0">
+  <nz-table #basicTable [nzData]="data" nzShowPagination 
+  [(nzPageIndex)]="page" [nzFrontPagination]="false" 
+  [nzTotal]="total" [nzLoading]="loading"
+  (nzPageIndexChange)="get_data()">
+    <thead>
+      <tr>
+        <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="isIndeterminate"
+          (nzCheckedChange)="check_all($event)"></th>
+        <th>用户编号</th>
+        <th>用户名称</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refresh_status()"></td>
+        <td>{{data.snum}}</td>
+        <td>{{data.name}}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+<div *ngIf="current===1"></div>
+<div nz-row>
+  <div nz-col>
+    <button *ngIf="current===0" nz-button class="ant-right" (click)="change_current(1)">下一步</button>
+    <button *ngIf="current===1" nz-button class="ant-right" (click)="change_current(0)">上一步</button>
+    <button *ngIf="current===1" nz-button class="ant-right" nzType="primary" (click)="done()">完成</button>
+    <button nz-button class="ant-right" (click)="cancel()">取消</button>
+  </div>
+</div>

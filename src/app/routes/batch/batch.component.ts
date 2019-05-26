@@ -1,7 +1,9 @@
+import { AddBatchComponent } from './add-batch/add-batch.component';
 import { Component, OnInit } from "@angular/core";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
-import { NzMessageService } from "ng-zorro-antd";
+import { NzModalService, NzMessageService } from "ng-zorro-antd";
+import { FN } from '@core/store';
 @Component({
   selector: "app-batch",
   templateUrl: "./batch.component.html",
@@ -16,11 +18,15 @@ export class BatchComponent implements OnInit {
   total = 0;
   description;
   datetime;
+  fn = {};
   constructor(
+    private modalService: NzModalService,
     private datePipe: DatePipe,
     private http: HttpClient,
     private messageService: NzMessageService
-  ) {}
+  ) {
+    this.fn = FN['batch_mutual_gold_list'];
+  }
 
   ngOnInit() {
     this.get_data();
@@ -54,5 +60,34 @@ export class BatchComponent implements OnInit {
           this.total = data["total"];
         }
       });
+  }
+
+  search_data(flag?: boolean) {
+    if (flag) {
+      this.page = 1;
+    }
+    this.get_data();
+  }
+
+  clear_data() {
+    this.description = '';
+    this.datetime = null;
+  }
+
+  show_modal() {
+    let modal;
+    modal = this.modalService.create({
+      nzTitle: '添加批量操作',
+      nzContent: AddBatchComponent,
+      nzFooter: null,
+      nzMaskClosable: false,
+      nzClosable: true,
+      nzWidth: 1000
+    });
+    modal.afterClose.subscribe(res => {
+      if (res) {
+        this.search_data(true);
+      }
+    })
   }
 }
