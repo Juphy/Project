@@ -1,3 +1,4 @@
+import { ListComponent } from './list/list.component';
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { NzModalService, NzMessageService } from "ng-zorro-antd";
@@ -229,18 +230,33 @@ export class UserComponent implements OnInit {
   }
 
   user_child_list(user_id) {
-    this.http
-      .post("api/manager/user_child_list", { user_id })
-      .subscribe(res => {
-        console.log(res);
-      });
+    this.modalService.create({
+      nzTitle: "查看子级",
+      nzContent: ListComponent,
+      nzComponentParams: {
+        user_id,
+        type: 1
+      },
+      nzFooter: null,
+      nzMaskClosable: false,
+      nzClosable: true,
+      nzWidth: 1000
+    })
+
   }
 
   user_parent_list(user_id) {
-    this.http
-      .post("api/manager/user_parent_list", { user_id })
-      .subscribe(res => {
-        console.log(res);
-      });
+    this.modalService.create({
+      nzTitle: "查看父级",
+      nzContent: ListComponent,
+      nzComponentParams: {
+        user_id,
+        type: 0
+      },
+      nzFooter: null,
+      nzMaskClosable: false,
+      nzClosable: true,
+      nzWidth: 1000
+    })
   }
 }

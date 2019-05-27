@@ -3,31 +3,49 @@
   <nz-step nzTitle="编辑批量操作互助金"></nz-step>
 </nz-steps>
 <div *ngIf="current===0">
-  <nz-table #basicTable [nzData]="data" nzShowPagination 
-  [(nzPageIndex)]="page" [nzFrontPagination]="false" 
-  [nzTotal]="total" [nzLoading]="loading"
-  (nzPageIndexChange)="get_data()">
+  <div class="ant-bottom ant-top">
+    <label>用户id：</label>
+    <nz-input-number [(ngModel)]="begin_id" [nzMin]="0" [nzStep]="1" nzPlaceHolder="起始id"></nz-input-number> —
+    <nz-input-number [(ngModel)]="end_id" [nzMin]="0" [nzStep]="1" nzPlaceHolder="结束id"></nz-input-number>
+    <label class="ant-left">注册时间：</label>
+    <nz-range-picker [(ngModel)]="datetime" style="width: 260px"></nz-range-picker>
+    <button class="ant-left" nz-button (click)="get_data()" nzType="primary">搜索</button>
+  </div>
+  <nz-table #basicTable [nzData]="data" nzShowPagination [nzShowTotal]="totalTemplate" [nzFrontPagination]="true"
+    [nzTotal]="total" [nzLoading]="loading">
     <thead>
       <tr>
-        <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="isIndeterminate"
-          (nzCheckedChange)="check_all($event)"></th>
+        <th></th>
         <th>用户编号</th>
         <th>用户名称</th>
+        <th>注册日期</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let data of basicTable.data">
         <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refresh_status()"></td>
         <td>{{data.snum}}</td>
-        <td>{{data.name}}</td>
+        <td>{{data.name||data.nick_name}}</td>
+        <td>{{data.created_at.split(' ')[0]}}</td>
       </tr>
     </tbody>
   </nz-table>
+  <ng-template #totalTemplate> 已经勾选 {{ total }} 条 </ng-template>
 </div>
-<div *ngIf="current===1"></div>
-<div nz-row>
-  <div nz-col>
-    <button *ngIf="current===0" nz-button class="ant-right" (click)="change_current(1)">下一步</button>
+<div *ngIf="current===1" nz-row>
+  <div nz-col [nzSpan]="18" nzOffset="3" style="display: flex">
+    <label style="width:96px;line-height: 32px;text-align: right">互助金：</label>
+    <nz-input-number [(ngModel)]='mutual_gold'></nz-input-number>（元）
+  </div>
+  <div nz-col [nzSpan]="18" nzOffset="3" style="display: flex" class="ant-top">
+    <label style="width: 112px;line-height: 32px;text-align: right">操作描述：</label>
+    <textarea rows="2" nz-input [(ngModel)]="description"></textarea>
+  </div>
+</div>
+<div nz-row class="ant-top">
+  <div nz-col style="text-align: center">
+    <button *ngIf="current===0" nz-button class="ant-right" (click)="change_current(1)" [disabled]="!total"
+      nzType="primary">下一步</button>
     <button *ngIf="current===1" nz-button class="ant-right" (click)="change_current(0)">上一步</button>
     <button *ngIf="current===1" nz-button class="ant-right" nzType="primary" (click)="done()">完成</button>
     <button nz-button class="ant-right" (click)="cancel()">取消</button>
