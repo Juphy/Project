@@ -15,9 +15,9 @@ export class RuleComponent implements OnInit, AfterViewInit {
     private el: ElementRef,
     private http: HttpClient,
     private messageService: NzMessageService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngAfterViewInit(): void {
     this.http.post("api/manager/convention_rules_info", {}).subscribe(res => {
@@ -29,7 +29,7 @@ export class RuleComponent implements OnInit, AfterViewInit {
         this.editor.customConfig.uploadFileName = "photo";
         this.editor.customConfig.uploadImgHooks = {
           success: (xhr, editor, result) => {
-
+            this.messageService.success('图片上传成功')
           },
           customInsert: (insertImg, result, editor) => {
 

@@ -1,6 +1,7 @@
 <div class="ant-bottom" nz-row>
     <div nz-col [nzSpan]="12"><label>标题：</label><input type="text" nz-input [(ngModel)]="title"></div>
-    <div nz-col [nzSpan]="12" style="visibility: hidden;"><label class="ant-left-xl">图片链接：</label><input type="text" nz-input [(ngModel)]="image_name"></div>
+    <div nz-col [nzSpan]="12" style="visibility: hidden;"><label class="ant-left-xl">图片链接：</label><input type="text"
+            nz-input [(ngModel)]="image_name"></div>
 </div>
 <div class="ant-bottom" nz-row>
     <div nz-col [nzSpan]="24">
@@ -17,7 +18,8 @@
     </div>
 </div>
 <div class="ant-bottom-xxl">
-    <button nz-button nzType="primary" (click)="submit()">提交</button><button class="ant-left" nz-button (click)="cancel()">取消</button>
+    <button nz-button nzType="primary" (click)="submit()">提交</button><button class="ant-left" nz-button
+        (click)="cancel()">取消</button>
     <div class="file-btn ant-btn ant-btn-default ant-left">
         <span><i class="ant-right-tiny" nz-icon nzType="folder-open" nzTheme="outline"></i>打开本地图片</span>
         <input type="file" name="image" accept="image/*" (change)="get_change($event)" />
@@ -36,8 +38,10 @@
         </nz-radio-group>
         <label class="ant-left-xxl">旋转：</label>
         <nz-radio-group>
-            <label nz-radio-button nzTitle="顺时针旋转45°" nzPlacement="top" nz-tooltip [nzValue]="45" (click)="change_rotate(45)"><i nz-icon nzType="redo" nzTheme="outline"></i></label>
-            <label nz-radio-button nzTitle="逆时针旋转45°" nzPlacement="top" nz-tooltip [nzValue]="-45" (click)="change_rotate(-45)"><i nz-icon nzType="undo" nzTheme="outline"></i></label>
+            <label nz-radio-button nzTitle="顺时针旋转45°" nzPlacement="top" nz-tooltip [nzValue]="45"
+                (click)="change_rotate(45)"><i nz-icon nzType="redo" nzTheme="outline"></i></label>
+            <label nz-radio-button nzTitle="逆时针旋转45°" nzPlacement="top" nz-tooltip [nzValue]="-45"
+                (click)="change_rotate(-45)"><i nz-icon nzType="undo" nzTheme="outline"></i></label>
             <label nz-radio-button nzTitle="重置" nzPlacement="top" nz-tooltip [nzValue]="0" (click)="change_rotate(0)"><i
                     nz-icon nzType="sync" nzTheme="outline"></i></label>
         </nz-radio-group>
@@ -63,7 +67,7 @@
     </div>
     <div class="ant-bottom">
         <button class="ant-right" [nzLoading]="loading" nz-button (click)="upload_image()"><i nz-icon
-                nzType="cloud-upload" nzTheme="outline"></i>上传所选区域图片</button>
+                nzType="cloud-upload" nzTheme="outline"></i>上传所选区域图片</button><span *ngIf='image_name'>图片已经上传成功！</span>
     </div>
 </div>
 

@@ -27,9 +27,9 @@ export class AddMapComponent implements OnInit {
     private nzModalRef: NzModalRef,
     private http: HttpClient,
     private messageService: NzMessageService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   get_change(e) {
     var files = e.target.files;
@@ -108,6 +108,7 @@ export class AddMapComponent implements OnInit {
 
         if (res["status"] === 200) {
           this.image_name = res["data"];
+          this.messageService.success('图片上传成功！')
         }
       },
       err => {

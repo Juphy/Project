@@ -12,8 +12,9 @@
             </button>
         </div>
     </div>
-    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="false" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" [nzPageSizeOptions]="pagesizeAry" (nzPageIndexChange)="search_data()"
-        (nzPageSizeChange)="search_data(true)">
+    <nz-table #table [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="false"
+        [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" [nzPageSizeOptions]="pagesizeAry"
+        (nzPageIndexChange)="search_data()" (nzPageSizeChange)="search_data(true)">
         <thead>
             <tr>
                 <th>账号</th>
@@ -30,7 +31,9 @@
                 <td>{{ data.created_at }}</td>
                 <td>{{ data.invalid ? "已删除" : status[data["status"]] }}</td>
                 <td>
-                    <button class="ant-right" *ngIf="fn['delete_manager']" nz-button nz-popconfirm nzTitle="你确定要删除这个用户吗？" (nzOnConfirm)="delete_manager(data.id)" (nzOnCancel)="cancel()" nzPlacement="top" nzType="danger">
+                    <button class="ant-right" *ngIf="fn['delete_manager']" nz-button nz-popconfirm
+                        nzTitle="你确定要删除这个用户吗？" (nzOnConfirm)="delete_manager(data.id)" (nzOnCancel)="cancel()"
+                        nzPlacement="top" nzType="danger">
                         删除
                     </button>
                     <button nz-button *ngIf="fn['add_manager']" class="ant-right" (click)="show_modal(data)">编辑</button>
@@ -39,7 +42,9 @@
         </tbody>
     </nz-table>
 </nz-card>
-<ng-template #totalTemplate> 总计 {{ total }} 条 </ng-template>
+<ng-template #totalTemplate> 总计 {{ total }} 条 当前页数：<nz-input-number class="ant-right" [(ngModel)]="page"
+        (ngModelChange)="search_data()" [nzMin]="1" [nzStep]="1"></nz-input-number>
+</ng-template>
 
 <ng-template #extraTemplate>
     <button *ngIf="fn['add_manager']" nz-button (click)="show_modal()" nzType="primary">

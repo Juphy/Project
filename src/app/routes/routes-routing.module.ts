@@ -33,7 +33,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(
       routes,
-      environment.production ? { preloadingStrategy: PreloadAllModules } : {}
+      // environment.production ? { preloadingStrategy: PreloadAllModules } : {}
     )
   ],
   exports: [RouterModule]

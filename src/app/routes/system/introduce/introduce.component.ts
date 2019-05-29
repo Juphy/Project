@@ -28,7 +28,7 @@ export class IntroduceComponent implements OnInit, AfterViewInit {
         this.editor.customConfig.uploadFileName = "photo";
         this.editor.customConfig.uploadImgHooks = {
           success: (xhr, editor, result) => {
-
+            this.messageService.success('图片上传成功')
           },
           customInsert: (insertImg, result, editor) => {
 

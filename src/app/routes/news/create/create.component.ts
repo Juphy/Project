@@ -35,7 +35,7 @@ export class CreateComponent implements OnInit, AfterViewInit {
     private nzModalRef: NzModalRef,
     private http: HttpClient,
     private messageService: NzMessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.options.forEach(item => {
@@ -57,7 +57,7 @@ export class CreateComponent implements OnInit, AfterViewInit {
     this.editor.customConfig.uploadFileName = "photo";
     this.editor.customConfig.uploadImgHooks = {
       success: (xhr, editor, result) => {
-
+        this.messageService.success('图片上传成功')
       },
       customInsert: (insertImg, result, editor) => {
 

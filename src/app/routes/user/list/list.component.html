@@ -23,5 +23,8 @@
   </nz-table>
 </div>
 <div *ngIf="type===1">
-  <div id="tree-container"></div>
+  <div *ngIf="!flag" id="tree-container" style="width:1552px;height: 600px"></div>
+  <div *ngIf="flag" style="width:1552px;height: 600px;text-align: center">
+    <nz-spin nzSimple nzSize="large"></nz-spin>
+  </div>
 </div>

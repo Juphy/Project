@@ -11,16 +11,17 @@
                 <label class="ant-left-xxl" style="width: 98px">起止日期：</label>
                 <nz-range-picker [nzFormat]="date"></nz-range-picker>
                 <button nz-button nzType="primary" class="ant-left-xxl" (click)="search_data(true)">
-                <i nz-icon nzType="search" nzTheme="outline"></i>搜索
-            </button>
+                    <i nz-icon nzType="search" nzTheme="outline"></i>搜索
+                </button>
                 <button nz-button class="ant-left-large" (click)="clear_data()">
-                <i nz-icon nzType="reload" nzTheme="outline"></i>清空
-            </button>
+                    <i nz-icon nzType="reload" nzTheme="outline"></i>清空
+                </button>
             </div>
         </div>
     </div>
-    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="false" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" [nzPageSizeOptions]="pagesizeAry" (nzPageIndexChange)="search_data()"
-        (nzPageSizeChange)="search_data(true)">
+    <nz-table #table [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="false"
+        [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" [nzPageSizeOptions]="pagesizeAry"
+        (nzPageIndexChange)="search_data()" (nzPageSizeChange)="search_data(true)">
         <thead>
             <tr>
                 <th>姓名</th>
@@ -39,11 +40,15 @@
                 <td>{{ data.created_at }}</td>
                 <td>{{ status[data["status"]] }}</td>
                 <td>
-                    <button nz-button *ngIf="data.status === 0" nz-popconfirm nzTitle="你确定要审核通过这个申请吗？" (nzOnConfirm)="check_cash(data.id, 1)" (nzOnCancel)="cancel()" nzPlacement="top">审核通过</button>
-                    <button nz-button *ngIf="data.status === 0" nz-popconfirm nzTitle="你确定要审核不通过这个申请吗？" (nzOnConfirm)="check_cash(data.id, -1)" (nzOnCancel)="cancel()" nzPlacement="top">审核不通过</button>
+                    <button nz-button *ngIf="data.status === 0" nz-popconfirm nzTitle="你确定要审核通过这个申请吗？"
+                        (nzOnConfirm)="check_cash(data.id, 1)" (nzOnCancel)="cancel()" nzPlacement="top">审核通过</button>
+                    <button nz-button *ngIf="data.status === 0" nz-popconfirm nzTitle="你确定要审核不通过这个申请吗？"
+                        (nzOnConfirm)="check_cash(data.id, -1)" (nzOnCancel)="cancel()" nzPlacement="top">审核不通过</button>
                 </td>
             </tr>
         </tbody>
     </nz-table>
 </nz-card>
-<ng-template #totalTemplate> 总计 {{ total }} 条 </ng-template>
+<ng-template #totalTemplate> 总计 {{ total }} 条 当前页数：<nz-input-number class="ant-right" [(ngModel)]="page" (ngModelChange)="search_data()"
+        [nzMin]="1" [nzStep]="1"></nz-input-number>
+</ng-template>
