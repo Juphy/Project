@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule, PreloadAllModules } from "@angular/router";
 import { LayoutComponent } from "@layout/layout.component";
 import { environment } from "@env/environment";
-import { MainComponent } from "./main/main.component";
+import { NotfoundComponent } from './notfound/notfound.component';
 const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" },
   { path: "login", loadChildren: "./login/login.module#LoginModule" },
@@ -10,7 +10,6 @@ const routes: Routes = [
     path: "console",
     component: LayoutComponent,
     children: [
-      { path: "main", component: MainComponent },
       { path: "news", loadChildren: "./news/news.module#NewsModule" },
       { path: "system", loadChildren: "./system/system.module#SystemModule" },
       { path: "user", loadChildren: "./user/user.module#UserModule" },
@@ -21,9 +20,13 @@ const routes: Routes = [
         loadChildren: "./manager/manager.module#ManagerModule"
       },
       { path: "batch", loadChildren: "./batch/batch.module#BatchModule" },
-      { path: "pay", loadChildren: "./pay/pay.module#PayModule" }
+      { path: "pay", loadChildren: "./pay/pay.module#PayModule" },
+      { path: 'notfound', component: NotfoundComponent },
+      { path: '**', redirectTo: 'notfound' }
     ]
-  }
+  },
+  { path: 'notfound', component: NotfoundComponent },
+  { path: '**', redirectTo: 'notfound' }
 ];
 
 @NgModule({
@@ -35,4 +38,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class RouteRoutingModule {}
+export class RouteRoutingModule { }

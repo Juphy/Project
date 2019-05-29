@@ -26,7 +26,7 @@ export class CashComponent implements OnInit {
     private datePipe: DatePipe,
     private http: HttpClient,
     private messageService: NzMessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.get_data();
@@ -77,7 +77,6 @@ export class CashComponent implements OnInit {
     this.http
       .post("api/manager/check_cash", { cash_id, status })
       .subscribe(res => {
-        console.log(res);
         if (res["status"] === 200) {
           this.messageService.success("审核操作成功！");
           this.get_data();
@@ -85,5 +84,5 @@ export class CashComponent implements OnInit {
       });
   }
 
-  cancel() {}
+  cancel() { }
 }

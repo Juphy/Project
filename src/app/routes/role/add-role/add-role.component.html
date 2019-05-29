@@ -9,8 +9,8 @@
             <li class="role" *ngFor="let option of permissionOptions">
                 <label nz-checkbox [(ngModel)]="option.checked">{{option.name}}</label>
                 <div style="padding-left: 24px;">
-                    <label *ngFor="let a of option.children" nz-checkbox [(ngModel)]="a.checked" (click)="change_checked(a.id)"
-                        style="margin-left: 0">{{a.name}}</label>
+                    <label *ngFor="let a of option.children" nz-checkbox [(ngModel)]="a.checked"
+                        (ngModelChange)="change_checked(a.id)" style="margin-left: 0">{{a.name}}</label>
                 </div>
             </li>
         </ul>

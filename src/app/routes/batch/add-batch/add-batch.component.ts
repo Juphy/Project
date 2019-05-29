@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NzModalRef, NzMessageService } from "ng-zorro-antd";
+import { NzModalRef, NzMessageService, NzModalService } from "ng-zorro-antd";
 import { HttpClient } from "@angular/common/http";
 import { DatePipe } from "@angular/common";
 @Component({
@@ -15,7 +15,7 @@ export class AddBatchComponent implements OnInit {
   data = [];
   total = 0;
   loading = false;
-
+  btnLoading = false;
   mutual_gold;
   description = '';
   constructor(
@@ -23,6 +23,7 @@ export class AddBatchComponent implements OnInit {
     private nzMessageService: NzMessageService,
     private http: HttpClient,
     private datePipe: DatePipe,
+    private nzModalService: NzModalService,
   ) { }
 
   refresh_status() {
@@ -32,6 +33,17 @@ export class AddBatchComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  show_modal() {
+    this.nzModalService.confirm({
+      nzTitle: 'Do you Want to delete these items?',
+      nzContent: 'When clicked the OK button, this dialog will be closed after 1 second',
+      nzOnOk: () => {
+        this.get_data();
+      },
+      nzOnCancel: () => { }
+    })
   }
 
   get_data() {
@@ -83,13 +95,16 @@ export class AddBatchComponent implements OnInit {
       this.nzMessageService.warning('没有填写互助金！');
       return;
     }
-    params['mutual_gold'] = this.mutual_gold;
+    params['mutual_gold'] = this.mutual_gold * 100;
+    this.btnLoading = true;
     this.http.post('api/manager/add_mutual_gold', params).subscribe(res => {
-      console.log(res);
+      this.btnLoading = false;;
       if (res['status'] === 200) {
         this.nzMessageService.success('批量操作成功！');
         this.nzModalRef.destroy(true);
       }
+    }, err => {
+      this.btnLoading = false;
     })
   }
 

@@ -108,16 +108,30 @@ export class UserComponent implements OnInit {
     this.search_data(true);
   }
 
-  show_modal() {
+  show_modal(data) {
     let modal;
-    modal = this.modalService.create({
-      nzTitle: "添加用户",
-      nzContent: AddUserComponent,
-      nzFooter: null,
-      nzMaskClosable: false,
-      nzClosable: true,
-      nzWidth: 1000
-    });
+    if (data) {
+      modal = this.modalService.create({
+        nzTitle: "编辑用户",
+        nzContent: AddUserComponent,
+        nzComponentParams: {
+          data
+        },
+        nzFooter: null,
+        nzMaskClosable: false,
+        nzClosable: true,
+        nzWidth: 1000
+      });
+    } else {
+      modal = this.modalService.create({
+        nzTitle: "添加用户",
+        nzContent: AddUserComponent,
+        nzFooter: null,
+        nzMaskClosable: false,
+        nzClosable: true,
+        nzWidth: 1000
+      });
+    }
     modal.afterClose.subscribe(res => {
       if (res) {
         this.search_data();
@@ -140,6 +154,7 @@ export class UserComponent implements OnInit {
       .subscribe(res => {
         if (res["status"] === 200) {
           this.messageService.success("操作成功！");
+          this.get_data();
         }
       });
   }
@@ -202,7 +217,6 @@ export class UserComponent implements OnInit {
           );
         break;
       case 2:
-      case 1:
         this.http
           .post("api/manager/change_mutual_gold", {
             mutual_gold: Number(this.gold) * 100,
@@ -214,6 +228,7 @@ export class UserComponent implements OnInit {
               if (res["status"] === 200) {
                 this.messageService.success("修改成功！");
                 this.visible = false;
+                this.get_data();
               }
             },
             e => {
@@ -240,7 +255,7 @@ export class UserComponent implements OnInit {
       nzFooter: null,
       nzMaskClosable: false,
       nzClosable: true,
-      nzWidth: 1000
+      nzWidth: 1600
     })
 
   }

@@ -1,7 +1,11 @@
 <div nz-row style="padding: 24px">
+    <div nz-col class="ant-bottom">
+        <label>当前用户总数：</label>
+        <nz-input-number [(ngModel)]="num" [nzDisabled]="true"></nz-input-number>
+    </div>
     <div nz-col>
         <label>修改用户总数：</label>
-        <nz-input-number [(ngModel)]="num" [nzMin]="0" [nzStep]="1"></nz-input-number>
+        <nz-input-number [(ngModel)]="_num" [nzMin]="0" [nzStep]="1"></nz-input-number>
         <button nz-button class="ant-left-large" nzType="primary" (click)="change_num()">提交</button>
     </div>
 </div>

@@ -56,7 +56,7 @@ export class NewsComponent implements OnInit {
       pagesize: this.pagesize
     };
     if (this.c_id) {
-      params["c_id"] = this.c_id;
+      params["c_ids"] = [this.c_id];
     }
     if (this.title) {
       params["title"] = this.title;

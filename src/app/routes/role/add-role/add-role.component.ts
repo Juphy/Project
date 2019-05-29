@@ -33,7 +33,6 @@ export class AddRoleComponent implements OnInit {
 
   get_all_permission(permission?: Array<any>) {
     this.http.post("api/roles/permission", {}).subscribe(res => {
-      console.log(res);
       if (res["status"] === 200) {
         let data = res["data"];
         let roles = [];
@@ -95,7 +94,6 @@ export class AddRoleComponent implements OnInit {
   }
 
   change_checked(id) {
-    console.log(id);
     this.permissionOptions.forEach(item => {
       if (item.children.some(_item => _item.id == id)) item.checked = true;
     })

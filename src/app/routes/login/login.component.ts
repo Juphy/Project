@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
-import { DATA, userinfo } from "@core/store";
+import { DATA, userinfo, URL } from "@core/store";
 import { NzMessageService } from "ng-zorro-antd";
 import { Router } from "@angular/router";
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
@@ -11,14 +12,14 @@ import { Router } from "@angular/router";
 })
 export class LoginComponent implements OnInit {
   title = "用户管理系统";
-  description = "武林中最有影响力的《葵花宝典》；欲练神功，挥刀自宫";
+  description = "";
   validateForm: FormGroup;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private nzMessageService: NzMessageService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.validateForm = this.fb.group({
@@ -48,7 +49,6 @@ export class LoginComponent implements OnInit {
         password: this.password.value
       })
       .subscribe(res => {
-        console.log(res);
         if (res["status"] === 200) {
           this.nzMessageService.success(res["message"]);
           let data = res["data"];
@@ -68,7 +68,9 @@ export class LoginComponent implements OnInit {
             "permission",
             JSON.stringify(data["permission_list"])
           );
-          this.router.navigate(["console/user"]);
+          let a = data['permission_list'].find(item => item.description == 1);
+          let url = URL[a['name']];
+          this.router.navigateByUrl(url);
         }
       });
   }

@@ -29,10 +29,10 @@ export class RuleComponent implements OnInit, AfterViewInit {
         this.editor.customConfig.uploadFileName = "photo";
         this.editor.customConfig.uploadImgHooks = {
           success: (xhr, editor, result) => {
-            console.log(result);
+
           },
           customInsert: (insertImg, result, editor) => {
-            console.log(result);
+
             let path = result["data"];
             insertImg(siteinfo.ucs + path);
           }

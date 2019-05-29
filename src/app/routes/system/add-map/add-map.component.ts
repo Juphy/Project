@@ -105,7 +105,7 @@ export class AddMapComponent implements OnInit {
     this.http.post("api/upload_file", formData).subscribe(
       res => {
         this.loading = false;
-        console.log(res);
+
         if (res["status"] === 200) {
           this.image_name = res["data"];
         }

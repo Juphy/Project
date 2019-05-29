@@ -8,7 +8,7 @@
                 <label style="width: 64px">描述：</label>
                 <input type="text" nz-input [(ngModel)]="description" style="width: 120px;flex:none" />
                 <label class="ant-left-xxl" style="width: 98px">起止日期：</label>
-                <nz-range-picker [nzFormat]="datetime"></nz-range-picker>
+                <nz-range-picker [(ngModel)]="datetime" style="width: 260px"></nz-range-picker>
                 <button nz-button nzType="primary" class="ant-left-xxl" (click)="search_data(true)">
                     <i nz-icon nzType="search" nzTheme="outline"></i>搜索
                 </button>
@@ -23,16 +23,16 @@
         [nzPageSizeOptions]="pagesizeAry" (nzPageIndexChange)="search_data()" (nzPageSizeChange)="search_data(true)">
         <thead>
             <tr>
-                <th>user_id</th>
-                <th>change</th>
-                <th>description</th>
-                <th>created_at</th>
+                <th>操作人ID</th>
+                <th>互助金（元）</th>
+                <th>操作描述</th>
+                <th>操作时间</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let data of table.data">
                 <td>{{ data.user_id }}</td>
-                <td>{{ data.change }}</td>
+                <td>{{ (data.change/100).toFixed(2) }}</td>
                 <td>{{ data.description }}</td>
                 <td>{{ data.created_at }}</td>
             </tr>

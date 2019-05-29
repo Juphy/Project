@@ -51,7 +51,6 @@ export class PayComponent implements OnInit {
     this.http.post("api/manager/pay_list", params).subscribe(
       res => {
         this.loading = false;
-        console.log(res);
         let data = res["data"];
         this.data = [...data] || [];
         this.total = res["total"] || 0;

@@ -8,10 +8,11 @@ import { NzMessageService } from "ng-zorro-antd";
 })
 export class SumComponent implements OnInit {
   num;
+  _num = 0;
   constructor(
     private http: HttpClient,
     private messageService: NzMessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.get_sum_user();
@@ -27,7 +28,7 @@ export class SumComponent implements OnInit {
 
   change_num() {
     this.http
-      .post("api/manager/change_sum_user", { num: this.num })
+      .post("api/manager/change_sum_user", { num: this._num })
       .subscribe(res => {
         if (res["status"] === 200) {
           this.messageService.success("修改用户总数成功！");

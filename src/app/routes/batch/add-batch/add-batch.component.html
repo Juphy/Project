@@ -9,7 +9,8 @@
     <nz-input-number [(ngModel)]="end_id" [nzMin]="0" [nzStep]="1" nzPlaceHolder="结束id"></nz-input-number>
     <label class="ant-left">注册时间：</label>
     <nz-range-picker [(ngModel)]="datetime" style="width: 260px"></nz-range-picker>
-    <button class="ant-left" nz-button (click)="get_data()" nzType="primary">搜索</button>
+    <button class="ant-left" nz-button *ngIf="!data.length" (click)="get_data()" nzType="primary">搜索</button>
+    <button class="ant-left" nz-button *ngIf="data.length" (click)="show_modal()" nzType="primary">搜索</button>
   </div>
   <nz-table #basicTable [nzData]="data" nzShowPagination [nzShowTotal]="totalTemplate" [nzFrontPagination]="true"
     [nzTotal]="total" [nzLoading]="loading">
@@ -41,13 +42,15 @@
     <label style="width: 112px;line-height: 32px;text-align: right">操作描述：</label>
     <textarea rows="2" nz-input [(ngModel)]="description"></textarea>
   </div>
+  <div nz-col [nzSpan]="18" nzOffset="3"></div>
 </div>
 <div nz-row class="ant-top">
   <div nz-col style="text-align: center">
     <button *ngIf="current===0" nz-button class="ant-right" (click)="change_current(1)" [disabled]="!total"
       nzType="primary">下一步</button>
     <button *ngIf="current===1" nz-button class="ant-right" (click)="change_current(0)">上一步</button>
-    <button *ngIf="current===1" nz-button class="ant-right" nzType="primary" (click)="done()">完成</button>
+    <button *ngIf="current===1" nz-button class="ant-right" nzType="primary" (click)="done()"
+      [nzLoading]="btnLoading">完成</button>
     <button nz-button class="ant-right" (click)="cancel()">取消</button>
   </div>
 </div>
