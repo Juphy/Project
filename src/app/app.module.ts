@@ -63,7 +63,7 @@ const INTERCEPTOR_PROVIDES = [
     CoreModule,
     SharedModule,
     LayoutModule,
-    RoutesModule,
+    RoutesModule
     // ServiceWorkerModule.register("ngsw-worker.js", {
     //   enabled: environment.production
     // })
@@ -72,6 +72,7 @@ const INTERCEPTOR_PROVIDES = [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     // { provide: LocationStrategy, useClass: PathLocationStrategy }, // 使用Html5路由
     { provide: RouteReuseStrategy, useClass: AppRoutingCache }, // 实现路由缓存
+    { provide: APP_BASE_HREF, useValue: "/" },
     ...LANG_PROVIDES,
     ...INTERCEPTOR_PROVIDES,
     ...APPINIT_PROVIDES

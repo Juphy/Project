@@ -14,11 +14,21 @@ export class StartupService {
 
   load() {
     console.log("welcome!");
-    DATA["TOKEN"] = localStorage.getItem("token") ? localStorage.getItem("token") : '';
-    userinfo["name"] = localStorage.getItem("name") ? localStorage.getItem("name") : '';
-    userinfo["id"] = localStorage.getItem("id") ? localStorage.getItem("id") : '';
-    userinfo["roles"] = localStorage.getItem("roles") ? JSON.parse(localStorage.getItem("roles")) : [];
-    userinfo["permission"] = localStorage.getItem("permission") ? JSON.parse(localStorage.getItem("permission")) : [];
+    DATA["TOKEN"] = localStorage.getItem("token")
+      ? localStorage.getItem("token")
+      : "";
+    userinfo["name"] = localStorage.getItem("name")
+      ? localStorage.getItem("name")
+      : "";
+    userinfo["id"] = localStorage.getItem("id")
+      ? localStorage.getItem("id")
+      : "";
+    userinfo["roles"] = localStorage.getItem("roles")
+      ? JSON.parse(localStorage.getItem("roles"))
+      : [];
+    userinfo["permission"] = localStorage.getItem("permission")
+      ? JSON.parse(localStorage.getItem("permission"))
+      : [];
   }
 
   // load(): Promise<any> {

@@ -33,15 +33,15 @@ const CODEMESSAGE = {
 
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) { }
+  constructor(private injector: Injector) {}
 
   get msg(): NzMessageService {
     return this.injector.get(NzMessageService);
   }
 
   private goTo(url: string) {
-    setTimeout(() => (window.location.href = url), 300);
-    // setTimeout(() => this.injector.get(Router).navigateByUrl(url));
+    // setTimeout(() => (window.location.href = url), 300);
+    setTimeout(() => this.injector.get(Router).navigateByUrl(url));
   }
 
   private handleData(event: HttpResponseBase): Observable<any> {
@@ -66,7 +66,7 @@ export class DefaultInterceptor implements HttpInterceptor {
       case 500: //服务端错误
         let message = event["error"]["message"];
         if (message.includes("Token")) {
-          this.goTo(siteinfo.site + "/login");
+          this.goTo("/login");
         }
         this.msg.error(event["error"]["message"]);
         break;

@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -15,17 +15,17 @@
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2018", "dom"],
     "paths": {
-      "@shared": ["app/shared"],
-      "@shared/*": ["app/shared/*"],
-      "@core": ["app/core"],
-      "@core/*": ["app/core/*"],
-      "@routes": ["app/routes"],
-      "@routes/*": ["app/routes/*"],
-      "@layout": ["app/layout"],
-      "@layout/*": ["app/layout/*"],
-      "@env/*": ["environments/*"],
-      "@assets": ["assets"],
-      "@assets/*": ["assets/*"]
+      "@shared": ["src/app/shared"],
+      "@shared/*": ["src/app/shared/*"],
+      "@core": ["src/app/core"],
+      "@core/*": ["src/app/core/*"],
+      "@routes": ["src/app/routes"],
+      "@routes/*": ["src/app/routes/*"],
+      "@layout": ["src/app/layout"],
+      "@layout/*": ["src/app/layout/*"],
+      "@env/*": ["src/environments/*"],
+      "@assets": ["src/assets"],
+      "@assets/*": ["src/assets/*"]
     }
   }
 }

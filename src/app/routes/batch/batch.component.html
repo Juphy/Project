@@ -18,15 +18,15 @@
             </div>
         </div>
     </div>
-    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page"
-        [nzFrontPagination]="false" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading"
-        [nzPageSizeOptions]="pagesizeAry" (nzPageIndexChange)="search_data()" (nzPageSizeChange)="search_data(true)">
+    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="false" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" [nzPageSizeOptions]="pagesizeAry" (nzPageIndexChange)="search_data()"
+        (nzPageSizeChange)="search_data(true)">
         <thead>
             <tr>
                 <th>操作人ID</th>
                 <th>互助金（元）</th>
                 <th>操作描述</th>
                 <th>操作时间</th>
+                <th>操作</th>
             </tr>
         </thead>
         <tbody>
@@ -35,6 +35,9 @@
                 <td>{{ (data.change/100).toFixed(2) }}</td>
                 <td>{{ data.description }}</td>
                 <td>{{ data.created_at }}</td>
+                <td>
+                    <button nz-button (click)="show_detail()">查看详情</button>
+                </td>
             </tr>
         </tbody>
     </nz-table>
