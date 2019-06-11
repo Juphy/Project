@@ -1,3 +1,4 @@
+import { BatchDetailComponent } from './batch-detail/batch-detail.component';
 import { AddBatchComponent } from './add-batch/add-batch.component';
 import { Component, OnInit } from "@angular/core";
 import { DatePipe } from "@angular/common";
@@ -12,13 +13,13 @@ import { FN } from '@core/store';
 export class BatchComponent implements OnInit {
   data = [];
   page = 1;
-  pagesize = 16;
-  pagesizeAry = [16, 32, 48];
+  pagesize = 15;
   loading = false;
   total = 0;
   description;
   datetime;
   fn = {};
+  max = 1
   constructor(
     private modalService: NzModalService,
     private datePipe: DatePipe,
@@ -58,6 +59,8 @@ export class BatchComponent implements OnInit {
           let data = res["data"];
           this.data = data["data"] || [];
           this.total = data["total"];
+          this.pagesize = data['per_page'];
+          this.max = data['last_page'];
         }
       });
   }
@@ -72,6 +75,7 @@ export class BatchComponent implements OnInit {
   clear_data() {
     this.description = '';
     this.datetime = null;
+    this.get_data();
   }
 
   show_modal() {
@@ -89,5 +93,18 @@ export class BatchComponent implements OnInit {
         this.search_data(true);
       }
     })
+  }
+
+  show_detail(id) {
+    let modal;
+    modal = this.modalService.create({
+      nzTitle: '查看批量操作详情',
+      nzContent: BatchDetailComponent,
+      nzComponentParams: { id },
+      nzFooter: null,
+      nzMaskClosable: false,
+      nzClosable: true,
+      nzWidth: 1250
+    });
   }
 }

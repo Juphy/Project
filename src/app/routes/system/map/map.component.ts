@@ -24,7 +24,7 @@ export class MapComponent implements OnInit {
     private modalService: NzModalService,
     private http: HttpClient,
     private messageService: NzMessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.get_data();
@@ -107,7 +107,7 @@ export class MapComponent implements OnInit {
       });
   }
 
-  cancel() {}
+  cancel() { }
 
   delete_image(id) {
     this.http.post("api/manager/delete_carousel_map", { id }).subscribe(res => {

@@ -18,8 +18,9 @@
             </div>
         </div>
     </div>
-    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="false" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" [nzPageSizeOptions]="pagesizeAry" (nzPageIndexChange)="search_data()"
-        (nzPageSizeChange)="search_data(true)">
+    <nz-table #table [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page"
+        [nzFrontPagination]="false" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading"
+        (nzPageIndexChange)="search_data()" (nzPageSizeChange)="search_data(true)">
         <thead>
             <tr>
                 <th>操作人ID</th>
@@ -36,13 +37,14 @@
                 <td>{{ data.description }}</td>
                 <td>{{ data.created_at }}</td>
                 <td>
-                    <button nz-button (click)="show_detail()">查看详情</button>
+                    <button nz-button (click)="show_detail(data.id)">查看详情</button>
                 </td>
             </tr>
         </tbody>
     </nz-table>
 </nz-card>
-<ng-template #totalTemplate> 总计 {{ total }} 条 </ng-template>
+<ng-template #totalTemplate> 总计 {{ total }} 条 当前页数：<nz-input-number class="ant-right" [(ngModel)]="page" (ngModelChange)="search_data()" [nzMin]="1" [nzStep]="1"
+    [(nzMax)]="max"></nz-input-number></ng-template>
 <ng-template #extraTemplate>
     <button *ngIf="fn['batch_mutual_gold']" nz-button (click)="show_modal()" nzType="primary">
         <span>批量操作互助金</span>

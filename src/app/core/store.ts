@@ -1,6 +1,6 @@
 export let siteinfo = {
-  site: "",
-  api: "https://chengcheng.wenquanpage.com",
+  site: "https://www.chengdicheng198.cn",
+  api: "https://www.chengdicheng198.cn/",
   ucs: "https://chengcheng.wenquanpage.com/"
 };
 export let userinfo = { name: "", id: "", roles: [], info: {}, permission: [] };

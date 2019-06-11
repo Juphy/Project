@@ -19,7 +19,7 @@ export class RangeComponent implements OnInit {
     private modalService: NzModalService,
     private http: HttpClient,
     private messageService: NzMessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.get_data();
@@ -83,5 +83,5 @@ export class RangeComponent implements OnInit {
     });
   }
 
-  cancel() {}
+  cancel() { }
 }

@@ -22,6 +22,7 @@ export class CashComponent implements OnInit {
     "0": "申请中",
     "1": "已通过"
   };
+  max = 1;
   constructor(
     private datePipe: DatePipe,
     private http: HttpClient,
@@ -53,6 +54,8 @@ export class CashComponent implements OnInit {
         this.loading = false;
         this.data = res["data"] || [];
         this.total = res["total"] || 0;
+        this.pagesize = res['per_page'] || 15;
+        this.max = res['last_page'] || 1;
       },
       err => {
         this.loading = false;

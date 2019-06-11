@@ -10,8 +10,7 @@ import { CreateComponent } from "./create/create.component";
 export class NewsComponent implements OnInit {
   data = [];
   page = 1;
-  pagesize = 16;
-  pagesizeAry = [16, 32, 48];
+  pagesize = 15;
   loading = false;
   total = 0;
   title;
@@ -21,6 +20,7 @@ export class NewsComponent implements OnInit {
     0: "未发布",
     1: "已发布"
   };
+  max = 1;
   constructor(
     private modalService: NzModalService,
     private http: HttpClient,
@@ -69,6 +69,8 @@ export class NewsComponent implements OnInit {
           let data = res["data"];
           this.data = data["data"];
           this.total = data["total"];
+          this.pagesize = data['per_page'] || 15;
+          this.max = data['last_page'] || 1;
         }
       },
       error => {
@@ -144,5 +146,8 @@ export class NewsComponent implements OnInit {
         this.search_data();
       }
     });
+  }
+  cancel() {
+
   }
 }

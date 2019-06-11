@@ -13,7 +13,7 @@
         </div>
     </div>
     <nz-table #table [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="false"
-        [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" [nzPageSizeOptions]="pagesizeAry"
+        [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading"
         (nzPageIndexChange)="search_data()" (nzPageSizeChange)="search_data(true)">
         <thead>
             <tr>
@@ -42,8 +42,8 @@
         </tbody>
     </nz-table>
 </nz-card>
-<ng-template #totalTemplate> 总计 {{ total }} 条 当前页数：<nz-input-number class="ant-right" [(ngModel)]="page"
-        (ngModelChange)="search_data()" [nzMin]="1" [nzStep]="1"></nz-input-number>
+<ng-template #totalTemplate> 总计 {{ total }} 条   当前页数：<nz-input-number class="ant-right" [(ngModel)]="page"
+        (ngModelChange)="search_data()" [nzMin]="1" [nzStep]="1" [(nzMax)]= "max"></nz-input-number>
 </ng-template>
 
 <ng-template #extraTemplate>

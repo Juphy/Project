@@ -37,8 +37,8 @@ export class AddBatchComponent implements OnInit {
 
   show_modal() {
     this.nzModalService.confirm({
-      nzTitle: 'Do you Want to delete these items?',
-      nzContent: 'When clicked the OK button, this dialog will be closed after 1 second',
+      nzTitle: '【*警 告*】',
+      nzContent: '重新搜索之后，之前勾选的用户不在圈定的范围内！',
       nzOnOk: () => {
         this.get_data();
       },

@@ -11,8 +11,7 @@ import { AddManagerComponent } from "./add-manager/add-manager.component";
 export class ManagerComponent implements OnInit {
   data = [];
   page = 1;
-  pagesize = 16;
-  pagesizeAry = [16, 32, 48];
+  pagesize = 15;
   loading = false;
   total = 0;
 
@@ -21,6 +20,8 @@ export class ManagerComponent implements OnInit {
   status = {
     "1": "正常"
   };
+
+  max = 1;
   constructor(
     private modalService: NzModalService,
     private http: HttpClient,
@@ -46,6 +47,8 @@ export class ManagerComponent implements OnInit {
           let data = res["data"];
           this.data = data["data"] || [];
           this.total = data["total"] || 0;
+          this.pagesize = data['per_page'] || 15;
+          this.max = data['last_page'] || 1;
         }
       },
       err => {

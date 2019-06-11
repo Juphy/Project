@@ -22,6 +22,7 @@ export class SumComponent implements OnInit {
     this.http.post("api/get_sum_user", {}).subscribe(res => {
       if (res["status"] === 200) {
         this.num = res["data"];
+        this._num = this.num;
       }
     });
   }
@@ -32,6 +33,7 @@ export class SumComponent implements OnInit {
       .subscribe(res => {
         if (res["status"] === 200) {
           this.messageService.success("修改用户总数成功！");
+          this.get_sum_user();
         }
       });
   }

@@ -21,6 +21,8 @@ export class RoleComponent implements OnInit {
     '0': '禁用',
     '1': '正常'
   };
+
+  max = 1;
   constructor(
     private modalService: NzModalService,
     private http: HttpClient,
@@ -33,8 +35,7 @@ export class RoleComponent implements OnInit {
 
   get_data() {
     let params = {
-      page: this.page,
-      pagesize: this.pagesize
+      page: this.page
     };
     this.loading = true;
     this.http.post("api/roles/index", {}).subscribe(
@@ -57,6 +58,10 @@ export class RoleComponent implements OnInit {
       this.page = 1;
     }
     this.get_data();
+  }
+
+  clear_data() {
+
   }
 
   show_modal(id?: any) {

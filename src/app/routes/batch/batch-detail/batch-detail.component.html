@@ -1,3 +1,42 @@
-<p>
-  batch-detail works!
-</p>
+<div nz-row class="ant-bottom">
+  <div nz-col>
+    <label>关键字：</label>
+    <input type="text" nz-input [(ngModel)]="search_str" style="width: 200px">
+    <button nz-button class="ant-left-xxl" (click)="search_data(true)">搜索</button>
+    <button nz-button class="ant-left" (click)="clear_data()">清空</button>
+  </div>
+</div>
+<nz-table #table [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="false"
+  [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" (nzPageIndexChange)="search_data()"
+  (nzPageSizeChange)="search_data(true)">
+  <thead>
+    <tr>
+      <th>会员编号</th>
+      <th>身份证号</th>
+      <th>姓名</th>
+      <th>性别</th>
+      <th>电话</th>
+      <th>地址</th>
+      <th>余额（元）</th>
+      <th>互助金（元）</th>
+      <th>创建时间</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of table.data" [ngClass]="{marked: data.mutual_gold<3000}">
+      <td>{{data.snum}}</td>
+      <td>{{ data.id_card }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{['','男','女'][data.sex]}}</td>
+      <td>{{data.phone}}</td>
+      <td>{{ data.address }}</td>
+      <td>{{(data.balance/100).toFixed(2)}}</td>
+      <td>{{(data.mutual_gold/100).toFixed(2)}}</td>
+      <td>{{ data.created_at.split(' ')[0] }}</td>
+    </tr>
+  </tbody>
+</nz-table>
+<ng-template #totalTemplate> 总计 {{ total }} 条 当前页数：<nz-input-number class="ant-right" [(ngModel)]="page"
+    (ngModelChange)="search_data()" [nzMin]="1" [nzStep]="1" [(nzMax)]="max">
+  </nz-input-number>
+</ng-template>

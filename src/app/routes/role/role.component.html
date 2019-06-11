@@ -12,9 +12,8 @@
             </button>
         </div>
     </div>
-    <nz-table #table nzShowSizeChanger [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page"
-        [nzFrontPagination]="true" [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading"
-        [nzPageSizeOptions]="pagesizeAry">
+    <nz-table #table [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="true"
+        [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading">
         <thead>
             <tr>
                 <th>名称</th>
@@ -43,7 +42,9 @@
         </tbody>
     </nz-table>
 </nz-card>
-<ng-template #totalTemplate> 总计 {{ total }} 条 </ng-template>
+<ng-template #totalTemplate> 总计 {{ total }} 条 当前页数：<nz-input-number class="ant-right" [(ngModel)]="page"
+        (ngModelChange)="search_data()" [nzMin]="1" [nzStep]="1" [(nzMax)]="max"></nz-input-number>
+</ng-template>
 <ng-template #extraTemplate>
     <button nz-button (click)="show_modal()" nzType="primary">
         <span>添加角色</span>

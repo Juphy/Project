@@ -19,9 +19,10 @@ export class AddMapComponent implements OnInit {
 
   loading = false;
   linkHeader = "http://";
+  a = NaN;
   @Input() title: any;
   @Input() image_name: any;
-  @Input() link: any;
+  @Input() link: any = '';
   @Input() id: any;
   constructor(
     private nzModalRef: NzModalRef,
@@ -130,14 +131,10 @@ export class AddMapComponent implements OnInit {
       this.messageService.warning("尚未上传图片！");
       return;
     }
-    if (!this.link) {
-      this.messageService.warning("图片外链不能为空！");
-      return;
-    }
     let params = {
       title: this.title,
       image_name: this.image_name,
-      link: this.linkHeader + this.link
+      link: this.link
     };
     if (this.id) {
       params["id"] = this.id;

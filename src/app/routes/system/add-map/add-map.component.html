@@ -6,9 +6,9 @@
 <div class="ant-bottom" nz-row>
     <div nz-col [nzSpan]="24">
         <label>图片外链：</label>
-        <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
-            <input type="text" nz-input [(ngModel)]="link" />
-        </nz-input-group>
+        <!-- <nz-input-group> -->
+        <input type="text" nz-input [(ngModel)]="link" />
+        <!-- </nz-input-group> -->
         <ng-template #addOnBeforeTemplate>
             <nz-select [ngModel]="linkHeader">
                 <nz-option [nzLabel]="'Http://'" [nzValue]="'http://'"></nz-option>
@@ -34,7 +34,7 @@
             <label nz-radio-button [nzValue]="16/9">16:9</label>
             <label nz-radio-button [nzValue]="4/3">4:3</label>
             <label nz-radio-button [nzValue]="1">1:1</label>
-            <label nz-radio-button [nzValue]="NaN">free</label>
+            <label nz-radio-button [nzValue]="a">free</label>
         </nz-radio-group>
         <label class="ant-left-xxl">旋转：</label>
         <nz-radio-group>

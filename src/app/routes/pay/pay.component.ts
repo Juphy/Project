@@ -10,18 +10,18 @@ import { DatePipe } from "@angular/common";
 export class PayComponent implements OnInit {
   data = [];
   page = 1;
-  pagesize = 16;
-  pagesizeAry = [16, 32, 48];
+  pagesize = 15;
   loading = false;
   total = 0;
 
   name;
   datetime;
+  max = 1;
   constructor(
     private http: HttpClient,
     private messageService: NzMessageService,
     private datePipe: DatePipe
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.get_data();
@@ -54,6 +54,8 @@ export class PayComponent implements OnInit {
         let data = res["data"];
         this.data = [...data] || [];
         this.total = res["total"] || 0;
+        this.pagesize = res['per_page'] || 15;
+        this.max = res['last_page'] || 1;
         this.data.forEach(item => {
           let b = "0000000";
           let a = item["pay_for_user"].toString();

@@ -1,15 +1,8 @@
 ﻿<form nz-form [formGroup]="validateForm" (ngSubmit)="submit_form()">
     <nz-form-item>
-        <nz-form-label [nzSpan]="6">推荐人编号</nz-form-label>
-        <nz-form-control [nzSpan]="12">
-            <input type="text" nz-input formControlName="parent_snum" placeholder="推荐人编号" />
-        </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
         <nz-form-label [nzSpan]="6" nzRequired>身份证号码</nz-form-label>
         <nz-form-control [nzSpan]="12">
-            <input type="text" nz-input formControlName="id_card" (ngModelChange)="handle_birth($event)"
-                placeholder="身份证号码" />
+            <input type="text" nz-input formControlName="id_card" placeholder="身份证号码" />
             <nz-form-explain *ngIf="validateForm.get('id_card')?.dirty && validateForm.get('id_card')?.errors">
                 请输入你的身份证号码！
             </nz-form-explain>
@@ -30,15 +23,6 @@
         </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzRequired>生日</nz-form-label>
-        <nz-form-control [nzSpan]="12">
-            <nz-date-picker formControlName="birthday" placeholder="生日"></nz-date-picker>
-            <nz-form-explain *ngIf="validateForm.get('birthday')?.dirty && validateForm.get('birthday')?.errors">
-                请输入你的生日！
-            </nz-form-explain>
-        </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
         <nz-form-label [nzSpan]="6" nzRequired>地址</nz-form-label>
         <nz-form-control [nzSpan]="12">
             <input type="text" nz-input formControlName="address" placeholder="地址" />
@@ -46,7 +30,7 @@
             </nz-form-explain>
         </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
+    <nz-form-item *ngIf="data.id">
         <nz-form-label [nzSpan]="6" nzRequired>密码</nz-form-label>
         <nz-form-control [nzSpan]="12">
             <input type="password" nz-input formControlName="password" placeholder="密码" />
@@ -56,7 +40,7 @@
             </nz-form-explain>
         </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
+    <nz-form-item *ngIf="data.id">
         <nz-form-label [nzSpan]="6" nzRequired>确认密码</nz-form-label>
         <nz-form-control [nzSpan]="12">
             <input type="password" nz-input formControlName="_password" placeholder="确认密码" />

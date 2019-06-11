@@ -7,7 +7,12 @@
       <button nz-button (click)="logout()">退出登录</button>
     </ng-template>
     <div class="account">
-      <i nz-icon nzType="user" nzTheme="outline" style="margin-right: 6px;"></i>{{ name }}
+      <div>
+        <i nz-icon nzType="user" nzTheme="outline" style="margin-right: 6px;"></i>{{ name }}
+      </div>
+      <!-- <div class="others">
+        <button nz-button (click)="logout()">退出登录</button>
+      </div> -->
     </div>
   </header>
   <nz-layout style="display: flex">

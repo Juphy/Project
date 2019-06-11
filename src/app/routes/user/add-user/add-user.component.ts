@@ -22,11 +22,9 @@ export class AddUserComponent implements OnInit {
     this.validateForm = this.fb.group({
       id_card: ["", [Validators.required]],
       name: ["", [Validators.required]],
-      birthday: [null, [Validators.required]],
       address: ["", [Validators.required]],
       password: [123456, [Validators.required]],
       _password: [123456, [Validators.required]],
-      parent_snum: ['',],
       phone: ['',],
     });
   }
@@ -37,10 +35,6 @@ export class AddUserComponent implements OnInit {
 
   get name() {
     return this.validateForm.controls.name;
-  }
-
-  get birthday() {
-    return this.validateForm.controls.birthday;
   }
 
   get address() {
@@ -59,34 +53,20 @@ export class AddUserComponent implements OnInit {
     return this.validateForm.controls.phone;
   }
 
-  get parent_snum() {
-    return this.validateForm.controls.parent_snum;
-  }
-
 
   ngOnInit() {
     if (this.data) {
       this.validateForm = this.fb.group({
         id_card: [this.data.id_card, [Validators.required]],
         name: [this.data.name, [Validators.required]],
-        birthday: [new Date(this.data.birthday), [Validators.required]],
         address: [this.data.address, [Validators.required]],
         password: [123456, [Validators.required]],
         _password: [123456, [Validators.required]],
-        parent_snum: [this.data.parent_snum,],
         phone: [this.data.phone,],
       });
     }
   }
 
-  handle_birth(e) {
-    if (this.birthday.value) return;
-    if (e.length >= 18) {
-      e = e.slice(6, 14);
-      let date = e.slice(0, 4) + "-" + e.slice(4, 6) + "-" + e.slice(6, 8);
-      this.birthday.setValue(new Date(date));
-    }
-  }
 
   submit_form() {
     if (this.password.value !== this._password.value) {
@@ -101,7 +81,6 @@ export class AddUserComponent implements OnInit {
     if (
       this.id_card.invalid ||
       this.name.invalid ||
-      this.birthday.invalid ||
       this.address.invalid ||
       this.password.invalid ||
       this._password.invalid
@@ -111,10 +90,8 @@ export class AddUserComponent implements OnInit {
     let params = {
       id_card: this.id_card.value,
       name: this.name.value,
-      birthday: this.datePipe.transform(this.birthday.value, "yyyy-MM-dd"),
       address: this.address.value,
-      phone: this.phone.value,
-      parent_snum: this.parent_snum.value
+      phone: this.phone.value
     }
     if (this.data) {
       params['id'] = this.data.id;

@@ -42,11 +42,12 @@
         </div>
     </div>
     <nz-table #table [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="false"
-        [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" [nzPageSizeOptions]="pagesizeAry"
-        (nzPageIndexChange)="search_data()" (nzPageSizeChange)="search_data(true)">
+        [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" (nzPageIndexChange)="search_data()"
+        (nzPageSizeChange)="search_data(true)">
         <thead>
             <tr>
                 <th>会员编号</th>
+                <th>推荐人编号</th>
                 <th>身份证号</th>
                 <th>姓名</th>
                 <th>性别</th>
@@ -62,6 +63,7 @@
         <tbody>
             <tr *ngFor="let data of table.data" [ngClass]="{marked: data.mutual_gold<3000}">
                 <td>{{data.snum}}</td>
+                <td>{{data.parent_snum}}</td>
                 <td>{{ data.id_card }}</td>
                 <td>{{ data.name }}</td>
                 <td>{{['','男','女'][data.sex]}}</td>
@@ -89,6 +91,8 @@
                         (click)="show_balance_gold(data.id, 1, data.balance)">修改余额</button>
                     <button class="ant-right" *ngIf="fn['change_mutual_gold']" nz-button
                         (click)="show_balance_gold(data.id, 2, data.mutual_gold)">修改互助金</button>
+                    <button class="ant-right" *ngIf="fn['change_parent_snum']" nz-button
+                        (click)="show_balance_gold(data.id, 3, data.parent_snum)">修改推荐人编号</button>
                     <button class="ant-right" *ngIf="fn['user_parent_list']" nz-button
                         (click)="user_parent_list(data.id)">查看父级</button>
                     <button *ngIf='fn["user_child_list"]' nz-button (click)="user_child_list(data.id)">查看子级</button>
@@ -98,7 +102,7 @@
     </nz-table>
 </nz-card>
 <ng-template #totalTemplate> 总计 {{ total }} 条 当前页数：<nz-input-number class="ant-right" [(ngModel)]="page"
-        (ngModelChange)="search_data()" [nzMin]="1" [nzStep]="1">
+        (ngModelChange)="search_data()" [nzMin]="1" [nzStep]="1" [(nzMax)]="max">
     </nz-input-number>
 </ng-template>
 
@@ -107,7 +111,7 @@
         <span>添加用户</span>
     </button>
 </ng-template>
-<nz-modal [(nzVisible)]="visible" [nzTitle]="type===1?'修改余额': (type===2? '修改互助金':'')" (nzOnCancel)="cancel()"
+<nz-modal [(nzVisible)]="visible" [nzTitle]="type===1?'修改余额': (type===2? '修改互助金':'修改推荐人编号')" (nzOnCancel)="cancel()"
     (nzOnOk)="make_sure()" nzOkText="确认" nzCancelText="关闭" [nzMaskClosable]="false" [nzOkLoading]="visibleLoading">
     <div nz-row *ngIf="type===1">
         <label>余额：</label>
@@ -116,5 +120,9 @@
     <div nz-row *ngIf="type===2">
         <label>互助金：</label>
         <nz-input-number [(ngModel)]="gold"></nz-input-number> 元
+    </div>
+    <div nz-row *ngIf="type===3" style="display: flex">
+        <label style="width: 142px;line-height: 32px">推荐人编号：</label>
+        <input type="text" nz-input [(ngModel)]="parent_snum">
     </div>
 </nz-modal>

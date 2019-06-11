@@ -13,7 +13,7 @@ import { DatePipe } from "@angular/common";
 export class UserComponent implements OnInit {
   data = [];
   page = 1;
-  pagesize = 16;
+  pagesize = 15;
   pagesizeAry = [16, 32, 48];
   loading = false;
   total = 0;
@@ -24,7 +24,9 @@ export class UserComponent implements OnInit {
   user_id;
   balance;
   gold;
-  type; // 1 balance  2 gold
+  type; // 1 balance  2 gold   3 修改推荐人
+
+  max = 1;
 
   status = {
     "0": "未激活",
@@ -37,6 +39,8 @@ export class UserComponent implements OnInit {
   address = "";
   sex;
   datetime;
+
+  parent_snum;
   constructor(
     private modalService: NzModalService,
     private http: HttpClient,
@@ -85,6 +89,8 @@ export class UserComponent implements OnInit {
         this.loading = false;
         this.data = res["data"] || [];
         this.total = res["total"] || 0;
+        this.pagesize = res['per_page'] || 15;
+        this.max = res['last_page'] || 1;
       },
       err => {
         this.loading = false;
@@ -189,6 +195,9 @@ export class UserComponent implements OnInit {
       case 2:
         this.gold = (num / 100).toFixed(2);
         break;
+      case 3:
+        this.parent_snum = num;
+        break;
     }
     this.visible = true;
   }
@@ -235,6 +244,21 @@ export class UserComponent implements OnInit {
               this.visibleLoading = false;
             }
           );
+        break;
+      case 3:
+        this.http.post('api/manager/change_parent_snum', {
+          parent_snum: this.parent_snum,
+          user_id: this.user_id
+        }).subscribe(res => {
+          this.visibleLoading = false;
+          if (res['status'] === 200) {
+            this.messageService.success("修改成功！");
+            this.visible = false;
+            this.get_data();
+          }
+        }, e => {
+          this.visibleLoading = false;
+        })
         break;
     }
   }
