@@ -11,6 +11,7 @@ import { DatePipe } from "@angular/common";
 export class AddUserComponent implements OnInit {
   validateForm: FormGroup;
   loading = false;
+  snum;
   @Input() data: any;
   constructor(
     private nzModalRef: NzModalRef,
@@ -26,6 +27,7 @@ export class AddUserComponent implements OnInit {
       password: [123456, [Validators.required]],
       _password: [123456, [Validators.required]],
       phone: ['',],
+      parent_snum: ['']
     });
   }
 
@@ -53,9 +55,13 @@ export class AddUserComponent implements OnInit {
     return this.validateForm.controls.phone;
   }
 
+  get parent_snum () {
+    return this.validateForm.controls.parent_snum;
+  }
 
   ngOnInit() {
     if (this.data) {
+      this.snum = this.data.snum;
       this.validateForm = this.fb.group({
         id_card: [this.data.id_card, [Validators.required]],
         name: [this.data.name, [Validators.required]],
@@ -85,23 +91,17 @@ export class AddUserComponent implements OnInit {
       this.password.invalid ||
       this._password.invalid
     )
-      return;
-    this.loading = true;
-    let params = {
-      id_card: this.id_card.value,
-      name: this.name.value,
-      address: this.address.value,
-      phone: this.phone.value
-    }
+    return;
     if (this.data) {
-      params['id'] = this.data.id;
-      if (this.password.value == '123456') {
-
-      } else {
-        params['password'] = this.password.value;
-      }
       this.http
-        .post("api/manager/edit_user", params)
+        .post("api/manager/edit_user", {
+          id: this.data.id,
+          snum: this.snum,
+          phone: this.phone.value,
+          id_card: this.id_card.value,
+          name: this.name.value,
+          address: this.address.value
+        })
         .subscribe(res => {
           this.loading = false;
           if (res["status"] === 200) {
@@ -112,7 +112,15 @@ export class AddUserComponent implements OnInit {
           this.loading = false;
         });
     } else {
-      params['password'] = this.password.value;
+      this.loading = true;
+      let params = {
+        id_card: this.id_card.value,
+        name: this.name.value,
+        address: this.address.value,
+        phone: this.phone.value,
+        parent_snum: this.parent_snum.value,
+        password: this.password.value
+      }
       this.http
         .post("api/manager/add_user", params)
         .subscribe(res => {

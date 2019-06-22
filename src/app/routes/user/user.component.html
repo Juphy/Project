@@ -17,11 +17,8 @@
                 <input type="text" nz-input [(ngModel)]="address">
             </div>
             <div nz-col [nzSpan]="6">
-                <label>性别：</label>
-                <nz-select [(ngModel)]="sex" nzAllowClear nzPlaceHolder="选择性别">
-                    <nz-option nzLabel="男" [nzValue]="1"></nz-option>
-                    <nz-option nzLabel="女" [nzValue]="2"></nz-option>
-                </nz-select>
+                <label style="width: 148px">互助金范围（元）：</label>
+                <nz-input-number [nzFormatter]="formatterPercent" [(ngModel)]="start_mutual_gold" [nzStep]="0.01"></nz-input-number><span style="display: inline-block;line-height: 32px;padding: 0 6px">至</span><nz-input-number [nzFormatter]="formatterPercent" [nzStep]="0.01" [(ngModel)]="end_mutual_gold"></nz-input-number>
             </div>
         </div>
         <div nz-row>
@@ -50,7 +47,6 @@
                 <th>推荐人编号</th>
                 <th>身份证号</th>
                 <th>姓名</th>
-                <th>性别</th>
                 <th>电话</th>
                 <th>地址</th>
                 <th>余额（元）</th>
@@ -66,7 +62,6 @@
                 <td>{{data.parent_snum}}</td>
                 <td>{{ data.id_card }}</td>
                 <td>{{ data.name }}</td>
-                <td>{{['','男','女'][data.sex]}}</td>
                 <td>{{data.phone}}</td>
                 <td>{{ data.address }}</td>
                 <td>{{(data.balance/100).toFixed(2)}}</td>

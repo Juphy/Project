@@ -64,19 +64,29 @@ export class AddRoleComponent implements OnInit {
   }
 
   add_edit_role() {
-    if (this.id) {
-    } else {
-      let permission_ids = [];
-      this.permissionOptions.forEach(item => {
-        if (item.checked) {
-          permission_ids.push(item.id);
+    let permission_ids = [];
+    this.permissionOptions.forEach(item => {
+      if (item.checked) {
+        permission_ids.push(item.id);
+      }
+      item.children.forEach(_item => {
+        if (_item.checked) {
+          permission_ids.push(_item.id);
         }
-        item.children.forEach(_item => {
-          if (_item.checked) {
-            permission_ids.push(_item.id);
-          }
-        })
       })
+    })
+    if (this.id) {
+      this.http.post('api/roles/edit', {
+        id: this.id,
+        name: this.name,
+        permission_ids: permission_ids.join(',')
+      }).subscribe(res => {
+        if (res['status'] === 200) {
+          this.nzMessageService.success('编辑成功！');
+          this.nzModalRef.destroy(true);
+        }
+      })
+    } else {
       this.http.post('api/roles/add', {
         name: this.name,
         permission_ids: permission_ids.join(',')

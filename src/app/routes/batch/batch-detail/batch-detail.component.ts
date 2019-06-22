@@ -28,6 +28,8 @@ export class BatchDetailComponent implements OnInit {
 
   get_data() {
     let params = {
+      page: this.page,
+      pagesize:this.pagesize,
       id: this.id,
       search_str: this.search_str
     };

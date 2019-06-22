@@ -96,7 +96,7 @@ export class RoleComponent implements OnInit {
   }
 
   delete_role(id) {
-    this.http.post('api/role/delete', { id }).subscribe(res => {
+    this.http.post('api/roles/delete', { id }).subscribe(res => {
       if (res['status'] === 200) {
         this.messageService.success('删除成功！');
         this.get_data();
@@ -105,7 +105,7 @@ export class RoleComponent implements OnInit {
   }
 
   restore_role(id) {
-    this.http.post('role/restore_roles', { id }).subscribe(res => {
+    this.http.post('api/roles/restore_roles', { id }).subscribe(res => {
       if (res['status'] === 200) {
         this.messageService.success('恢复成功！');
         this.get_data();

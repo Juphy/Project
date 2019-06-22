@@ -41,6 +41,10 @@ export class UserComponent implements OnInit {
   datetime;
 
   parent_snum;
+
+  start_mutual_gold = null;
+  end_mutual_gold = null;
+  formatterPercent = (value:number) => value?value.toFixed(2):value;
   constructor(
     private modalService: NzModalService,
     private http: HttpClient,
@@ -68,9 +72,6 @@ export class UserComponent implements OnInit {
     if (this.address) {
       params["address"] = this.address;
     }
-    if (this.sex) {
-      params["sex"] = this.sex;
-    }
     if (this.datetime) {
       this.datetime[0] &&
         (params["regist_begin_time"] = this.datePipe.transform(
@@ -82,6 +83,10 @@ export class UserComponent implements OnInit {
           this.datetime[1],
           "yyyy-MM-dd"
         ));
+    }
+    if(this.start_mutual_gold!==null&&this.end_mutual_gold!==null){
+      params['start_mutual_gold'] = (this.start_mutual_gold*100).toFixed(0);
+      params['end_mutual_gold'] = (this.end_mutual_gold*100).toFixed(0);
     }
     this.loading = true;
     this.http.post("api/manager/user_list", params).subscribe(
@@ -109,8 +114,9 @@ export class UserComponent implements OnInit {
     this.name = "";
     this.snum = "";
     this.address = "";
-    this.sex = 0;
     this.datetime = null;
+    this.start_mutual_gold = null;
+    this.end_mutual_gold = null;
     this.search_data(true);
   }
 

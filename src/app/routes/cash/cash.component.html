@@ -27,8 +27,9 @@
                 <th>用户编码</th>
                 <th>姓名</th>
                 <th>手机号</th>
-                <th>余额</th>
+                <th>提现前余额（元）</th>
                 <th>提现金额（元）</th>
+                <th>提现后余额（元）</th>
                 <th>银行卡号</th>
                 <th>申请时间</th>
                 <th>状态</th>
@@ -42,6 +43,7 @@
                 <td>{{ data.phone }}</td>
                 <td>{{ (data.before_deduction/100).toFixed(2) }}</td>
                 <td>{{ (data.money/100).toFixed(2) }}</td>
+                <td>{{ data.status===1?((data.before_deduction-data.money)/100).toFixed(2):data.status===-1?(data.before_deduction/100).toFixed(2):'--' }}</td>
                 <td>{{ data.bank_card }}</td>
                 <td>{{ data.created_at }}</td>
                 <td>{{ status[data["status"]] }}</td>
