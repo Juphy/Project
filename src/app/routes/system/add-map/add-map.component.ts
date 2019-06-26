@@ -12,7 +12,7 @@ export class AddMapComponent implements OnInit {
   imgSrc;
   cropper: any;
 
-  aspectRatio = 16 / 9; // 纵横比
+  aspectRatio = 4 / 3; // 纵横比
   width;
   height;
   degree = 0;
@@ -22,15 +22,15 @@ export class AddMapComponent implements OnInit {
   a = NaN;
   @Input() title: any;
   @Input() image_name: any;
-  @Input() link: any = '';
+  @Input() link: any = "";
   @Input() id: any;
   constructor(
     private nzModalRef: NzModalRef,
     private http: HttpClient,
     private messageService: NzMessageService
-  ) { }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   get_change(e) {
     var files = e.target.files;
@@ -45,9 +45,9 @@ export class AddMapComponent implements OnInit {
           if (this.cropper) this.cropper.destroy();
           let that = this;
           this.cropper = new Cropper(image, {
-            aspectRatio: 16 / 9,
+            aspectRatio: 4 / 3,
             viewMode: 1,
-            zoomOnWheel: false,
+            zoomOnWheel: true,
             crop(event) {
               that.height = event.detail.height.toFixed(0);
               that.width = event.detail.width.toFixed(0);
@@ -109,7 +109,7 @@ export class AddMapComponent implements OnInit {
 
         if (res["status"] === 200) {
           this.image_name = res["data"];
-          this.messageService.success('图片上传成功！')
+          this.messageService.success("图片上传成功！");
         }
       },
       err => {
