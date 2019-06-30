@@ -5,6 +5,7 @@ import { NzModalService, NzMessageService } from "ng-zorro-antd";
 import { FN } from "@core/store";
 import { AddUserComponent } from "./add-user/add-user.component";
 import { DatePipe } from "@angular/common";
+import * as XLSX from 'xlsx';
 @Component({
   selector: "app-user",
   templateUrl: "./user.component.html",
@@ -44,6 +45,9 @@ export class UserComponent implements OnInit {
 
   start_mutual_gold = null;
   end_mutual_gold = null;
+  phone='';
+  _status=null;
+  btnLoading = false;
   formatterPercent = (value:number) => value?value.toFixed(2):value;
   constructor(
     private modalService: NzModalService,
@@ -88,6 +92,12 @@ export class UserComponent implements OnInit {
       params['start_mutual_gold'] = (this.start_mutual_gold*100).toFixed(0);
       params['end_mutual_gold'] = (this.end_mutual_gold*100).toFixed(0);
     }
+    if(this.phone){
+      params['phone'] = this.phone;
+    }
+    if(this._status!==null){
+      params['status'] = this._status;
+    }
     this.loading = true;
     this.http.post("api/manager/user_list", params).subscribe(
       res => {
@@ -117,6 +127,7 @@ export class UserComponent implements OnInit {
     this.datetime = null;
     this.start_mutual_gold = null;
     this.end_mutual_gold = null;
+    this._status = null;
     this.search_data(true);
   }
 
@@ -302,6 +313,77 @@ export class UserComponent implements OnInit {
       nzMaskClosable: false,
       nzClosable: true,
       nzWidth: 1000
+    })
+  }
+  
+  download_data(){
+    let params = {download_excel: 1};
+    if (this.name) {
+      params["name"] = this.name;
+    }
+    if (this.snum) {
+      params["snum"] = this.snum;
+    }
+    if (this.datetime) {
+      this.datetime[0] &&
+        (params["regist_begin_time"] = this.datePipe.transform(
+          this.datetime[0],
+          "yyyy-MM-dd"
+        ));
+      this.datetime[1] &&
+        (params["regist_end_time"] = this.datePipe.transform(
+          this.datetime[1],
+          "yyyy-MM-dd"
+        ));
+    }
+    if(this.start_mutual_gold!==null&&this.end_mutual_gold!==null){
+      params['start_mutual_gold'] = (this.start_mutual_gold*100).toFixed(0);
+      params['end_mutual_gold'] = (this.end_mutual_gold*100).toFixed(0);
+    }
+    if(this.phone){
+      params['phone'] = this.phone;
+    }
+    if(this._status!==null){
+      params['status'] = this._status;
+    }
+    this.btnLoading = true;
+    this.http.post('api/manager/user_list',params).subscribe(res =>{
+      this.btnLoading = false;
+      let data:any = res;
+      let datas=[], obj = {
+        'snum':'会员编号',
+        'parent_snum':'推荐人编号',
+        'id_card':'身份证号',
+        'name':'姓名',
+        'phone':'电话',
+        'address':'地址'       
+      };
+      data.forEach(item =>{
+        let o = {};
+        for(let key in item){
+          if(obj[key]) o[obj[key]] = item[key];
+          if(key==='balance'){
+            o['余额（元）'] = (item[key]/100).toFixed(2);
+          }
+          if(key==='mutual_gold'){
+            o['互助金（元）'] = (item[key]/100).toFixed(2);
+          }
+          if(key==='status'){
+            o['状态'] = item.invalid===1?'已删除':this.status[item[key]];
+          }
+          if(key==='created_at'){
+            o['创建时间'] = item[key].split(' ')[0];
+          }
+        }
+        datas.push(o);
+      })
+      console.log(datas);
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(datas);
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      XLSX.writeFile(wb, '用户列表.xlsx');
+    }, err =>{
+      this.btnLoading = false;
     })
   }
 }

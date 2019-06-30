@@ -71,7 +71,7 @@ export class MapComponent implements OnInit {
         nzComponentParams: {
           title: data.title,
           image_name: data.image_name,
-          link: data.link.split("://").pop(),
+          link: data.link,
           id: data.id
         },
         nzFooter: null,

@@ -11,15 +11,15 @@ const routes: Routes = [{ path: "", component: NewsComponent }];
   imports: [
     SharedModule,
     RouterModule.forChild(routes),
-    UEditorModule.forRoot({
-      js: [
-        `/assets/ueditor/ueditor.config.js`,
-        `/assets/ueditor/ueditor.all.min.js`
-      ],
-      options: {
-        UEDITOR_HOME_URL: "/assets/ueditor/"
-      }
-    })
+    // UEditorModule.forRoot({
+    //   js: [
+    //     `/assets/ueditor/ueditor.config.js`,
+    //     `/assets/ueditor/ueditor.all.min.js`
+    //   ],
+    //   options: {
+    //     UEDITOR_HOME_URL: "/assets/ueditor/"
+    //   }
+    // })
   ],
   declarations: [NewsComponent, CreateComponent],
   entryComponents: [CreateComponent]

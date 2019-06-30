@@ -147,6 +147,14 @@ export class NewsComponent implements OnInit {
       }
     });
   }
+  down_news(id){
+    this.http.post('api/news/down_news', {id}).subscribe(res =>{
+      if(res['status'] === 200){
+        this.messageService.success('下架文章成功！');
+        this.search_data();
+      }
+    })
+  }
   cancel() {
 
   }

@@ -30,9 +30,12 @@
                         ],
                         "styles": [
                             "src/theme.less",
-                            "src/styles.scss"
+                            "src/styles.scss",
+                            "src/assets/css/cropper.min.css"
                         ],
-                        "scripts": [],
+                        "scripts": [
+                            "src/assets/js/d3.v3.min.js"
+                        ],
                         "es5BrowserSupport": true
                     },
                     "configurations": {

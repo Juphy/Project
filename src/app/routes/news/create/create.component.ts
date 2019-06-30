@@ -10,7 +10,7 @@ import * as wangEditor from "wangeditor";
 import { HttpClient } from "@angular/common/http";
 import { NzModalRef, NzMessageService } from "ng-zorro-antd";
 import { siteinfo } from "@core/store";
-import { UEditorComponent } from "ngx-ueditor";
+// import { UEditorComponent } from "ngx-ueditor";
 @Component({
   selector: "app-create",
   templateUrl: "./create.component.html",
@@ -70,7 +70,7 @@ export class CreateComponent implements OnInit, AfterViewInit {
   @Input() options: any = [];
   @Input() type: any; // 1 创建  2
 
-  @ViewChild("ueditor") ueditor: UEditorComponent;
+  // @ViewChild("ueditor") ueditor: UEditorComponent;
   html: string;
   constructor(
     private el: ElementRef,
@@ -89,36 +89,37 @@ export class CreateComponent implements OnInit, AfterViewInit {
       this.content = this.data["content"];
       this.option = this.data["c_id"];
     }
-    this.html = `<h1>测试</h1>`;
+    // this.html = `<h1>测试</h1>`;
   }
 
   ngAfterViewInit(): void {
-    // let editorDom = this.el.nativeElement.querySelector("#editorElem");
-    // this.editor = new wangEditor(editorDom);
-    // this.editor.customConfig.pasteFilterStyle = false;
-    // this.editor.customConfig.pasteIgnoreImg = false;
-    // this.editor.customConfig.linkImgCallback = function(url){
-    //   console.log(url);
-    // }
-    // this.editor.customConfig.uploadImgServer =
-    //   siteinfo.api + "/api/upload_file";
-    // this.editor.customConfig.uploadFileName = "photo";
-    // this.editor.customConfig.uploadImgHooks = {
-    //   success: (xhr, editor, result) => {
-    //     this.messageService.success("图片上传成功");
-    //   },
-    //   customInsert: (insertImg, result, editor) => {
-    //     let path = result["data"];
-    //     insertImg(siteinfo.ucs + path);
-    //   }
-    // };
-    // this.editor.create();
-    // this.editor.txt.html(this.content);
+    let editorDom = this.el.nativeElement.querySelector("#editorElem");
+    this.editor = new wangEditor(editorDom);
+    this.editor.customConfig.pasteFilterStyle = false;
+    this.editor.customConfig.pasteIgnoreImg = false;
+    this.editor.customConfig.uploadImgMaxSize = 10 * 1024 * 1024
+    this.editor.customConfig.linkImgCallback = function(url){
+      console.log(url);
+    }
+    this.editor.customConfig.uploadImgServer =
+      siteinfo.api + "/api/upload_file";
+    this.editor.customConfig.uploadFileName = "photo";
+    this.editor.customConfig.uploadImgHooks = {
+      success: (xhr, editor, result) => {
+        this.messageService.success("图片上传成功");
+      },
+      customInsert: (insertImg, result, editor) => {
+        let path = result["data"];
+        insertImg(siteinfo.ucs + path);
+      }
+    };
+    this.editor.create();
+    this.editor.txt.html(this.content);
   }
 
   done() {
     let contents = this.editor.txt.html();
-    // let contents = this.ueditor.Instance.getAllHtml();
+    // let contents = this.ueditor.Instance.getContent();
     this.loading = true;
     let params = {
       title: this.title,

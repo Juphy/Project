@@ -55,6 +55,8 @@
                         nzPlacement="top">
                         发布
                     </button>
+                    <button nz-button nz-popconfirm nzTitle="你确定要下架这篇文章吗?" (nzOnConfirm)="down_news(data.id)" (nzOnCancel)="cancel()"
+                    nzPlacement="top" *ngIf="data.status===1&&data.invalid===0">下架</button>
                 </td>
             </tr>
         </tbody>
