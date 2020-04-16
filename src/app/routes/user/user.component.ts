@@ -49,6 +49,8 @@ export class UserComponent implements OnInit {
   _status=null;
   btnLoading = false;
   formatterPercent = (value:number) => value?value.toFixed(2):value;
+
+  btnLoading1 = false;
   constructor(
     private modalService: NzModalService,
     private http: HttpClient,
@@ -384,6 +386,18 @@ export class UserComponent implements OnInit {
       XLSX.writeFile(wb, '用户列表.xlsx');
     }, err =>{
       this.btnLoading = false;
+    })
+  }
+
+  send_message(){
+    this.btnLoading1 = true;
+    this.http.get('manager/send_unqualified_user').subscribe(res =>{
+      this.btnLoading1 = false;
+      if(res['status']===200){
+        this.messageService.success("操作成功！");
+      }
+    }, err =>{
+        this.btnLoading1 = false;
     })
   }
 }
