@@ -391,7 +391,7 @@ export class UserComponent implements OnInit {
 
   send_message(){
     this.btnLoading1 = true;
-    this.http.get('manager/send_unqualified_user').subscribe(res =>{
+    this.http.get('api/manager/send_unqualified_user').subscribe(res =>{
       this.btnLoading1 = false;
       if(res['status']===200){
         this.messageService.success("操作成功！");
