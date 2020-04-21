@@ -8,13 +8,15 @@ import { RangeComponent } from "./range/range.component";
 import { SumComponent } from "./sum/sum.component";
 import { RuleComponent } from "./rule/rule.component";
 import { IntroduceComponent } from "./introduce/introduce.component";
+import { MsgComponent } from './msg/msg.component';
 
 const routes: Routes = [
   { path: "map", component: MapComponent },
   { path: "range", component: RangeComponent },
   { path: "sum", component: SumComponent },
   { path: "rule", component: RuleComponent },
-  { path: "introduce", component: IntroduceComponent }
+  { path: "introduce", component: IntroduceComponent },
+  { path: 'msg', component: MsgComponent }
 ];
 
 @NgModule({
@@ -26,8 +28,9 @@ const routes: Routes = [
     AddRangeComponent,
     SumComponent,
     IntroduceComponent,
-    RuleComponent
+    RuleComponent,
+    MsgComponent
   ],
   entryComponents: [AddMapComponent, AddRangeComponent]
 })
-export class SystemModule {}
+export class SystemModule { }

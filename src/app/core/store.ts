@@ -22,7 +22,8 @@ export let URL = {
   mutual_range: "/console/system/range",
   convention_rules: "/console/system/rule",
   company_introducte: "/console/system/introduce",
-  carousel_map: "/console/system/map"
+  carousel_map: "/console/system/map",
+  send_msg:'/console/system/msg'
 };
 
 export let ICON = {

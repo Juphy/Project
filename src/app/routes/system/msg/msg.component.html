@@ -1,0 +1,76 @@
+<nz-card nzTitle="发送消息" [nzExtra]="extraTemplate">
+  <div class="search">
+    <div class="query">
+      <b>查询条件</b>
+    </div>
+    <div nz-row>
+      <div nz-col [nzSpan]="6">
+        <label>用户ID：</label>
+        <input type="number" nz-input [(ngModel)]="user_id">
+      </div>
+      <div nz-col [nzSpan]="6">
+        <label>
+          姓名：
+        </label>
+        <input type="text" nz-input [(ngModel)]="user_name">
+      </div>
+      <div nz-col [nzSpan]="6">
+        <label>手机号：</label>
+        <input type="text" nz-input [(ngModel)]="phone">
+      </div>
+      <div nz-col [nzSpan]="6">
+        <label>发送结果：</label>
+        <nz-select [(ngModel)]="result" nzAllowClear>
+          <nz-option nzLabel="成功" [nzValue]="0"></nz-option>
+          <nz-option nzLabel="失败" [nzValue]="1"></nz-option>
+        </nz-select>
+      </div>
+      <div nz-col [nzSpan]="18">
+        <label>发送时间：</label>
+        <nz-range-picker [(ngModel)]="datetime" style="width: 260px" nzShowTime></nz-range-picker>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col style="justify-content: flex-end">
+        <button nz-button nzType="primary" class="ant-left-xxl" (click)="search_data(true)">
+          <i nz-icon nzType="search" nzTheme="outline"></i>搜索
+        </button>
+        <button nz-button class="ant-left-large ant-right-xxl" (click)="clear_data()">
+          <i nz-icon nzType="reload" nzTheme="outline"></i>清空
+        </button>
+      </div>
+    </div>
+  </div>
+  <nz-table #table [nzData]="data" [(nzPageSize)]="pagesize" [(nzPageIndex)]="page" [nzFrontPagination]="false"
+    [nzTotal]="total" [nzShowTotal]="totalTemplate" [nzLoading]="loading" (nzPageIndexChange)="search_data()"
+    (nzPageSizeChange)="search_data(true)">
+    <thead>
+      <tr>
+        <th>用户ID</th>
+        <th>姓名</th>
+        <th>电话</th>
+        <th>短信发送时间</th>
+        <th>发送结果</th>
+        <th>结果原因</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of table.data">
+        <td>{{data.user_id}}</td>
+        <td>{{data.user_name}}</td>
+        <td>{{data.phone}}</td>
+        <td>{{data.created_at}}</td>
+        <td>{{ResultObj[data.result]}}</td>
+        <td>{{data.errmsg}}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+<ng-template #totalTemplate> 总计 {{ total }} 条 当前页数：<nz-input-number class="ant-right" [(ngModel)]="page"
+    (ngModelChange)="search_data()" [nzMin]="1" [nzStep]="1" [(nzMax)]="max">
+  </nz-input-number>
+</ng-template>
+<ng-template #extraTemplate>
+  <button nzTitle="互助金低于30元的有效用户将收到此短信！" nzPlacement="top" nz-button nz-tooltip (click)="send_message()"
+    nzType="primary" [nzLoading]="btnLoading" style="margin-right: 16px;">短信通知</button>
+</ng-template>
