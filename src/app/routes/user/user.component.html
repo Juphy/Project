@@ -33,9 +33,17 @@
                     <nz-option nzLabel="已禁用" [nzValue]="2"></nz-option>
                 </nz-select>
             </div>
-            <div nz-col [nzSpan]="18">
+            <div nz-col [nzSpan]="6">
+                <label>用户是否失效：</label>
+                <nz-select [(ngModel)]="is_lost" style="margin-left: 32px;" nzAllowClear>
+                    <nz-option nzLabel="失效用户" [nzValue]="1"></nz-option>
+                    <nz-option nzLabel="有效用户" [nzValue]="0"></nz-option>
+                </nz-select>
+            </div>
+            <div nz-col [nzSpan]="12">
                 <label style="width: 120px">注册起止日期：</label>
-                <nz-range-picker [(ngModel)]="datetime" style="width: 260px"></nz-range-picker>
+                <nz-range-picker [(ngModel)]="datetime" style="min-width: 260px"></nz-range-picker>
+
             </div>
         </div>
         <div nz-row>

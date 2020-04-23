@@ -21,13 +21,13 @@
       <div nz-col [nzSpan]="6">
         <label>发送结果：</label>
         <nz-select [(ngModel)]="result" nzAllowClear>
-          <nz-option nzLabel="成功" [nzValue]="0"></nz-option>
-          <nz-option nzLabel="失败" [nzValue]="1"></nz-option>
+          <nz-option nzLabel="成功" [nzValue]="1"></nz-option>
+          <nz-option nzLabel="失败" [nzValue]="2"></nz-option>
         </nz-select>
       </div>
       <div nz-col [nzSpan]="18">
         <label>发送时间：</label>
-        <nz-range-picker [(ngModel)]="datetime" style="width: 260px" nzShowTime></nz-range-picker>
+        <nz-range-picker [(ngModel)]="datetime" nzShowTime></nz-range-picker>
       </div>
     </div>
     <div nz-row>

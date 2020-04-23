@@ -24,12 +24,12 @@ export class MsgComponent implements OnInit {
   result = '';
   datetime;
   ResultObj = {
-    0: '成功',
-    1: '失败'
+    1: '成功',
+    2: '失败'
   };
   ResultList = [
-    { name: '成功', value: 0 },
-    { name: '失败', value: 1 }
+    { name: '成功', value: 1 },
+    { name: '失败', value: 2 }
   ];
   constructor(
     private http: HttpClient,

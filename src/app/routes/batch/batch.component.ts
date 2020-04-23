@@ -104,7 +104,7 @@ export class BatchComponent implements OnInit {
       nzFooter: null,
       nzMaskClosable: false,
       nzClosable: true,
-      nzWidth: 1250
+      nzWidth: 1360
     });
   }
 }
