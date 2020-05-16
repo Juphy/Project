@@ -9,6 +9,7 @@ import { SumComponent } from "./sum/sum.component";
 import { RuleComponent } from "./rule/rule.component";
 import { IntroduceComponent } from "./introduce/introduce.component";
 import { MsgComponent } from './msg/msg.component';
+import { AddUserComponent } from './add-user/add-user.component';
 
 const routes: Routes = [
   { path: "map", component: MapComponent },
@@ -29,8 +30,9 @@ const routes: Routes = [
     SumComponent,
     IntroduceComponent,
     RuleComponent,
-    MsgComponent
+    MsgComponent,
+    AddUserComponent
   ],
-  entryComponents: [AddMapComponent, AddRangeComponent]
+  entryComponents: [AddMapComponent, AddRangeComponent, AddUserComponent]
 })
 export class SystemModule { }

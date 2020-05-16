@@ -132,6 +132,7 @@ export class UserComponent implements OnInit {
     this.start_mutual_gold = null;
     this.end_mutual_gold = null;
     this._status = null;
+    this.is_lost = null;
     this.search_data(true);
   }
 
@@ -389,6 +390,16 @@ export class UserComponent implements OnInit {
       XLSX.writeFile(wb, '用户列表.xlsx');
     }, err => {
       this.btnLoading = false;
+    })
+  }
+
+  // 恢复用户
+  recover_user(user_id) {
+    this.http.post('api/manager/recover_user', { user_id }).subscribe(res => {
+      if (res['status'] === 200) {
+        this.messageService.success('用户恢复成功！');
+        this.get_data();
+      }
     })
   }
 }

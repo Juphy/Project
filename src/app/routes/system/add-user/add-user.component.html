@@ -1,0 +1,40 @@
+<div>
+  <div class="ant-bottom ant-top">
+    <label>用户ID：</label>
+    <nz-input-number [(ngModel)]="begin_id" [nzMin]="0" [nzStep]="1" nzPlaceHolder="起始id"></nz-input-number> —
+    <nz-input-number [(ngModel)]="end_id" [nzMin]="0" [nzStep]="1" nzPlaceHolder="结束id"></nz-input-number>
+    <label class="ant-left">用户名称：</label>
+    <input nz-input placeholder="请输入用户名称" [(ngModel)]="name" style="width: 200px">
+    <button class="ant-left" nz-button (click)="search_data()" nzType="primary">搜索</button>
+    <button class="ant-left" nz-button (click)="clear_data()">清空</button>
+  </div>
+</div>
+<nz-table #table [nzData]="data" nzShowPagination [nzShowTotal]="totalTemplate" [nzFrontPagination]="true"
+  [nzTotal]="total" [nzLoading]="loading">
+  <thead>
+    <tr>
+      <th></th>
+      <th>用户ID</th>
+      <th>用户编号</th>
+      <th>用户名称</th>
+      <th>电话</th>
+      <th>即将失效日期</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of table.data">
+      <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="search_data()"></td>
+      <td>{{data.id}}</td>
+      <td>{{data.snum}}</td>
+      <td>{{data.name}}</td>
+      <td>{{data.phone}}</td>
+      <td>{{data.lose_time}}</td>
+    </tr>
+  </tbody>
+</nz-table>
+<ng-template #totalTemplate>已经勾选{{total}}条</ng-template>
+<div nz-row>
+  <div nz-col>
+    <button nz-button nzType="primary" (click)="add_msg_logs()" [nzLoading]="btnLoading">给已勾选用户发送短信</button>
+  </div>
+</div>

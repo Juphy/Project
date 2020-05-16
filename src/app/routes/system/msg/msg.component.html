@@ -52,6 +52,7 @@
         <th>短信发送时间</th>
         <th>发送结果</th>
         <th>结果原因</th>
+        <th>操作</th>
       </tr>
     </thead>
     <tbody>
@@ -62,6 +63,9 @@
         <td>{{data.created_at}}</td>
         <td>{{ResultObj[data.result]}}</td>
         <td>{{data.errmsg}}</td>
+        <td>
+          <button nz-button (click)="send_msg(data.id)" *ngIf="data.result===2">重新发送短信</button>
+        </td>
       </tr>
     </tbody>
   </nz-table>

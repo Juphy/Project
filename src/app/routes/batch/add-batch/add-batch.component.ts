@@ -57,6 +57,7 @@ export class AddBatchComponent implements OnInit {
     }
 
     if (this.datetime && this.datetime[0] && this.datetime[1]) {
+      if (!params) params = {};
       params['begin_created_at'] = this.datePipe.transform(this.datetime[0], 'yyyy-MM-dd');
       params['end_created_at'] = this.datePipe.transform(this.datetime[1], 'yyyy-MM-dd');
     }

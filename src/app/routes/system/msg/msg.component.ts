@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { NzMessageService } from "ng-zorro-antd";
+import { NzMessageService, NzModalService } from "ng-zorro-antd";
 import { DatePipe } from "@angular/common";
+import { AddUserComponent } from '../add-user/add-user.component';
 
 @Component({
   selector: 'app-msg',
@@ -24,17 +25,20 @@ export class MsgComponent implements OnInit {
   result = '';
   datetime;
   ResultObj = {
+    0: '待发送',
     1: '成功',
     2: '失败'
   };
   ResultList = [
+    { name: '待发送', value: 0 },
     { name: '成功', value: 1 },
     { name: '失败', value: 2 }
   ];
   constructor(
     private http: HttpClient,
     private messageService: NzMessageService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private modalService: NzModalService
   ) { }
 
   ngOnInit() {
@@ -42,15 +46,26 @@ export class MsgComponent implements OnInit {
   }
 
   send_message() {
-    this.btnLoading = true;
-    this.http.get('api/manager/send_unqualified_user').subscribe(res => {
-      this.btnLoading = false;
-      if (res['status'] === 200) {
-        this.messageService.success("当前发送成功！");
-        this.get_data();
-      }
-    }, err => {
-      this.btnLoading = false;
+    // this.btnLoading = true;
+    // this.http.get('api/manager/send_unqualified_user').subscribe(res => {
+    //   this.btnLoading = false;
+    //   if (res['status'] === 200) {
+    //     this.messageService.success("当前发送成功！");
+    //     this.get_data();
+    //   }
+    // }, err => {
+    //   this.btnLoading = false;
+    // })
+    let modal = this.modalService.create({
+      nzTitle: '选择用户范围',
+      nzContent: AddUserComponent,
+      nzFooter: null,
+      nzMaskClosable: false,
+      nzClosable: true,
+      nzWidth: 800
+    });
+    modal.afterClose.subscribe(res => {
+      if (res) this.get_data();
     })
   }
 
@@ -103,4 +118,12 @@ export class MsgComponent implements OnInit {
     this.search_data(true);
   }
 
+  send_msg(id) {
+    this.http.post('api/manager/send_msg', { id }).subscribe(res => {
+      if (res['status'] === 200) {
+        this.messageService.success('重新发送成功！');
+        this.get_data();
+      };
+    })
+  }
 }
