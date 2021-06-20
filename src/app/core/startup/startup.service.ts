@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { siteinfo, userinfo, DATA } from "@core/store";
+import { userinfo, DATA } from "@core/store";
 import { NzIconService } from "ng-zorro-antd";
 import { ICONS } from "@core/style-icons";
 @Injectable({
@@ -23,9 +23,6 @@ export class StartupService {
     userinfo["id"] = localStorage.getItem("id")
       ? localStorage.getItem("id")
       : "";
-    userinfo["roles"] = localStorage.getItem("roles")
-      ? JSON.parse(localStorage.getItem("roles"))
-      : [];
     userinfo["permission"] = localStorage.getItem("permission")
       ? JSON.parse(localStorage.getItem("permission"))
       : [];

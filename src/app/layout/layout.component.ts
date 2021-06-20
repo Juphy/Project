@@ -24,17 +24,17 @@ export class LayoutComponent implements OnInit {
     data.forEach(item => {
       if (item.pid === 0) {
         let obj = {};
-        obj["name"] = item["display_name"];
-        obj["url"] = URL[item["name"]];
-        obj["icon"] = ICON[item["name"]];
-        if (item.name === 'system_setting') {
+        obj["name"] = item["name"];
+        obj["url"] = URL[item["display_name"]];
+        obj["icon"] = ICON[item["display_name"]];
+        if (item.display_name === 'system_setting') {
           let ary = [];
           data.forEach(_item => {
             if (item.id === _item.pid) {
               ary.push({
-                name: _item.display_name,
-                url: URL[_item.name],
-                icon: ICON[_item.name]
+                name: _item.name,
+                url: URL[_item.display_name],
+                icon: ICON[_item.display_name]
               });
             }
           });
@@ -43,10 +43,10 @@ export class LayoutComponent implements OnInit {
           let o = {};
           data.forEach(_item => {
             if (item.id === _item.pid) {
-              o[_item["name"]] = true;
+              o[_item["display_name"]] = true;
             }
           });
-          FN[item["name"]] = o;
+          FN[item["display_name"]] = o;
         }
         this.menus.push(obj);
       }
@@ -65,7 +65,7 @@ export class LayoutComponent implements OnInit {
       }
     }
     if (name) {
-      let a = data.find(item => item.name == name);
+      let a = data.find(item => item.display_name == name);
       if (!a) {
         this.router.navigateByUrl('/notfound');
       }

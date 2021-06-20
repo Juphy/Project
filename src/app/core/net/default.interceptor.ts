@@ -11,7 +11,8 @@ import {
 import { Observable, of, throwError } from "rxjs";
 import { mergeMap, catchError, map } from "rxjs/operators";
 import { NzMessageService, NzNotificationService } from "ng-zorro-antd";
-import { siteinfo, DATA } from "@core/store";
+import { DATA } from "@core/store";
+import { environment } from "@env/environment";
 
 const CODEMESSAGE = {
   200: "服务器成功返回请求的数据。",
@@ -33,7 +34,7 @@ const CODEMESSAGE = {
 
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector) { }
 
   get msg(): NzMessageService {
     return this.injector.get(NzMessageService);
@@ -55,20 +56,20 @@ export class DefaultInterceptor implements HttpInterceptor {
         }
         break;
       case 400: // 客服端错误
-        this.msg.warning(event["error"]["message"]);
+        this.msg.warning(event["error"]["error"]);
         break;
       case 401:
-        this.msg.warning(event["error"]["message"]);
+        this.msg.warning(event["error"]["error"]);
         break;
       case 403:
-        this.msg.error(event["error"]["message"]);
+        this.msg.error(event["error"]["error"]);
         break;
       case 500: //服务端错误
-        let message = event["error"]["message"];
+        let message = event["error"]["error"];
         if (message.includes("Token")) {
           this.goTo("/login");
         }
-        this.msg.error(event["error"]["message"]);
+        this.msg.error(event["error"]["error"]);
         break;
     }
     return of(event);
@@ -78,12 +79,12 @@ export class DefaultInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    let url = siteinfo.api + "/" + req.url;
-    if (req.url !== "api/manager_login") {
+    let url = environment.api + "/" + req.url.replace('api/', '');
+    if (req.url !== "home/manager_login") {
       req = req.clone({
         url: url,
         setHeaders: {
-          Authorization: "Bearer " + DATA["TOKEN"]
+          Authorization: DATA["TOKEN"]
         }
       });
     } else {

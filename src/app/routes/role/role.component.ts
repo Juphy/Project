@@ -42,7 +42,7 @@ export class RoleComponent implements OnInit {
       res => {
         this.loading = false;
         if (res["status"] === 200) {
-          let data = res["data"];
+          let data:any = res["result"];
           this.data = [...data];
           this.total = this.data.length;
         }

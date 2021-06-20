@@ -2,7 +2,8 @@ import { AddMapComponent } from "./../add-map/add-map.component";
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { NzModalService, NzMessageService } from "ng-zorro-antd";
-import { siteinfo } from "@core/store";
+import { environment } from "@env/environment";
+
 @Component({
   selector: "app-map",
   templateUrl: "./map.component.html",
@@ -19,7 +20,7 @@ export class MapComponent implements OnInit {
     0: "未上架",
     1: "已上架"
   };
-  UCS = siteinfo.ucs;
+  UCS = environment.ucs;
   constructor(
     private modalService: NzModalService,
     private http: HttpClient,
@@ -40,7 +41,7 @@ export class MapComponent implements OnInit {
       res => {
         this.loading = false;
         if (res["status"] === 200) {
-          let data = res["data"];
+          let data: any = res["result"];
           this.data = [...data];
           this.total = this.data.length;
         }

@@ -66,7 +66,7 @@ const data = [
     id: 10,
     pid: 3,
     name: "change_mutual_gold",
-    display_name: "修改互助金",
+    display_name: "修改鲜花数",
     description: "2",
     created_at: "2019-05-16 20:41:06",
     updated_at: "2019-05-16 20:41:06"
@@ -165,7 +165,7 @@ const data = [
     id: 21,
     pid: 0,
     name: "batch_mutual_gold_list",
-    display_name: "批量操作互助金记录",
+    display_name: "批量操作鲜花数记录",
     description: "1",
     created_at: "2019-05-16 20:41:06",
     updated_at: "2019-05-16 20:41:06"
@@ -174,7 +174,7 @@ const data = [
     id: 22,
     pid: 21,
     name: "batch_mutual_gold",
-    display_name: "批量操作互助金",
+    display_name: "批量操作鲜花数",
     description: "2",
     created_at: "2019-05-16 20:41:06",
     updated_at: "2019-05-16 20:41:06"

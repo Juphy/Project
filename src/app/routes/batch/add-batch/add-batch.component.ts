@@ -16,8 +16,11 @@ export class AddBatchComponent implements OnInit {
   total = 0;
   loading = false;
   btnLoading = false;
-  mutual_gold;
+  flowers;
   description = '';
+  start_flowers = null;
+  end_flowers = null;
+  formatterPercent = (value: number) => value ? value.toFixed(0) : value;
   constructor(
     private nzModalRef: NzModalRef,
     private nzMessageService: NzMessageService,
@@ -62,12 +65,18 @@ export class AddBatchComponent implements OnInit {
       params['end_created_at'] = this.datePipe.transform(this.datetime[1], 'yyyy-MM-dd');
     }
 
+    if (this.start_flowers !== null && this.end_flowers !== null) {
+      if (!params) params = {};
+      params['start_flowers'] = (this.start_flowers * 100).toFixed(0);
+      params['end_flowers'] = (this.end_flowers * 100).toFixed(0);
+    }
+
     if (!params) {
       this.nzMessageService.warning('没有搜索条件无法搜索！');
       return;
     }
     this.loading = true;
-    this.http.post('api/manager/batch_mutual_gold', params).subscribe(res => {
+    this.http.post('api/manager/batch_flowers', params).subscribe(res => {
       this.loading = false;
       this.data = [...res['data']];
       this.data.forEach(item => {
@@ -92,13 +101,13 @@ export class AddBatchComponent implements OnInit {
       user_list,
       description: this.description
     };
-    if (!this.mutual_gold) {
-      this.nzMessageService.warning('没有填写互助金！');
+    if (!this.flowers) {
+      this.nzMessageService.warning('没有填写鲜花数！');
       return;
     }
-    params['mutual_gold'] = this.mutual_gold * 100;
+    params['flowers'] = this.flowers * 100;
     this.btnLoading = true;
-    this.http.post('api/manager/add_mutual_gold', params).subscribe(res => {
+    this.http.post('api/manager/add_flowers', params).subscribe(res => {
       this.btnLoading = false;;
       if (res['status'] === 200) {
         this.nzMessageService.success('批量操作成功！');

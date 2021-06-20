@@ -60,7 +60,7 @@
         <td>{{data.user_id}}</td>
         <td>{{data.user_name}}</td>
         <td>{{data.phone}}</td>
-        <td>{{data.created_at}}</td>
+        <td>{{data.result===0?"":data.updated_at}}</td>
         <td>{{ResultObj[data.result]}}</td>
         <td>{{data.errmsg}}</td>
         <td>
@@ -75,6 +75,6 @@
   </nz-input-number>
 </ng-template>
 <ng-template #extraTemplate>
-  <button nzTitle="互助金低于30元的有效用户将收到此短信！" nzPlacement="top" nz-button nz-tooltip (click)="send_message()"
+  <button nzTitle="鲜花数低于30朵的有效用户将收到此短信！" nzPlacement="top" nz-button nz-tooltip (click)="send_message()"
     nzType="primary" [nzLoading]="btnLoading" style="margin-right: 16px;">短信通知</button>
 </ng-template>

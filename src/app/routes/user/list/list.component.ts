@@ -18,7 +18,7 @@ export class ListComponent implements OnInit {
       this.http
         .post("api/manager/user_parent_list", { user_id: this.user_id })
         .subscribe(res => {
-          this.data = res['data'];
+          this.data = res['result'];
         });
     }
     if (this.type === 1) {
@@ -30,7 +30,7 @@ export class ListComponent implements OnInit {
           setTimeout(() => {
 
 
-            let treeData = res['data'];
+            let treeData = res['result'];
             // Calculate total nodes, max label length
             var totalNodes = 0;
             var maxLabelLength = 0;

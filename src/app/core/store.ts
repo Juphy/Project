@@ -4,7 +4,7 @@ export let siteinfo = {
   ucs: "https://www.chengdicheng198.cn/"
 };
 export let userinfo = { name: "", id: "", roles: [], info: {}, permission: [] };
-export let app = "后台管理系统";
+export let app = "婚庆一生一世";
 export let DATA = {
   TOKEN: ""
 };
@@ -16,7 +16,7 @@ export let URL = {
   pay_list: "/console/pay",
   news_manager: "/console/news",
   roles_manager: "/console/role",
-  batch_mutual_gold_list: "/console/batch",
+  batch_flower_list: "/console/batch",
   system_setting: "/console/system",
   change_sum_user: "/console/system/sum",
   mutual_range: "/console/system/range",
@@ -33,7 +33,7 @@ export let ICON = {
   pay_list: "pay-circle",
   news_manager: "edit",
   roles_manager: "idcard",
-  batch_mutual_gold_list: "table",
+  batch_flower_list: "table",
   system_setting: "setting"
 };
 
@@ -44,5 +44,5 @@ export let FN = {
   pay_list: {},
   news_manager: {},
   roles_manager: {},
-  batch_mutual_gold_list: {}
+  batch_flower_list: {}
 };

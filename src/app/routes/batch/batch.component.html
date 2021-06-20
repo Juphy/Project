@@ -1,4 +1,4 @@
-<nz-card nzTitle="批量操作互助金历史记录列表" [nzExtra]="extraTemplate">
+<nz-card nzTitle="批量操作鲜花数历史记录列表" [nzExtra]="extraTemplate">
     <div class="search">
         <div class="query">
             <b>查询条件</b>
@@ -24,7 +24,7 @@
         <thead>
             <tr>
                 <th>操作人ID</th>
-                <th>互助金（元）</th>
+                <th>鲜花数（元）</th>
                 <th>操作描述</th>
                 <th>操作时间</th>
                 <th>操作</th>
@@ -46,7 +46,7 @@
 <ng-template #totalTemplate> 总计 {{ total }} 条 当前页数：<nz-input-number class="ant-right" [(ngModel)]="page" (ngModelChange)="search_data()" [nzMin]="1" [nzStep]="1"
     [(nzMax)]="max"></nz-input-number></ng-template>
 <ng-template #extraTemplate>
-    <button *ngIf="fn['batch_mutual_gold']" nz-button (click)="show_modal()" nzType="primary">
-        <span>批量操作互助金</span>
+    <button *ngIf="fn['batch_flower']" nz-button (click)="show_modal()" nzType="primary">
+        <span>批量操作鲜花数</span>
     </button>
 </ng-template>

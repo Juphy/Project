@@ -19,9 +19,9 @@ export class SumComponent implements OnInit {
   }
 
   get_sum_user() {
-    this.http.post("api/get_sum_user", {}).subscribe(res => {
+    this.http.post("home/get_sum_user", {}).subscribe(res => {
       if (res["status"] === 200) {
-        this.num = res["data"];
+        this.num = res["result"];
         this._num = this.num;
       }
     });

@@ -66,11 +66,11 @@ export class NewsComponent implements OnInit {
       res => {
         this.loading = false;
         if (res["status"] === 200) {
-          let data = res["data"];
-          this.data = data["data"];
-          this.total = data["total"];
-          this.pagesize = data['per_page'] || 15;
-          this.max = data['last_page'] || 1;
+          res = res['result'];
+          this.data = res['data'] || [];
+          this.total = res['pageinfo']["total"] || 0;
+          this.pagesize = res['pageinfo']['per_page'] || 15;
+          this.max = res['pageinfo']['last_page'] || 1;
         }
       },
       error => {

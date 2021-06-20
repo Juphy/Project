@@ -34,7 +34,7 @@ export class BatchDetailComponent implements OnInit {
       search_str: this.search_str
     };
     this.loading = true;
-    this.http.post('api/manager/batch_mutual_gold_info', params).subscribe(res => {
+    this.http.post('api/manager/batch_flowers_info', params).subscribe(res => {
       this.loading = false;
       if (res['status'] === 200) {
         let data = res['data']['user_batch_list'];

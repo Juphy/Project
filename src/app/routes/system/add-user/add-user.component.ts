@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NzMessageService, NzModalService, NzModalRef } from 'ng-zorro-antd';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-add-user',
@@ -57,7 +58,7 @@ export class AddUserComponent implements OnInit {
         this.data = this.DATA.filter(item => item.name.includes(this.name));
       }
     }
-    if (!this.data.length) this.data = [...this.DATA];
+    if (!this.begin_id && !this.end_id && !this.name) this.data = [...this.DATA];
     this.refresh_status();
     this.loading = false;
   }
@@ -70,14 +71,14 @@ export class AddUserComponent implements OnInit {
   }
 
   refresh_status() {
-    let data = this.DATA.filter(item => item.checked);
+    let data = this.data.filter(item => item.checked);
     this.total = data.length;
   }
 
   add_msg_logs() {
     this.btnLoading = true;
     let users = [];
-    this.DATA.forEach(item => {
+    this.data.forEach(item => {
       if (item.checked) users.push(item.id);
     })
     this.http.post('api/manager/add_msg_logs', { users }).subscribe(res => {
@@ -90,5 +91,26 @@ export class AddUserComponent implements OnInit {
     }, err => {
       this.btnLoading = false;
     })
+  }
+
+  export_data() {
+    let datas = [], obj = {
+      'id': '用户ID',
+      'snum': '用户编号',
+      'name': '用户名称',
+      'phone': '电话',
+      'lose_time': '即将失效日期'
+    };
+    this.DATA.forEach(item => {
+      let o = {};
+      Object.keys(obj).forEach(key => {
+        o[obj[key]] = item[key]
+      })
+      datas.push(o);
+    })
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(datas);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, '用户列表.xlsx');
   }
 }

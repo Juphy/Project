@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from "@angular/core";
 import Cropper from "cropperjs";
 import { HttpClient } from "@angular/common/http";
 import { NzModalRef, NzMessageService } from "ng-zorro-antd";
-import { siteinfo } from "@core/store";
 @Component({
   selector: "app-add-map",
   templateUrl: "./add-map.component.html",

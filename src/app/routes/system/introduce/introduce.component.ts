@@ -2,7 +2,8 @@ import { Component, OnInit, ElementRef, AfterViewInit } from "@angular/core";
 import * as wangEditor from "wangeditor";
 import { HttpClient } from "@angular/common/http";
 import { NzMessageService } from "ng-zorro-antd";
-import { siteinfo } from "@core/store";
+import { environment } from "@env/environment";
+
 @Component({
   selector: "app-introduce",
   templateUrl: "./introduce.component.html",
@@ -24,7 +25,7 @@ export class IntroduceComponent implements OnInit, AfterViewInit {
         let editorDom = this.el.nativeElement.querySelector("#rule");
         this.editor = new wangEditor(editorDom);
         this.editor.customConfig.uploadImgServer =
-          siteinfo.api + "/api/upload_file";
+          environment.api + "/api/upload_file";
         this.editor.customConfig.uploadFileName = "photo";
         this.editor.customConfig.uploadImgHooks = {
           success: (xhr, editor, result) => {
@@ -33,7 +34,7 @@ export class IntroduceComponent implements OnInit, AfterViewInit {
           customInsert: (insertImg, result, editor) => {
 
             let path = result["data"];
-            insertImg(siteinfo.ucs + path);
+            insertImg(environment.ucs + path);
           }
         };
         this.editor.create();

@@ -7,6 +7,7 @@
     <input nz-input placeholder="请输入用户名称" [(ngModel)]="name" style="width: 200px">
     <button class="ant-left" nz-button (click)="search_data()" nzType="primary">搜索</button>
     <button class="ant-left" nz-button (click)="clear_data()">清空</button>
+    <button class="ant-left" nz-button (click)="export_data()">导出所有用户</button>
   </div>
 </div>
 <nz-table #table [nzData]="data" nzShowPagination [nzShowTotal]="totalTemplate" [nzFrontPagination]="true"

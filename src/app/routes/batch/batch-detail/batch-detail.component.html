@@ -18,13 +18,13 @@
       <th>电话</th>
       <th>地址</th>
       <th>余额（元）</th>
-      <th>扣款前互助金（元）</th>
-      <th>互助金（元）</th>
+      <th>扣款前鲜花数（元）</th>
+      <th>鲜花数（元）</th>
       <th>创建时间</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let data of table.data" [ngClass]="{marked: data.mutual_gold<3000}">
+    <tr *ngFor="let data of table.data" [ngClass]="{marked: data.flowers<30}">
       <td>{{data.snum}}</td>
       <td>{{ data.id_card }}</td>
       <td>{{ data.name }}</td>
@@ -32,9 +32,9 @@
       <td>{{data.phone}}</td>
       <td>{{ data.address }}</td>
       <td>{{(data.balance/100).toFixed(2)}}</td>
-      <td>{{(data.before_mutual_gold/100).toFixed(2)}}</td>
-      <td>{{(data.mutual_gold/100).toFixed(2)}}</td>
-      <td>{{ data.created_at.split(' ')[0] }}</td>
+      <td>{{data.before_flowers}}</td>
+      <td>{{data.flowers}}</td>
+      <td>{{ data.created_at | date:'yyyy-MM-dd HH:mm:ss' }}</td>
     </tr>
   </tbody>
 </nz-table>

@@ -21,6 +21,7 @@ export class AddUserComponent implements OnInit {
     private datePipe: DatePipe
   ) {
     this.validateForm = this.fb.group({
+      type: [1, [Validators.required]],
       id_card: ["", [Validators.required]],
       name: ["", [Validators.required]],
       address: ["", [Validators.required]],
@@ -29,6 +30,10 @@ export class AddUserComponent implements OnInit {
       phone: ['',],
       parent_snum: ['']
     });
+  }
+
+  get type() {
+    return this.validateForm.controls.type;
   }
 
   get id_card() {
@@ -63,6 +68,7 @@ export class AddUserComponent implements OnInit {
     if (this.data) {
       this.snum = this.data.snum;
       this.validateForm = this.fb.group({
+        type: [this.data.type, [Validators.required]],
         id_card: [this.data.id_card, [Validators.required]],
         name: [this.data.name, [Validators.required]],
         address: [this.data.address, [Validators.required]],
@@ -114,6 +120,7 @@ export class AddUserComponent implements OnInit {
     } else {
       this.loading = true;
       let params = {
+        type: this.type.value,
         id_card: this.id_card.value,
         name: this.name.value,
         address: this.address.value,

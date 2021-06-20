@@ -51,11 +51,11 @@ export class PayComponent implements OnInit {
     this.http.post("api/manager/pay_list", params).subscribe(
       res => {
         this.loading = false;
-        let data = res["data"];
-        this.data = [...data] || [];
-        this.total = res["total"] || 0;
-        this.pagesize = res['per_page'] || 15;
-        this.max = res['last_page'] || 1;
+        res = res['result'];
+        this.data = res['data'] || [];
+        this.total = res['pageinfo']["total"] || 0;
+        this.pagesize = res['pageinfo']['per_page'] || 15;
+        this.max = res['pageinfo']['last_page'] || 1;
         this.data.forEach(item => {
           let b = "0000000";
           let a = item["pay_for_user"].toString();

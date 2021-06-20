@@ -30,9 +30,10 @@ export class UserComponent implements OnInit {
   max = 1;
 
   status = {
-    "0": "未激活",
-    "1": "已激活",
-    "2": "已禁用"
+    "-1": "未激活",
+    "0": "已激活",
+    "1": "VIP",
+    "2": '已禁用'
   };
 
   name = "";
@@ -43,15 +44,19 @@ export class UserComponent implements OnInit {
 
   parent_snum;
 
-  start_mutual_gold = null;
-  end_mutual_gold = null;
+  start_flowers = null;
+  end_flowers = null;
   phone = '';
   _status = null;
   btnLoading = false;
   is_lost = null;
-  formatterPercent = (value: number) => value ? value.toFixed(2) : value;
+  formatterPercent = (value: number) => value ? value.toFixed(0) : value;
 
   btnLoading1 = false;
+  Types={
+    1: '普通用户',
+    2: '信息员'
+  };
   constructor(
     private modalService: NzModalService,
     private http: HttpClient,
@@ -91,9 +96,9 @@ export class UserComponent implements OnInit {
           "yyyy-MM-dd"
         ));
     }
-    if (this.start_mutual_gold !== null && this.end_mutual_gold !== null) {
-      params['start_mutual_gold'] = (this.start_mutual_gold * 100).toFixed(0);
-      params['end_mutual_gold'] = (this.end_mutual_gold * 100).toFixed(0);
+    if (this.start_flowers !== null && this.start_flowers !== null) {
+      params['start_flowers'] = this.start_flowers ;
+      params['end_flowers'] = this.end_flowers;
     }
     if (this.phone) {
       params['phone'] = this.phone;
@@ -106,10 +111,11 @@ export class UserComponent implements OnInit {
     this.http.post("api/manager/user_list", params).subscribe(
       res => {
         this.loading = false;
+        res = res['result'];
         this.data = res["data"] || [];
-        this.total = res["total"] || 0;
-        this.pagesize = res['per_page'] || 15;
-        this.max = res['last_page'] || 1;
+        this.total = res['pageinfo']["total"] || 0;
+        this.pagesize = res['pageinfo']['per_page'] || 15;
+        this.max = res['pageinfo']['last_page'] || 1;
       },
       err => {
         this.loading = false;
@@ -129,8 +135,8 @@ export class UserComponent implements OnInit {
     this.snum = "";
     this.address = "";
     this.datetime = null;
-    this.start_mutual_gold = null;
-    this.end_mutual_gold = null;
+    this.start_flowers = null;
+    this.end_flowers = null;
     this._status = null;
     this.is_lost = null;
     this.search_data(true);
@@ -249,8 +255,8 @@ export class UserComponent implements OnInit {
         break;
       case 2:
         this.http
-          .post("api/manager/change_mutual_gold", {
-            mutual_gold: Number(this.gold) * 100,
+          .post("api/manager/change_flowers", {
+            flowers: this.gold,
             user_id: this.user_id
           })
           .subscribe(
@@ -341,9 +347,9 @@ export class UserComponent implements OnInit {
           "yyyy-MM-dd"
         ));
     }
-    if (this.start_mutual_gold !== null && this.end_mutual_gold !== null) {
-      params['start_mutual_gold'] = (this.start_mutual_gold * 100).toFixed(0);
-      params['end_mutual_gold'] = (this.end_mutual_gold * 100).toFixed(0);
+    if (this.start_flowers !== null && this.end_flowers !== null) {
+      params['start_flowers'] = this.start_flowers;
+      params['end_flowers'] = this.end_flowers;
     }
     if (this.phone) {
       params['phone'] = this.phone;
@@ -355,7 +361,7 @@ export class UserComponent implements OnInit {
     this.btnLoading = true;
     this.http.post('api/manager/user_list', params).subscribe(res => {
       this.btnLoading = false;
-      let data: any = res;
+      let data: any = res['result'];
       let datas = [], obj = {
         'snum': '会员编号',
         'parent_snum': '推荐人编号',
@@ -371,8 +377,8 @@ export class UserComponent implements OnInit {
           if (key === 'balance') {
             o['余额（元）'] = (item[key] / 100).toFixed(2);
           }
-          if (key === 'mutual_gold') {
-            o['互助金（元）'] = (item[key] / 100).toFixed(2);
+          if (key === 'flowers') {
+            o['鲜花数（朵）'] = item[key];
           }
           if (key === 'status') {
             o['状态'] = item.invalid === 1 ? '已删除' : this.status[item[key]];
@@ -383,7 +389,6 @@ export class UserComponent implements OnInit {
         }
         datas.push(o);
       })
-      console.log(datas);
       const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(datas);
       const wb: XLSX.WorkBook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');

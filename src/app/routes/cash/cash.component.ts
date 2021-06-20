@@ -52,10 +52,11 @@ export class CashComponent implements OnInit {
     this.http.post("api/manager/cash_list", params).subscribe(
       res => {
         this.loading = false;
+        res = res['result'];
         this.data = res["data"] || [];
-        this.total = res["total"] || 0;
-        this.pagesize = res['per_page'] || 15;
-        this.max = res['last_page'] || 1;
+        this.total = res['pageinfo']["total"] || 0;
+        this.pagesize = res['pageinfo']['per_page'] || 15;
+        this.max = res['pageinfo']['last_page'] || 1;
       },
       err => {
         this.loading = false;

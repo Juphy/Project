@@ -44,32 +44,31 @@ export class LoginComponent implements OnInit {
     }
     if (this.account.invalid || this.password.invalid) return;
     this.http
-      .post("api/manager_login", {
-        account: this.account.value,
+      .post("home/manager_login", {
+        snum: this.account.value,
         password: this.password.value
       })
       .subscribe(res => {
         if (res["status"] === 200) {
-          this.nzMessageService.success(res["message"]);
-          let data = res["data"];
+          this.nzMessageService.success('登录成功！');
+          let data = res["result"];
+          data['permissions'] = data['permissions'].filter(item => item.belong_to === 'admin');
           DATA["TOKEN"] = data["token"];
-          let user_info = data["user_info"];
-          userinfo["name"] = user_info["name"];
-          userinfo["id"] = user_info["id"];
-          userinfo["roles"] = user_info["roles"];
-          userinfo["permission"] = data["permission_list"];
-          userinfo["info"] = user_info;
+          userinfo["name"] = data["name"];
+          userinfo["id"] = data["id"];
+          userinfo["permission"] = data["permissions"];
+          userinfo["info"] = data;
           // localStorage存储信息
           localStorage.setItem("token", data["token"]);
-          localStorage.setItem("name", user_info["name"]);
-          localStorage.setItem("id", user_info["id"]);
-          localStorage.setItem("roles", JSON.stringify(user_info["roles"]));
+          localStorage.setItem("name", userinfo["name"]);
+          localStorage.setItem("id", userinfo["id"]);
           localStorage.setItem(
             "permission",
-            JSON.stringify(data["permission_list"])
+            JSON.stringify(data["permissions"])
           );
-          let a = data['permission_list'].find(item => item.description == 1);
-          let url = URL[a['name']];
+          let a = data['permissions'].find(item => item.pid == 0);
+          let url = URL[a['display_name']];
+          console.log(url);
           this.router.navigateByUrl(url);
         }
       });

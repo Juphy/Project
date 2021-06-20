@@ -1,6 +1,6 @@
 <nz-steps [nzCurrent]="current">
   <nz-step nzTitle="圈定范围"></nz-step>
-  <nz-step nzTitle="编辑批量操作互助金"></nz-step>
+  <nz-step nzTitle="编辑批量操作鲜花数"></nz-step>
 </nz-steps>
 <div *ngIf="current===0">
   <div class="ant-bottom ant-top">
@@ -9,6 +9,11 @@
     <nz-input-number [(ngModel)]="end_id" [nzMin]="0" [nzStep]="1" nzPlaceHolder="结束id"></nz-input-number>
     <label class="ant-left">注册时间：</label>
     <nz-range-picker [(ngModel)]="datetime" style="width: 260px"></nz-range-picker>
+    <label class="ant-left" style="width: 148px">鲜花数范围（朵）：</label>
+    <nz-input-number [nzFormatter]="formatterPercent" [(ngModel)]="start_flowers" [nzStep]="1">
+    </nz-input-number><span style="display: inline-block;line-height: 32px;padding: 0 6px">至</span>
+    <nz-input-number [nzFormatter]="formatterPercent" [nzStep]="1" [(ngModel)]="end_flowers">
+    </nz-input-number>
     <button class="ant-left" nz-button *ngIf="!data.length" (click)="get_data()" nzType="primary">搜索</button>
     <button class="ant-left" nz-button *ngIf="data.length" (click)="show_modal()" nzType="primary">搜索</button>
   </div>
@@ -20,6 +25,7 @@
         <th>用户编号</th>
         <th>用户名称</th>
         <th>注册日期</th>
+        <th>鲜花数（朵）</th>
       </tr>
     </thead>
     <tbody>
@@ -28,6 +34,7 @@
         <td>{{data.snum}}</td>
         <td>{{data.name||data.nick_name}}</td>
         <td>{{data.created_at.split(' ')[0]}}</td>
+        <td>{{data.flowers}}</td>
       </tr>
     </tbody>
   </nz-table>
@@ -35,8 +42,8 @@
 </div>
 <div *ngIf="current===1" nz-row>
   <div nz-col [nzSpan]="18" nzOffset="3" style="display: flex">
-    <label style="width:96px;line-height: 32px;text-align: right">互助金：</label>
-    <nz-input-number [(ngModel)]='mutual_gold'></nz-input-number>（元）
+    <label style="width:96px;line-height: 32px;text-align: right">鲜花数：</label>
+    <nz-input-number [(ngModel)]='flowers'></nz-input-number>（朵）
   </div>
   <div nz-col [nzSpan]="18" nzOffset="3" style="display: flex" class="ant-top">
     <label style="width: 112px;line-height: 32px;text-align: right">操作描述：</label>

@@ -26,7 +26,7 @@ export class BatchComponent implements OnInit {
     private http: HttpClient,
     private messageService: NzMessageService
   ) {
-    this.fn = FN['batch_mutual_gold_list'];
+    this.fn = FN['batch_flower_list'];
   }
 
   ngOnInit() {
@@ -53,14 +53,14 @@ export class BatchComponent implements OnInit {
     }
     this.loading = false;
     this.http
-      .post("api/manager/batch_mutual_gold_list", params)
+      .post("api/manager/batch_flowers_list", params)
       .subscribe(res => {
         if (res["status"] === 200) {
-          let data = res["data"];
-          this.data = data["data"] || [];
-          this.total = data["total"];
-          this.pagesize = data['per_page'];
-          this.max = data['last_page'];
+          res = res['result'];
+          this.data = res['data'] || [];
+          this.total = res['pageinfo']["total"] || 0;
+          this.pagesize = res['pageinfo']['per_page'] || 15;
+          this.max = res['pageinfo']['last_page'] || 1;
         }
       });
   }
@@ -86,7 +86,7 @@ export class BatchComponent implements OnInit {
       nzFooter: null,
       nzMaskClosable: false,
       nzClosable: true,
-      nzWidth: 1000
+      nzWidth: 1200
     });
     modal.afterClose.subscribe(res => {
       if (res) {
