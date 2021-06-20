@@ -31,15 +31,15 @@ export class NewsComponent implements OnInit {
 
   get_types() {
     this.http
-      .post("api/get_options", { option_type: "news_type" })
+      .get("home/get_options")
       .subscribe(res => {
         if (res["status"] === 200) {
           this.options = [];
-          let data = res["data"];
-          for (let key in data) {
+          let data = res["result"].filter(item => item.options_type ==='news_type');
+          for (let d of data) {
             this.options.push({
-              c_id: Number(key),
-              c_name: data[key]
+              c_id: Number(d.options_key),
+              c_name: d.options_value
             });
           }
         }
