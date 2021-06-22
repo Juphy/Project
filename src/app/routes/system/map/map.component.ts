@@ -20,7 +20,7 @@ export class MapComponent implements OnInit {
     0: "未上架",
     1: "已上架"
   };
-  UCS = environment.ucs;
+  UCS = environment.api;
   constructor(
     private modalService: NzModalService,
     private http: HttpClient,

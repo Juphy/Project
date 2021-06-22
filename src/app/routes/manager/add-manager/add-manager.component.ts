@@ -23,10 +23,10 @@ export class AddManagerComponent implements OnInit {
   ngOnInit() {
     if (this.id) {
       this.http
-        .post("api/manager/manager_info", { id: this.id })
+        .post("manager/manager_info", { id: this.id })
         .subscribe(res => {
           if (res["status"] === 200) {
-            let data = res["data"];
+            let data = res["result"];
             let roles = data["roles"];
             let info = data["manager_info"];
             this.name = info.name;
@@ -40,9 +40,9 @@ export class AddManagerComponent implements OnInit {
   }
 
   get_roles(roles?: Array<any>) {
-    this.http.post("api/roles/index", {}).subscribe(res => {
+    this.http.post("role/list", {}).subscribe(res => {
       if (res["status"] === 200) {
-        res["data"].forEach(item => {
+        res["result"].forEach(item => {
           this.rolesOption.push({
             id: item.id,
             name: item.name,
@@ -102,7 +102,7 @@ export class AddManagerComponent implements OnInit {
     if (this.id) {
       params["id"] = this.id;
     }
-    this.http.post("api/manager/add_manager", params).subscribe(res => {
+    this.http.post("manager/add_manager", params).subscribe(res => {
       if (res["status"] === 200) {
         if (this.id) {
           this.nzMessageService.success("编辑成功！");

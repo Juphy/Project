@@ -97,8 +97,8 @@ export class UserComponent implements OnInit {
         ));
     }
     if (this.start_flowers !== null && this.start_flowers !== null) {
-      params['start_flowers'] = this.start_flowers ;
-      params['end_flowers'] = this.end_flowers;
+      params['start_flowers'] = this.start_flowers*100 ;
+      params['end_flowers'] = this.end_flowers*100;
     }
     if (this.phone) {
       params['phone'] = this.phone;
@@ -256,7 +256,7 @@ export class UserComponent implements OnInit {
       case 2:
         this.http
           .post("api/manager/change_flowers", {
-            flowers: this.gold,
+            flowers: Number(this.gold) * 100,
             user_id: this.user_id
           })
           .subscribe(
@@ -274,8 +274,11 @@ export class UserComponent implements OnInit {
           );
         break;
       case 3:
+        if (!Number(this.parent_snum)){
+          return this.messageService.error('推荐人编号不符合要求！');
+        }
         this.http.post('api/manager/change_parent_snum', {
-          parent_snum: this.parent_snum,
+          parent_snum: Number(this.parent_snum),
           user_id: this.user_id
         }).subscribe(res => {
           this.visibleLoading = false;
@@ -348,8 +351,8 @@ export class UserComponent implements OnInit {
         ));
     }
     if (this.start_flowers !== null && this.end_flowers !== null) {
-      params['start_flowers'] = this.start_flowers;
-      params['end_flowers'] = this.end_flowers;
+      params['start_flowers'] = this.start_flowers*100;
+      params['end_flowers'] = this.end_flowers*100;
     }
     if (this.phone) {
       params['phone'] = this.phone;
@@ -378,7 +381,7 @@ export class UserComponent implements OnInit {
             o['余额（元）'] = (item[key] / 100).toFixed(2);
           }
           if (key === 'flowers') {
-            o['鲜花数（朵）'] = item[key];
+            o['鲜花数（朵）'] = item[key] / 100;
           }
           if (key === 'status') {
             o['状态'] = item.invalid === 1 ? '已删除' : this.status[item[key]];

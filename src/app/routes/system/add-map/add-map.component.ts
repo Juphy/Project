@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import Cropper from "cropperjs";
 import { HttpClient } from "@angular/common/http";
 import { NzModalRef, NzMessageService } from "ng-zorro-antd";
+import { environment } from "@env/environment";
 @Component({
   selector: "app-add-map",
   templateUrl: "./add-map.component.html",
@@ -27,9 +28,9 @@ export class AddMapComponent implements OnInit {
     private nzModalRef: NzModalRef,
     private http: HttpClient,
     private messageService: NzMessageService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   get_change(e) {
     var files = e.target.files;
@@ -87,34 +88,24 @@ export class AddMapComponent implements OnInit {
       maxHeight: 4096,
       fillColor: "#fff"
     });
-    function convertBase64UrlToBlob(urlData) {
-      var bytes = window.atob(urlData.split(",")[1]);
-      var ab = new ArrayBuffer(bytes.length);
-      var ia = new Uint8Array(ab);
-      for (var i = 0; i < bytes.length; i++) {
-        ia[i] = bytes.charCodeAt(i);
-      }
-      return new Blob([ab], { type: "image/png" });
-    }
+    result.toBlob(blob => {
+      let formData = new FormData();
+      formData.append("img_path", blob, 'ab.png');
+      this.http.post("ucs/upload_img", formData).subscribe(
+        res => {
+          this.loading = false;
 
-    let formData = new FormData();
-    formData.append(
-      "photo",
-      convertBase64UrlToBlob(result.toDataURL("image/jpeg"))
-    );
-    this.http.post("api/upload_file", formData).subscribe(
-      res => {
-        this.loading = false;
-
-        if (res["status"] === 200) {
-          this.image_name = res["data"];
-          this.messageService.success("图片上传成功！");
+          if (res["status"] === 200) {
+            this.image_name = res["result"];
+            this.link = environment.api + '/__images/' + this.image_name;
+            this.messageService.success("图片上传成功！");
+          }
+        },
+        err => {
+          this.loading = false;
         }
-      },
-      err => {
-        this.loading = false;
-      }
-    );
+      );
+    })
   }
 
   cancel() {

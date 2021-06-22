@@ -18,22 +18,22 @@
       <th>电话</th>
       <th>地址</th>
       <th>余额（元）</th>
-      <th>扣款前鲜花数（元）</th>
-      <th>鲜花数（元）</th>
+      <th>扣款前鲜花数（朵）</th>
+      <th>鲜花数（朵）</th>
       <th>创建时间</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let data of table.data" [ngClass]="{marked: data.flowers<30}">
-      <td>{{data.snum}}</td>
+    <tr *ngFor="let data of table.data" [ngClass]="{marked: data.flowers<3000}">
+      <td>{{ data.id }}</td>
       <td>{{ data.id_card }}</td>
       <td>{{ data.name }}</td>
       <td>{{['','男','女'][data.sex]}}</td>
       <td>{{data.phone}}</td>
       <td>{{ data.address }}</td>
       <td>{{(data.balance/100).toFixed(2)}}</td>
-      <td>{{data.before_flowers}}</td>
-      <td>{{data.flowers}}</td>
+      <td>{{data.before_flowers/100 | number:'1.2-2'}}</td>
+      <td>{{data.flowers/100 | number:'1.2-2'}}</td>
       <td>{{ data.created_at | date:'yyyy-MM-dd HH:mm:ss' }}</td>
     </tr>
   </tbody>

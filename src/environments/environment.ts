@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   api: 'https://yishengyishi.wenquanpage.com',
-  ucs: ''
+  ucs: 'https://yishengyishi.wenquanpage.com'
 };
 
 /*

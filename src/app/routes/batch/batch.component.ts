@@ -53,7 +53,7 @@ export class BatchComponent implements OnInit {
     }
     this.loading = false;
     this.http
-      .post("api/manager/batch_flowers_list", params)
+      .post("manager/batch_flowers_list", params)
       .subscribe(res => {
         if (res["status"] === 200) {
           res = res['result'];

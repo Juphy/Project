@@ -25,20 +25,20 @@ export class RuleComponent implements OnInit, AfterViewInit {
         let editorDom = this.el.nativeElement.querySelector("#rule");
         this.editor = new wangEditor(editorDom);
         this.editor.customConfig.uploadImgServer =
-          environment.api + "/api/upload_file";
-        this.editor.customConfig.uploadFileName = "photo";
+          environment.api + "/ucs/upload_img";
+        this.editor.customConfig.uploadFileName = "img_path";
         this.editor.customConfig.uploadImgHooks = {
           success: (xhr, editor, result) => {
             this.messageService.success('图片上传成功')
           },
           customInsert: (insertImg, result, editor) => {
 
-            let path = result["data"];
-            insertImg(environment.ucs + path);
+            let path = result["result"];
+            insertImg(environment.api + '/__images/' + path);
           }
         };
         this.editor.create();
-        this.editor.txt.html(res["data"]);
+        this.editor.txt.html(res["result"]);
       }
     });
   }

@@ -103,15 +103,15 @@ export class CreateComponent implements OnInit, AfterViewInit {
       console.log(url);
     }
     this.editor.customConfig.uploadImgServer =
-      environment.api + "/api/upload_file";
-    this.editor.customConfig.uploadFileName = "photo";
+      environment.api + "/ucs/upload_img";
+    this.editor.customConfig.uploadFileName = "img_path";
     this.editor.customConfig.uploadImgHooks = {
       success: (xhr, editor, result) => {
         this.messageService.success("图片上传成功");
       },
       customInsert: (insertImg, result, editor) => {
-        let path = result["data"];
-        insertImg(environment.ucs + path);
+        let path = result["result"];
+        insertImg(environment.api + '/__images/' + path);
       }
     };
     this.editor.create();

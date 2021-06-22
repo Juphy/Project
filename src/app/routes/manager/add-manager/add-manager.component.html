@@ -7,11 +7,11 @@
         <label>姓名：</label>
         <input type="text" [(ngModel)]="name" nz-input>
     </div>
-    <div *ngIf="!id" class="ant-bottom" nz-col [nzSpan]="16" [nzOffset]="4">
+    <div *ngIf="id" class="ant-bottom" nz-col [nzSpan]="16" [nzOffset]="4">
         <label>密码：</label>
         <input type="password" [(ngModel)]="password" (ngModelChange)="check_password(0)" nz-input>
     </div>
-    <div *ngIf="!id" class="ant-bottom" nz-col [nzSpan]="16" [nzOffset]="4">
+    <div *ngIf="id" class="ant-bottom" nz-col [nzSpan]="16" [nzOffset]="4">
         <label>确认密码：</label>
         <input type="password" [(ngModel)]="_password" nz-input (ngModelChange)="check_password(1)">
         <span *ngIf="flag" style="color:tomato">（密码不一致）</span>

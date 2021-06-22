@@ -18,11 +18,11 @@ export class AddRoleComponent implements OnInit {
 
   ngOnInit() {
     if (this.id) {
-      this.http.post("api/roles/info", { id: this.id }).subscribe(res => {
+      this.http.post("role/info", { id: this.id }).subscribe(res => {
         if (res['status'] === 200) {
-          let data = res['data'];
+          let data = res['result'];
           this.name = data.name;
-          let permission = data['permission'];
+          let permission = data['permissions'].map(item => item.id);
           this.get_all_permission(permission);
         }
       });
@@ -32,15 +32,15 @@ export class AddRoleComponent implements OnInit {
   }
 
   get_all_permission(permission?: Array<any>) {
-    this.http.post("api/roles/permission", {}).subscribe(res => {
+    this.http.post("role/permissions", {}).subscribe(res => {
       if (res["status"] === 200) {
-        let data = res["data"];
+        let data = res["result"];
         let roles = [];
         data.forEach(item => {
           if (item.pid === 0) {
             roles.push({
               id: item.id,
-              name: item.display_name,
+              name: item.name,
               checked: (permission && permission.includes(Number(item.id))) || false
             });
           }
@@ -51,7 +51,7 @@ export class AddRoleComponent implements OnInit {
             if (_item.pid === item.id) {
               children.push({
                 id: _item.id,
-                name: _item.display_name,
+                name: _item.name,
                 checked: (permission && permission.includes(Number(_item.id))) || false
               });
             }
@@ -76,10 +76,10 @@ export class AddRoleComponent implements OnInit {
       })
     })
     if (this.id) {
-      this.http.post('api/roles/edit', {
+      this.http.post('role/edit', {
         id: this.id,
         name: this.name,
-        permission_ids: permission_ids.join(',')
+        permissions: permission_ids
       }).subscribe(res => {
         if (res['status'] === 200) {
           this.nzMessageService.success('编辑成功！');
@@ -87,9 +87,9 @@ export class AddRoleComponent implements OnInit {
         }
       })
     } else {
-      this.http.post('api/roles/add', {
+      this.http.post('role/add', {
         name: this.name,
-        permission_ids: permission_ids.join(',')
+        permissions: permission_ids
       }).subscribe(res => {
         if (res['status'] === 200) {
           this.nzMessageService.success('添加成功！');

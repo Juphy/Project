@@ -24,7 +24,7 @@
         <thead>
             <tr>
                 <th>操作人ID</th>
-                <th>鲜花数（元）</th>
+                <th>鲜花数（朵）</th>
                 <th>操作描述</th>
                 <th>操作时间</th>
                 <th>操作</th>
@@ -33,9 +33,9 @@
         <tbody>
             <tr *ngFor="let data of table.data">
                 <td>{{ data.user_id }}</td>
-                <td>{{ (data.change/100).toFixed(2) }}</td>
+                <td>{{ data.change }}</td>
                 <td>{{ data.description }}</td>
-                <td>{{ data.created_at }}</td>
+                <td>{{ data.created_at | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                 <td>
                     <button nz-button (click)="show_detail(data.id)">查看详情</button>
                 </td>

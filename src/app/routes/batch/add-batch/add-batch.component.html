@@ -31,10 +31,10 @@
     <tbody>
       <tr *ngFor="let data of basicTable.data">
         <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refresh_status()"></td>
-        <td>{{data.snum}}</td>
+        <td>{{data.id}}</td>
         <td>{{data.name||data.nick_name}}</td>
         <td>{{data.created_at.split(' ')[0]}}</td>
-        <td>{{data.flowers}}</td>
+        <td>{{data.flowers/100 | number:'1.2-2'}}</td>
       </tr>
     </tbody>
   </nz-table>

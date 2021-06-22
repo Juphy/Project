@@ -82,8 +82,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let data of table.data" [ngClass]="{marked: data.flowers<30}">
-                <td>{{data.snum}}</td>
+            <tr *ngFor="let data of table.data" [ngClass]="{marked: data.flowers<3000}">
+                <td>{{data.id}}</td>
                 <td>{{data.parent_snum}}</td>
                 <td>{{ data.id_card }}</td>
                 <td>{{ data.name }}</td>
@@ -91,7 +91,7 @@
                 <td>{{ data.address }}</td>
                 <td>{{ Types[data.type] }}</td>
                 <td>{{(data.balance/100).toFixed(2)}}</td>
-                <td>{{data.flowers}}</td>
+                <td>{{data.flowers/100 | number:'1.2-2'}}</td>
                 <td>{{ data.created_at| date:'yyyy-MM-dd HH:mm:ss' }}</td>
                 <td>{{ data.invalid ? "已删除" : status[data["status"]] }}</td>
                 <td>

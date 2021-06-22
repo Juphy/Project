@@ -67,8 +67,8 @@ export class AddBatchComponent implements OnInit {
 
     if (this.start_flowers !== null && this.end_flowers !== null) {
       if (!params) params = {};
-      params['start_flowers'] = (this.start_flowers * 100).toFixed(0);
-      params['end_flowers'] = (this.end_flowers * 100).toFixed(0);
+      params['start_flowers'] = this.start_flowers * 100;
+      params['end_flowers'] = this.end_flowers * 100;
     }
 
     if (!params) {
@@ -76,9 +76,9 @@ export class AddBatchComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.http.post('api/manager/batch_flowers', params).subscribe(res => {
+    this.http.post('manager/batch_flowers', params).subscribe(res => {
       this.loading = false;
-      this.data = [...res['data']];
+      this.data = res['result'] || [];
       this.data.forEach(item => {
         item['checked'] = true;
       })
@@ -105,7 +105,7 @@ export class AddBatchComponent implements OnInit {
       this.nzMessageService.warning('没有填写鲜花数！');
       return;
     }
-    params['flowers'] = this.flowers * 100;
+    params['flowers'] = this.flowers*100;
     this.btnLoading = true;
     this.http.post('api/manager/add_flowers', params).subscribe(res => {
       this.btnLoading = false;;

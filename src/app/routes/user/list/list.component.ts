@@ -434,7 +434,7 @@ export class ListComponent implements OnInit {
                   return d.children || d._children ? "end" : "start";
                 })
                 .text(function (d) {
-                  return d.name + `(${d.snum})`;
+                  return d.name + `(${d.id})`;
                 })
                 .style("fill-opacity", 0);
 
@@ -461,7 +461,7 @@ export class ListComponent implements OnInit {
                   return d.children || d._children ? "end" : "start";
                 })
                 .text(function (d) {
-                  return d.name + `(${d.snum})`;
+                  return d.name + `(${d.id})`;
                 });
 
               // Change the circle fill depending on whether it has children and is collapsed

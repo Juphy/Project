@@ -37,11 +37,11 @@ export class BatchDetailComponent implements OnInit {
     this.http.post('api/manager/batch_flowers_info', params).subscribe(res => {
       this.loading = false;
       if (res['status'] === 200) {
-        let data = res['data']['user_batch_list'];
-        this.data = data['data'];
-        this.pagesize = data['per_page'];
-        this.total = data['total'];
-        this.max = data['last_page'];
+        res = res['result'];
+        this.data = res['data'];
+        this.pagesize = res['per_page'];
+        this.total = res['total'];
+        this.max = res['last_page'];
       }
     })
   }
