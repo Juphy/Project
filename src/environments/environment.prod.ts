@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  api: '',
-  ucs: ''
+  api: 'https://yishengyishi.wenquanpage.com',
+  ucs: 'https://yishengyishi.wenquanpage.com'
 };
